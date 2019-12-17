@@ -40,3 +40,14 @@ colors:
     - { index: 19, color: '0x6e6b5e' }
     - { index: 20, color: '0x999580' }
     - { index: 21, color: '0xe8e4cf' }
+
+# Windows 10 ConPTY backend (Windows only)
+#
+# This will enable better color support and may resolve other issues,
+# however this API and its implementation is still young and so is
+# disabled by default, as stability may not be as good as the winpty
+# backend.
+#
+# Alacritty will fall back to the WinPTY automatically if the ConPTY
+# backend cannot be initialized.
+enable_experimental_conpty_backend: true
