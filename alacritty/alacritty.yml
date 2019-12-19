@@ -51,3 +51,38 @@ colors:
 # Alacritty will fall back to the WinPTY automatically if the ConPTY
 # backend cannot be initialized.
 enable_experimental_conpty_backend: true
+
+# Font configuration
+font:
+    normal:
+        family: monospace
+    bold:
+        family: monospace
+        style: Bold
+    italic:
+        family: monospace
+        style: Italic
+    bold_italic:
+        family: monospace
+        style: Bold Italic
+    size: 9.0
+
+# Cursor
+cursor:
+  style: Block
+  unfocused_hollow: true
+
+# key_bindings:
+  # (Windows/Linux only)
+  # - { key: V,        mods: Control|Shift, action: Paste            }
+  # - { key: C,        mods: Control|Shift, action: Copy             }
+  # - { key: Insert,   mods: Shift,         action: PasteSelection   }
+  # - { key: Key0,     mods: Control,       action: ResetFontSize    }
+  # - { key: Equals,   mods: Control,       action: IncreaseFontSize }
+  # - { key: Add,      mods: Control,       action: IncreaseFontSize }
+  # - { key: Subtract, mods: Control,       action: DecreaseFontSize }
+  # - { key: Minus,    mods: Control,       action: DecreaseFontSize }
+  # - { key: Return,   mods: Alt,           action: ToggleFullscreen }
+
+live_config_reload: true
+
