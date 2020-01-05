@@ -1,7 +1,7 @@
-" set runtimepath^=~/.vim runtimepath+=~/.vim/after
-" let &packpath = &runtimepath
-" source ~/.vimrc
-
+call plug#begin('~/.config/nvim/plugins')
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+call plug#end()
 
 " Editor
 colorscheme deus
