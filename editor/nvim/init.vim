@@ -13,5 +13,16 @@ set guicursor=
 set laststatus=0 ruler
 set mouse=a
 set number
-set tabstop=8 softtabstop=0 expandtab shiftwidth=4 smarttab
+
+" Show file tabs
+set showtabline=2
+
+" Tabbing
+set tabstop=8
+set softtabstop=0
+set expandtab
+set shiftwidth=4
+set smarttab
+
+" Turn off bell sound
 set visualbell
