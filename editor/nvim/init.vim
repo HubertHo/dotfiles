@@ -1,11 +1,16 @@
 call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'stephpy/vim-yaml'
 call plug#end()
 
-" Editor
-colorscheme deus
+" git-commentary addition for Rust
+autocmd FileType rust setlocal commentstring=//\ %s
 
+" Editor Configs
+colorscheme deus
 set background=dark
 set colorcolumn=100
 set encoding=utf8
@@ -26,3 +31,7 @@ set smarttab
 
 " Turn off bell sound
 set visualbell
+
+" Splits that make sense
+set splitright
+set splitbelow
