@@ -47,3 +47,17 @@ set autoread
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
+
+" Stop accidentally opening help
+map <F1> <Esc>
+imap <F1> <Esc>
+
+" Set specific line length columns for different files
+au FileType sh set colorcolumn=127
+au FileType vim set colorcolumn=80
+
+" Hide the banner in netrw
+let g:netrw_banner=0
+
+" Use tree view when browsing files
+let g:netrw_liststyle=3
