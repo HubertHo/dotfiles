@@ -55,15 +55,15 @@ enable_experimental_conpty_backend: true
 # Font configuration
 font:
     normal:
-        family: monospace
+        family: Noto Sans Mono
     bold:
-        family: monospace
+        family: Noto Sans Mono
         style: Bold
     italic:
-        family: monospace
+        family: Noto Sans Mono
         style: Italic
     bold_italic:
-        family: monospace
+        family: Noto Sans Mono
         style: Bold Italic
     size: 8.0
 

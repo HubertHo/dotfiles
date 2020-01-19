@@ -1,5 +1,3 @@
-HOMEDIR="/home/hho"
-
 # Aliases
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
@@ -29,7 +27,7 @@ if [ alias edittodo 2>/dev/null >/dev/null ]; then
 fi
 
 # Only enable todo functionality if the file exists
-TODOFILE="$HOMEDIR/.todo"
+TODOFILE="$HOME/.todo"
 if [ -f "$TODOFILE" ]; then
     alias etodo='vim $TODOFILE'
 
@@ -68,6 +66,7 @@ if [ -f "$TODOFILE" ]; then
         printf "\n"
         # Low priority, will I even finish these?
         echolow "[TODO:---]: Clean up todos in code"
+        echo -e "\033[0m"
         printf "\n"
     }
 
