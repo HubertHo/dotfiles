@@ -1,6 +1,7 @@
 call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Language plugins
 Plug 'pangloss/vim-javascript'
@@ -61,3 +62,22 @@ let g:netrw_banner=0
 
 " Use tree view when browsing files
 let g:netrw_liststyle=3
+
+" ShowDirectoryTree, basically open netrw in a new tab with a single command
+command! SDT tab new | Explore
+
+" Show sign column
+set scl=yes
+
+" Reduce update time to show git diffs
+set updatetime=500
+
+" GitGutter configs
+let g:gitgutter_sign_added='++'
+let g:gitgutter_sign_modified='**'
+let g:gitgutter_sign_removed='--'
+let g:gitgutter_sign_removed_first_line = '--'
+let g:gitgutter_sign_modified_removed = '**'
+highlight GitGutterAdd ctermfg=0 ctermbg=2
+highlight GitGutterDelete ctermfg=0 ctermbg=1
+highlight GitGutterChange ctermfg=0 ctermbg=3
