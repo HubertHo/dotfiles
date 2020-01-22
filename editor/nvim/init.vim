@@ -1,9 +1,9 @@
 call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 
-" Language plugins
+" Language syntax plugins
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
@@ -70,14 +70,13 @@ command! SDT tab new | Explore
 set scl=yes
 
 " Reduce update time to show git diffs
-set updatetime=500
+set updatetime=100
 
-" GitGutter configs
-let g:gitgutter_sign_added='++'
-let g:gitgutter_sign_modified='**'
-let g:gitgutter_sign_removed='--'
-let g:gitgutter_sign_removed_first_line = '--'
-let g:gitgutter_sign_modified_removed = '**'
-highlight GitGutterAdd ctermfg=0 ctermbg=2
-highlight GitGutterDelete ctermfg=0 ctermbg=1
-highlight GitGutterChange ctermfg=0 ctermbg=3
+" vim-signify configs
+let g:signify_sign_add='+'
+let g:signify_sign_delete='-'
+let g:signify_sign_delete_first_line='-'
+let g:signify_sign_change='!'
+highlight SignifySignAdd ctermfg=green ctermbg=green
+highlight SignifySignChange ctermfg=yellow ctermbg=yellow
+highlight SignifySignDelete ctermfg=red ctermbg=red
