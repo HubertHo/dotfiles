@@ -72,6 +72,9 @@ cursor:
   style: Block
   unfocused_hollow: true
 
+scrolling:
+  history: 0
+
 # key_bindings:
   # (Windows/Linux only)
   # - { key: V,        mods: Control|Shift, action: Paste            }
