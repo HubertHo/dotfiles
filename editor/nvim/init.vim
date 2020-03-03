@@ -66,7 +66,7 @@ let g:netrw_banner=0
 " Use tree view when browsing files
 let g:netrw_liststyle=3
 
-" ShowDirectoryTree, basically open netrw in a new tab with a single command
+" ShowDirectoryTree
 command! SDT tab new | Explore
 
 " Show sign column
