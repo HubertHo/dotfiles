@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# For enabling copy/paste in neovim
+
+for i in "$@"
+do
+  case "$i" in
+  -o )
+    powershell.exe Get-Clipboard | sed 's/\r$//'
+    exit 0
+    ;;
+  -i )
+    tee <&0 | clip.exe
+    exit 0
+  esac
+done
