@@ -1,3 +1,8 @@
+# Alias mock xsel copy and paste on WSL
+export DISPLAY=:0
+alias copy='xsel -i'
+alias paste='xsel -o'
+
 # Aliases
 alias d='cd ../'
 alias dd='cd ../../'

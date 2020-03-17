@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# For enabling copy/paste in neovim
+# For enabling copy/paste in neovim. Ensure that this file has execute permissions.
 
 for i in "$@"
 do
