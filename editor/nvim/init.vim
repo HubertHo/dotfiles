@@ -2,23 +2,25 @@ call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
-Plug 'ayu-theme/ayu-vim'
+Plug 'junegunn/seoul256.vim'
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
-" Plug 'rust-lang/rust.vim'
-" Plug 'cespare/vim-toml'
-" Plug 'stephpy/vim-yaml'
+Plug 'rust-lang/rust.vim'
+Plug 'cespare/vim-toml'
+Plug 'stephpy/vim-yaml'
+Plug 'plasticboy/vim-markdown'
 call plug#end()
 
 " git-commentary additions for unsupported languages
-" autocmd FileType rust setlocal commentstring=//\ %s
+autocmd FileType rust setlocal commentstring=//\ %s
+
+" Colour scheme
+set termguicolors
+set background=light
+colorscheme seoul256-light
 
 " Editor Configs
-set termguicolors
-let ayucolor="mirage"
-colorscheme ayu
-set background=dark
 set colorcolumn=100
 set encoding=utf8
 set guicursor=
@@ -83,3 +85,6 @@ let g:signify_sign_change='!'
 highlight SignifySignAdd ctermfg=green ctermbg=green guifg=#00ff00 guibg=#00ff00
 highlight SignifySignChange ctermfg=yellow ctermbg=yellow guifg=#ffff00 guibg=#ffff00
 highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
+
+" vim-markdown configs
+let g:vim_markdown_folding_disabled=1
