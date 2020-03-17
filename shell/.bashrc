@@ -1,22 +1,28 @@
+# WSL specific aliases
 # Alias mock xsel copy and paste on WSL
-export DISPLAY=:0
 alias copy='xsel -i'
 alias paste='xsel -o'
+alias elc='vim /mnt/c/Users/Hubert/AppData/Roaming/alacritty/alacritty.yml'
 
 # Aliases
+alias cdh='cd ~'
 alias d='cd ../'
 alias dd='cd ../../'
 alias ddd='cd ../../../'
 alias ls='ls --color=auto'
-alias lsa='ls -al'
+alias la='ls --color=auto -al'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-alias v='nvim'
+if ! [ type nvim 2>/dev/null > /dev/null ]; then
+    alias vim='nvim'
+fi
+alias v='vim'
 
 # Helpers for editing/automatically sourcing bashrc
-alias editrc='vim ~/.bashrc ; source ~/.bashrc'
-alias srcbash="source ~/.bashrc"
+alias eb='vim ~/.bashrc ; source ~/.bashrc'
+alias sb="source ~/.bashrc"
+alias ev="vim ~/.config/nvim/init.vim"
 
 # Testing utility aliases
 alias runtestserver='python3 -m http.server 8002'
@@ -54,5 +60,31 @@ echo "TODO:"
 lt () {
     echo "[ ] Finish AST parser section of Crafting Interpreters"
     echo "[ ] Merge work bashrc with this version"
+    echo "[x] Setup copy and paste for neovim and bash"
+    echo "[x] Add SSH keys for github. Switch repos over to ssh"
 }
 lt
+
+# Enable ssh agent for github
+env=~/.ssh/agent.env
+
+agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
+
+agent_start () {
+    (umask 077; ssh-agent >| "$env")
+    . "$env" >| /dev/null ; }
+
+agent_load_env
+
+# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
+agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
+
+if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
+    agent_start
+    ssh-add
+elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
+    ssh-add
+fi
+
+unset env
+
