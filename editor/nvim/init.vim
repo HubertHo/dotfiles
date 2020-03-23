@@ -94,3 +94,11 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 
 " vim-markdown configs
 let g:vim_markdown_folding_disabled=1
+
+" File detection
+autocmd BufRead *.md set filetype=markdown
+
+" JUmp to last-edit position when opening files
+if has("autocmd")
+    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif

@@ -1,10 +1,26 @@
+
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-alias ls='ls --color=auto'
+export EDITOR="nvim"
+export TERMINAL="alacritty"
+
+# Bash history settings
+shopt -s histappend
+HISTSIZE=999999999
+HISTFILESIZE=999999999
+HISTCONTROL=ignoreboth
+
+# Check and update window size, if necessary
+shopt -s checkwinsize
+
 PS1='\u@\h \w\$ '
 
+# Add sass to PATH
+export PATH="$HOME/repos/dart-sass:$PATH"
+
 # Aliases
+alias rm='rm --interactive=never'
 alias cdh='cd ~'
 alias d='cd ../'
 alias dd='cd ../../'
@@ -18,16 +34,18 @@ if ! [ type nvim 2>/dev/null > /dev/null ]; then
     alias vim='nvim'
 fi
 alias v='vim'
+alias sp='ps aux | rg -F'
 
 # Aliases for editing .files
 alias eb='vim ~/.bashrc ; source ~/.bashrc'
 alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
+alias et="vim ~/.tmux.conf"
 
 # xclip aliases
-alias copy='xclip -selection clipboard -i'
-alias paste='xclip -selection clipboard -o'
+alias y='xclip -selection clipboard -i'
+alias p='xclip -selection clipboard -o'
 
 # Open a new terminal window
 alias nw="alacritty &"
@@ -38,6 +56,19 @@ alias pyserve='python3 -m http.server 8002'
 # ripgrep aliases
 alias ff='rg -l' # Get all files that match the pattern in curdir
 alias ffs='rg -lF' # Get all file that match that contain the given string
+alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
+
+# Enable/disable bluetooth
+# To pair and connect to a device:
+# bluetoothctl
+# power on -> agent on -> default-agent
+# scan on -> scan for devices
+# pair <device mac addr>
+# connect <device mac addr>
+# trust <device mac addr> -> auto connect
+# if connection fails then kill pulseaudio: $ pulseaudio -k
+alias startbl="sudo systemctl start bluetooth"
+alias stopbl="sudo systemctl stop bluetooth"
 
 # Git aliases
 alias ga='git add'
@@ -58,37 +89,18 @@ alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
 
-# TODO List
-echo "TODO:"
-lt () {
-    echo "[ ] Finish AST parser section of Crafting Interpreters"
-    echo "[ ] Merge work config file changes with local"
-    echo "[ ] Configure the rest of arch"
-    echo "    [ ] Go through the rest of the General Recommendations on Arch Wiki"
-    echo "    [ ] Go through the configuration for Asus UX430 on Arch Wiki"
-    echo "        [X] Install libinput for touchpad"
-    echo "        [ ] Read documentation on how to use libinput with xorg"
-    echo "        [ ] Install pulseaudio"
-    echo "    [X] Install password manager (keepass or keepassxc?)"
-    echo "    [X] Add SSH keys for github. Switch repos over to ssh"
-    echo "[ ] Remove GNOME and have a more customized setup (eventually)"
-    echo "    [ ] Look into the i3 window manager"
-    echo "    [ ] Setup xinit"
-}
-lt
-
 software=(
-    git,
-    firefox,
-    neovim,
-    xclip,
     alacritty,
-    ripgrep,
-    noto-fonts,
+    firefox,
+    git,
     htop,
-    whois,
-    tmux,
     keepassxc,
+    keychain,
+    neovim,
+    nodejs
+    noto-fonts,
     open-ssh,
-    keychain
+    ripgrep,
+    tmux,
+    xclip,
 )
