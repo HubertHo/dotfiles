@@ -1,43 +1,35 @@
-# Colors (Pencil Light)
+# Colors (Gruvbox light)
 colors:
   # Default colors
   primary:
-    background: '0xf1f1f1' 
-    foreground: '0x424242'
+    # hard contrast: background = '#f9f5d7'
+    background: '#fbf1c7'
+    # soft contrast: background = '#f2e5bc'
+    foreground: '#3c3836'
 
   # Normal colors
   normal:
-    black:   '0x212121'
-    red:     '0xc30771'
-    green:   '0x10a778'
-    yellow:  '0xa89c14'
-    blue:    '0x008ec4'
-    magenta: '0x523c79'
-    cyan:    '0x2025ba'
-    white:   '0xe0e0e0'
+    black:   '#fbf1c7'
+    red:     '#cc241d'
+    green:   '#98971a'
+    yellow:  '#d79921'
+    blue:    '#458588'
+    magenta: '#b16286'
+    cyan:    '#689d6a'
+    white:   '#7c6f64'
 
   # Bright colors
   bright:
-    black:   '0x212121'
-    red:     '0xfb007a'
-    green:   '0x5fd7af'
-    yellow:  '0xf3e430'
-    blue:    '0x20bbfc'
-    magenta: '0x6855de'
-    cyan:    '0x4fb8cc'
-    white:   '0xf1f1f1'
+    black:   '#928374'
+    red:     '#9d0006'
+    green:   '#79740e'
+    yellow:  '#b57614'
+    blue:    '#076678'
+    magenta: '#8f3f71'
+    cyan:    '#427b58'
+    white:   '#3c3836'
 
 background_opacity: 1
-
-# Windows 10 ConPTY backend (Windows only)
-#
-# This will enable better color support and may resolve other issues,
-# however this API and its implementation is still young and so is
-# disabled by default, as stability may not be as good as the winpty
-# backend.
-#
-# Set to true to use legact winpty
-winpty_backend: false
 
 # Font configuration
 font:
@@ -52,7 +44,7 @@ font:
     bold_italic:
         family: Noto Sans Mono
         style: Bold Italic
-    size: 8.0
+    size: 10.0
 
 # Cursor
 cursor:
@@ -60,7 +52,8 @@ cursor:
   unfocused_hollow: true
 
 scrolling:
-  history: 0
+  history: 100000
+  multiplier: 3
 
 # key_bindings:
   # (Windows/Linux only)

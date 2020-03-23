@@ -2,7 +2,7 @@ call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
-Plug 'junegunn/seoul256.vim'
+Plug 'morhetz/gruvbox'
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
@@ -18,7 +18,7 @@ autocmd FileType rust setlocal commentstring=//\ %s
 " Colour scheme
 set termguicolors
 set background=light
-colorscheme seoul256-light
+colorscheme gruvbox
 
 " Editor Configs
 set colorcolumn=100
@@ -27,7 +27,7 @@ set guicursor=
 set laststatus=0
 set ruler
 set mouse=a
-set number
+set number relativenumber
 set showmatch  " Show matching parentheses
 
 " Show file tabs
@@ -70,6 +70,12 @@ let g:netrw_liststyle=3
 
 " ShowDirectoryTree
 command! SDT tab new | Explore
+
+nnoremap <Leader>ev :tab new $MYVIMRC<CR>
+nnoremap <Leader>sv :so $MYVIMRC<CR>
+nnoremap <Leader>eb :tab new ~/.bashrc<CR>
+nnoremap <Leader>elc :tab new ~/.alacritty.yml<CR>
+nnoremap <Leader>ls :SDT<CR>
 
 " Show sign column
 set scl=yes

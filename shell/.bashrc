@@ -1,8 +1,8 @@
-# WSL specific aliases
-# Alias mock xsel copy and paste on WSL
-alias copy='xsel -i'
-alias paste='xsel -o'
-alias elc='vim /mnt/c/Users/Hubert/AppData/Roaming/alacritty/alacritty.yml'
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+PS1='\u@\h \w\$ '
 
 # Aliases
 alias cdh='cd ~'
@@ -19,22 +19,25 @@ if ! [ type nvim 2>/dev/null > /dev/null ]; then
 fi
 alias v='vim'
 
-# Helpers for editing/automatically sourcing bashrc
+# Aliases for editing .files
 alias eb='vim ~/.bashrc ; source ~/.bashrc'
 alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
+alias elc="vim ~/.alacritty.yml"
+
+# xclip aliases
+alias copy='xclip -selection clipboard -i'
+alias paste='xclip -selection clipboard -o'
+
+# Open a new terminal window
+alias nw="alacritty &"
 
 # Testing utility aliases
-alias runtestserver='python3 -m http.server 8002'
-alias runff2='cd /home/hho/ff2/ ; ./docker_wrap.py run dev --http_port 9000 --host_repo_path /home/hho/ff2'
+alias pyserve='python3 -m http.server 8002'
 
 # ripgrep aliases
-alias ffreg='find . | rg'                  # Get all file paths that match pattern
-alias ffsreg='rg -l'                       # Get all files that match the pattern in curdir
-alias ffwebreg='find ~/ff/web | rg'        # Get all file paths from ff/web that match pattern
-alias ffs='rg -lF'                         # Get all file that match that contain the given string
-alias ffnotest='rg -F --iglob=\!*test*'    # Show lines that have matching string
-alias ffsnotest='rg -Fl --iglob=\!*test*'  # Get all files but ignore the test files
+alias ff='rg -l' # Get all files that match the pattern in curdir
+alias ffs='rg -lF' # Get all file that match that contain the given string
 
 # Git aliases
 alias ga='git add'
@@ -59,32 +62,33 @@ alias gua='git pull && git submodule update --recursive --remote'
 echo "TODO:"
 lt () {
     echo "[ ] Finish AST parser section of Crafting Interpreters"
-    echo "[ ] Merge work bashrc with this version"
-    echo "[x] Setup copy and paste for neovim and bash"
-    echo "[x] Add SSH keys for github. Switch repos over to ssh"
+    echo "[ ] Merge work config file changes with local"
+    echo "[ ] Configure the rest of arch"
+    echo "    [ ] Go through the rest of the General Recommendations on Arch Wiki"
+    echo "    [ ] Go through the configuration for Asus UX430 on Arch Wiki"
+    echo "        [X] Install libinput for touchpad"
+    echo "        [ ] Read documentation on how to use libinput with xorg"
+    echo "        [ ] Install pulseaudio"
+    echo "    [X] Install password manager (keepass or keepassxc?)"
+    echo "    [X] Add SSH keys for github. Switch repos over to ssh"
+    echo "[ ] Remove GNOME and have a more customized setup (eventually)"
+    echo "    [ ] Look into the i3 window manager"
+    echo "    [ ] Setup xinit"
 }
 lt
 
-# Enable ssh agent for github
-env=~/.ssh/agent.env
-
-agent_load_env () { test -f "$env" && . "$env" >| /dev/null ; }
-
-agent_start () {
-    (umask 077; ssh-agent >| "$env")
-    . "$env" >| /dev/null ; }
-
-agent_load_env
-
-# agent_run_state: 0=agent running w/ key; 1=agent w/o key; 2= agent not running
-agent_run_state=$(ssh-add -l >| /dev/null 2>&1; echo $?)
-
-if [ ! "$SSH_AUTH_SOCK" ] || [ $agent_run_state = 2 ]; then
-    agent_start
-    ssh-add
-elif [ "$SSH_AUTH_SOCK" ] && [ $agent_run_state = 1 ]; then
-    ssh-add
-fi
-
-unset env
-
+software=(
+    git,
+    firefox,
+    neovim,
+    xclip,
+    alacritty,
+    ripgrep,
+    noto-fonts,
+    htop,
+    whois,
+    tmux,
+    keepassxc,
+    open-ssh,
+    keychain
+)
