@@ -1,10 +1,10 @@
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 
+# TODO: Look into bash history
 # Bash history settings
 shopt -s histappend
 HISTSIZE=999999999
@@ -14,7 +14,8 @@ HISTCONTROL=ignoreboth
 # Check and update window size, if necessary
 shopt -s checkwinsize
 
-PS1='\u@\h \w\$ '
+# Colour prompt
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\$ '
 
 # Add sass to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"
@@ -42,6 +43,7 @@ alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
 alias et="vim ~/.tmux.conf"
+alias etodo="vim ~/.todo; lt"
 
 # xclip aliases
 alias y='xclip -selection clipboard -i'
@@ -66,7 +68,7 @@ alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
 # pair <device mac addr>
 # connect <device mac addr>
 # trust <device mac addr> -> auto connect
-# if connection fails then kill pulseaudio: $ pulseaudio -k
+# if connection fails then restart pulseaudio: $ pulseaudio -k
 alias startbl="sudo systemctl start bluetooth"
 alias stopbl="sudo systemctl stop bluetooth"
 
@@ -88,6 +90,20 @@ alias gtp='git stash push'
 alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
+
+# Show TODOs in the current directory
+st() {
+    rg -F TODO\($1\)
+}
+
+# List TODOs in the todo file
+lt () {
+    echo "TODO"
+    if [ -f $HOME/.todo ]; then
+        cat $HOME/.todo
+    fi
+}
+lt
 
 software=(
     alacritty,
