@@ -4,6 +4,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 Plug 'morhetz/gruvbox'
 Plug 'Yggdroot/indentLine'
+Plug 'itchyny/lightline.vim'
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
@@ -31,7 +32,7 @@ let g:gruvbox_contrast_light="hard"
 set colorcolumn=100
 set encoding=utf8
 set guicursor=
-set laststatus=0
+set laststatus=2
 set ruler
 set mouse=a
 set number relativenumber
@@ -43,8 +44,9 @@ set showtabline=2
 " Map Leader to Space
 let mapleader = "\<Space>"
 
-" Quicksave
+" Save and quit shortcuts
 nmap <Leader>w :w<CR>
+nmap <Leader>q :q!<CR>
 
 " Tabbing
 set tabstop=8
@@ -74,6 +76,7 @@ imap <F1> <Esc>
 " Set specific line length columns for different files
 au FileType sh set colorcolumn=100
 au FileType vim set colorcolumn=100
+au FileType journal set colorcolumn=100
 
 " Hide the banner in netrw
 let g:netrw_banner=0
@@ -92,10 +95,11 @@ nnoremap <Leader>sv :so $MYVIMRC<CR>
 nnoremap <Leader>eb :tab new ~/.bashrc<CR>
 nnoremap <Leader>elc :tab new ~/.alacritty.yml<CR>
 nnoremap <Leader>etodo :tab new ~/.todo<CR>
+nnoremap <Leader>jnl :tab new ~/Documents/journal<CR>
 
 " ShowDirectoryTree
 command! SDT tab new | Explore
-nnoremap <Leader>ls :SDT<CR>
+nnoremap <Leader>sdt :SDT<CR>
 
 " Show sign column
 set scl=yes
@@ -112,6 +116,7 @@ endif
 "
 " File detection
 autocmd BufRead *.md set filetype=markdown
+autocmd BufRead journal set filetype=journal
 
 "-------- Plugin Configuration --------
 
@@ -130,3 +135,15 @@ let g:vim_markdown_conceal=0
 
 " git-commentary additions for unsupported languages
 autocmd FileType rust setlocal commentstring=//\ %s
+
+" lightline config
+let g:lightline = {
+    \ 'colorscheme': 'solarized',
+    \ 'active': {
+    \   'left': [ [ 'mode', 'paste' ],
+    \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ]
+    \ },
+    \ 'component_function': {
+    \   'gitbranch': 'FugitiveHead'
+    \ },
+    \ }
