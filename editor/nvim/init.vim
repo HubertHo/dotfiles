@@ -14,7 +14,7 @@ Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
 call plug#end()
 
-"-------- Colour scheme --------
+"-------- Colourscheme --------
 if !has('gui_running')
     set t_Co=256
 endif
@@ -29,41 +29,51 @@ let g:gruvbox_contrast_dark="hard"
 let g:gruvbox_contrast_light="hard"
 
 "-------- Editor Configuration --------
+"
+let mapleader = "\<Space>" " Map Leader to Space
+let g:netrw_banner=0 " Hide the banner in netrw
+let g:netrw_liststyle=3 " Use tree view when browsing files
+
+set autoread " Automatically apply changes if file changes outside of nvim
 set colorcolumn=100
 set encoding=utf8
 set guicursor=
 set laststatus=2
-set ruler
 set mouse=a
 set number relativenumber
-set showmatch  " Show matching parentheses
+set ruler
+set scl=yes " Show sign column
+set showmatch " Show matching parentheses
+set showtabline=2 " Show file tabs
+set updatetime=100 " Reduce update time to show git diffs
+set visualbell " Turn off bell sound
 
-" Show file tabs
-set showtabline=2
+" Search configuration
+set incsearch
+set ignorecase
+set smartcase
 
-" Map Leader to Space
-let mapleader = "\<Space>"
+" Tabbing
+set expandtab
+set shiftwidth=4
+set smarttab
+set softtabstop=0
+set tabstop=8
+
+" Splits that make sense
+set splitbelow
+set splitright
+
+" Jump to last-edit position when opening files
+if has("autocmd")
+    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
+
+"-------- Key Mappings and Commands --------
 
 " Save and quit shortcuts
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
-
-" Tabbing
-set tabstop=8
-set softtabstop=0
-set expandtab
-set shiftwidth=4
-set smarttab
-
-" Turn off bell sound
-set visualbell
-
-" Splits that make sense
-set splitright
-set splitbelow
-
-" Automatically apply changes if file changes outside of nvim
-set autoread
 
 " Move cursor on each line for wrapped line
 nnoremap j gj
@@ -72,22 +82,6 @@ nnoremap k gk
 " Stop accidentally opening help
 map <F1> <Esc>
 imap <F1> <Esc>
-
-" Set specific line length columns for different files
-au FileType sh set colorcolumn=100
-au FileType vim set colorcolumn=100
-au FileType journal set colorcolumn=100
-
-" Hide the banner in netrw
-let g:netrw_banner=0
-
-" Use tree view when browsing files
-let g:netrw_liststyle=3
-
-" Search configuration
-set incsearch
-set ignorecase
-set smartcase
 
 " Edit config shortcuts
 nnoremap <Leader>ev :tab new $MYVIMRC<CR>
@@ -101,22 +95,20 @@ nnoremap <Leader>jnl :tab new ~/Documents/journal<CR>
 command! SDT tab new | Explore
 nnoremap <Leader>sdt :SDT<CR>
 
-" Show sign column
-set scl=yes
-
-" Reduce update time to show git diffs
-set updatetime=100
-
-" Jump to last-edit position when opening files
-if has("autocmd")
-    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
+" Fast capitalization
+inoremap <c-u> <esc>bveU<esc>A
 
 "-------- Autocommands --------
-"
+
 " File detection
 autocmd BufRead *.md set filetype=markdown
 autocmd BufRead journal set filetype=journal
+autocmd BufRead *.tex set filetype=tex
+
+" Set specific line length columns for different files
+" au FileType sh set colorcolumn=100
+" au FileType vim set colorcolumn=100
+" au FileType journal set colorcolumn=100
 
 "-------- Plugin Configuration --------
 
