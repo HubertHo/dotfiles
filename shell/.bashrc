@@ -91,6 +91,8 @@ alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
 
+alias shutdown="sudo shutdown -P 0"
+
 # Show TODOs in the current directory
 st() {
     rg -F TODO\($1\)
@@ -101,9 +103,25 @@ lt () {
     echo "TODO"
     if [ -f $HOME/.todo ]; then
         cat $HOME/.todo
+    else
+        touch $HOME/.todo
     fi
 }
 lt
+
+# Journal for keeping notes
+JOURNALDIR=$HOME/Documents
+JOURNAL=$JOURNALDIR/journal
+journal() {
+    if [ ! -f $JOURNAL ]; then
+        if [ ! -d $JOURNALDIR ]; then
+            mkdir $JOURNALDIR
+        fi
+        touch $JOURNAL
+    fi
+    vim $JOURNAL
+}
+alias j="journal"
 
 software=(
     alacritty,
@@ -116,7 +134,10 @@ software=(
     nodejs
     noto-fonts,
     open-ssh,
+    powertop,
     ripgrep,
+    tlp,
     tmux,
     xclip,
+    zathura,
 )
