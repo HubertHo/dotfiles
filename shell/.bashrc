@@ -114,6 +114,17 @@ journal() {
 }
 alias j="journal"
 
+# LaTeX
+pdftex() {
+    if ! [ type pdflatex 2>/dev/null > /dev/null ] && ! [ -z $1  ]; then
+        if [ -d build ]; then
+            rm -r build
+        fi
+        mkdir build;
+        pdflatex -interaction=nonstopmode -output-directory=build $1;
+    fi
+}
+
 software=(
     alacritty,
     firefox,
@@ -127,6 +138,8 @@ software=(
     open-ssh,
     powertop,
     ripgrep,
+    rsync,
+    texlive-most,
     tlp,
     tmux,
     xclip,
