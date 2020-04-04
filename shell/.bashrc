@@ -60,15 +60,6 @@ alias ff='rg -l' # Get all files that match the pattern in curdir
 alias ffs='rg -lF' # Get all file that match that contain the given string
 alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
 
-# Enable/disable bluetooth
-# To pair and connect to a device:
-# bluetoothctl
-# power on -> agent on -> default-agent
-# scan on -> scan for devices
-# pair <device mac addr>
-# connect <device mac addr>
-# trust <device mac addr> -> auto connect
-# if connection fails then restart pulseaudio: $ pulseaudio -k
 alias startbl="sudo systemctl start bluetooth"
 alias stopbl="sudo systemctl stop bluetooth"
 
