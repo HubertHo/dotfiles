@@ -48,6 +48,7 @@ alias etodo="vim ~/.todo; lt"
 # xclip aliases
 alias y='xclip -selection clipboard -i'
 alias p='xclip -selection clipboard -o'
+alias clsc="echo '' | y"
 
 # Open a new terminal window
 alias nw="alacritty &"
@@ -60,8 +61,6 @@ alias ff='rg -l' # Get all files that match the pattern in curdir
 alias ffs='rg -lF' # Get all file that match that contain the given string
 alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
 
-alias startbl="sudo systemctl start bluetooth"
-alias stopbl="sudo systemctl stop bluetooth"
 
 # Git aliases
 alias ga='git add'
@@ -82,7 +81,27 @@ alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
 
-alias shutdown="sudo shutdown -P 0"
+# Service aliases
+alias startspotify="systemctl --user start spotifyd"
+alias stopspotify="systemctl --user stop spotifyd"
+
+alias startbluetooth="sudo systemctl start bluetooth"
+alias stopbluetooth="sudo systemctl stop bluetooth"
+
+# Get latest PKGBUILD. Will need to run makepkg though
+update-pkgbuild() {
+    declare -a pkgs=(
+        spotifyd
+        spotify-tui
+    )
+    for pkg in "${pkgs[@]}"
+    do
+        cd $HOME/aurpkg/$pkg
+        echo "Updating $pkg"
+        git pull
+        cd - > /dev/null
+    done
+}
 
 # Show TODOs in the current directory
 st() {
@@ -126,22 +145,24 @@ pdftex() {
 }
 
 software=(
-    alacritty,
-    firefox,
-    git,
-    htop,
-    keepassxc,
-    keychain,
-    neovim,
+    alacritty
+    firefox
+    git
+    htop
+    keepassxc
+    keychain
+    neovim
     nodejs
-    noto-fonts,
-    open-ssh,
-    powertop,
-    ripgrep,
-    rsync,
-    texlive-most,
-    tlp,
-    tmux,
-    xclip,
-    zathura,
+    noto-fonts
+    open-ssh
+    powertop
+    python
+    python-pip
+    ripgrep
+    rsync
+    texlive-most
+    tlp
+    tmux
+    xclip
+    zathura
 )
