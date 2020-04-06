@@ -2,9 +2,12 @@ call plug#begin('~/.config/nvim/plugins')
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
-Plug 'morhetz/gruvbox'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
+
+" Colourschemes
+" Plug 'morhetz/gruvbox'
+Plug 'junegunn/seoul256.vim'
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
@@ -21,32 +24,42 @@ endif
 if match($TERM, '-256color')
     set termguicolors
 endif
-set background=light
-colorscheme gruvbox
+set background=dark
 syntax on
 
-let g:gruvbox_contrast_dark="hard"
-let g:gruvbox_contrast_light="hard"
+" Gruvbox
+" colorscheme gruvbox
+" let g:gruvbox_contrast_dark="hard"
+" let g:gruvbox_contrast_light="hard"
+
+" Seoul256
+let g:seoul256_background=234
+colorscheme seoul256
 
 "-------- Editor Configuration --------
 "
-let mapleader = "\<Space>" " Map Leader to Space
-let g:netrw_banner=0 " Hide the banner in netrw
-let g:netrw_liststyle=3 " Use tree view when browsing files
+let mapleader = "\<Space>"  " Map Leader to Space
+let g:netrw_banner=0  " Hide the banner in netrw
+let g:netrw_liststyle=3  " Use tree view when browsing files
 
-set autoread " Automatically apply changes if file changes outside of nvim
+let g:tex_conceal='' " Don't hide anything in LaTeX
+
+set autoread  " Automatically apply changes if file changes outside of nvim
 set colorcolumn=100
 set encoding=utf8
 set guicursor=
+set hidden
 set laststatus=2
 set mouse=a
 set number relativenumber
 set ruler
-set scl=yes " Show sign column
-set showmatch " Show matching parentheses
-set showtabline=2 " Show file tabs
-set updatetime=100 " Reduce update time to show git diffs
-set visualbell " Turn off bell sound
+set scl=yes  " Show sign column
+set shortmess+=c
+set showmatch  " Show matching parentheses
+set showtabline=2  " Show file tabs
+set ttyfast
+set updatetime=100  " Reduce update time to show git diffs
+set visualbell  " Turn off bell sound
 
 " Search configuration
 set incsearch
@@ -130,12 +143,21 @@ autocmd FileType rust setlocal commentstring=//\ %s
 
 " lightline config
 let g:lightline = {
-    \ 'colorscheme': 'solarized',
+    \ 'colorscheme': 'seoul256',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ]
+    \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ],
+    \   'right': [ [ 'lineinfo' ],
+    \              [ 'fileencoding', 'filetype' ] ]
     \ },
     \ 'component_function': {
-    \   'gitbranch': 'FugitiveHead'
+    \   'gitbranch': 'TruncatedFugitiveHead'
     \ },
     \ }
+
+" Sometimes branch names are too long
+function! TruncatedFugitiveHead()
+    let len_limit=25
+    let head = FugitiveHead()
+    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
+endfunction
