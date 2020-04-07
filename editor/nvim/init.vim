@@ -78,7 +78,8 @@ set splitright
 
 " Jump to last-edit position when opening files
 if has("autocmd")
-    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1
+                \&& line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
 "-------- Key Mappings and Commands --------
