@@ -4,7 +4,7 @@
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 
-# TODO: Look into bash history
+# TODO(hubert): Look into bash history
 # Bash history settings
 shopt -s histappend
 HISTSIZE=999999999
@@ -61,6 +61,14 @@ alias ff='rg -l' # Get all files that match the pattern in curdir
 alias ffs='rg -lF' # Get all file that match that contain the given string
 alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
 
+# tmux aliases
+alias t='tmux'
+alias tk='tmux kill-server'
+alias tsa='tmux attach-session -t'
+alias tsk='tmux kill-session -t'
+alias tsl='tmux list-session'
+alias twk='tmux kill-window -t'
+alias tcd='tmux detach-client'
 
 # Git aliases
 alias ga='git add'

@@ -41,7 +41,6 @@ colorscheme seoul256
 let mapleader = "\<Space>"  " Map Leader to Space
 let g:netrw_banner=0  " Hide the banner in netrw
 let g:netrw_liststyle=3  " Use tree view when browsing files
-
 let g:tex_conceal='' " Don't hide anything in LaTeX
 
 set autoread  " Automatically apply changes if file changes outside of nvim
@@ -84,6 +83,10 @@ endif
 
 "-------- Key Mappings and Commands --------
 
+" Stop accidentally opening help
+map <F1> <Esc>
+imap <F1> <Esc>
+
 " Save and quit shortcuts
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
@@ -91,10 +94,6 @@ nmap <Leader>q :q!<CR>
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
-
-" Stop accidentally opening help
-map <F1> <Esc>
-imap <F1> <Esc>
 
 " Edit config shortcuts
 nnoremap <Leader>ev :tab new $MYVIMRC<CR>
@@ -151,13 +150,13 @@ let g:lightline = {
     \              [ 'fileencoding', 'filetype' ] ]
     \ },
     \ 'component_function': {
-    \   'gitbranch': 'TruncatedFugitiveHead'
+    \   'gitbranch': 'TruncateFugitiveHead'
     \ },
     \ }
 
 " Sometimes branch names are too long
-function! TruncatedFugitiveHead()
-    let len_limit=25
+function! TruncateFugitiveHead()
+    let len_limit=30
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction
