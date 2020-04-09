@@ -17,6 +17,30 @@ shopt -s checkwinsize
 # Colour prompt
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\$ '
 
+# List of software/packages installed
+software=(
+    alacritty
+    firefox
+    git
+    htop
+    keepassxc
+    keychain
+    neovim
+    nodejs
+    noto-fonts
+    open-ssh
+    powertop
+    python
+    python-pip
+    ripgrep
+    rsync
+    texlive-most
+    tlp
+    tmux
+    xclip
+    zathura
+)
+
 # Add sass to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"
 
@@ -28,14 +52,14 @@ alias dd='cd ../../'
 alias ddd='cd ../../../'
 alias ls='ls --color=auto'
 alias la='ls --color=auto -al'
-alias grep='grep --color=auto'
-alias fgrep='fgrep --color=auto'
-alias egrep='egrep --color=auto'
 if ! [ type nvim 2>/dev/null > /dev/null ]; then
     alias vim='nvim'
 fi
 alias v='vim'
 alias sp='ps aux | rg -F'
+if ! [ type zathura 2>/dev/null > /dev/null ]; then
+    alias z='zathura'
+fi
 
 # Aliases for editing .files
 alias eb='vim ~/.bashrc ; source ~/.bashrc'
@@ -70,6 +94,16 @@ alias tsl='tmux list-session'
 alias twk='tmux kill-window -t'
 alias tcd='tmux detach-client'
 
+# Open tmux just the way I like it
+dev-mux() {
+    SESSION="dev"
+    tmux start-server
+    tmux new-session -d -s $SESSION -n spotify
+    tmux new-window -t $SESSION:1 -n code
+    tmux select-window -t $SESSION:0
+    tmux attach-session -t $SESSION
+}
+
 # Git aliases
 alias ga='git add'
 alias gb='git branch'
@@ -96,7 +130,7 @@ alias stopspotify="systemctl --user stop spotifyd"
 alias startbluetooth="sudo systemctl start bluetooth"
 alias stopbluetooth="sudo systemctl stop bluetooth"
 
-# Get latest PKGBUILD. Will need to run makepkg though
+# Make it easier to update packages
 update-pkgbuild() {
     declare -a pkgs=(
         spotifyd
@@ -109,6 +143,11 @@ update-pkgbuild() {
         git pull
         cd - > /dev/null
     done
+}
+
+update-system() {
+    sudo pacman -Syu
+    update-pkgbuild
 }
 
 # Show TODOs in the current directory
@@ -151,26 +190,3 @@ pdftex() {
         pdflatex -interaction=nonstopmode -output-directory=build $1;
     fi
 }
-
-software=(
-    alacritty
-    firefox
-    git
-    htop
-    keepassxc
-    keychain
-    neovim
-    nodejs
-    noto-fonts
-    open-ssh
-    powertop
-    python
-    python-pip
-    ripgrep
-    rsync
-    texlive-most
-    tlp
-    tmux
-    xclip
-    zathura
-)

@@ -45,6 +45,7 @@ let g:tex_conceal='' " Don't hide anything in LaTeX
 
 set autoread  " Automatically apply changes if file changes outside of nvim
 set colorcolumn=100
+set conceallevel=0
 set encoding=utf8
 set guicursor=
 set hidden
@@ -92,6 +93,10 @@ imap <F1> <Esc>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
 
+" Faster buffer switching
+nmap <Leader>gp :bp<CR>
+nmap <Leader>gn :bn<CR>
+
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
@@ -137,6 +142,7 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 " vim-markdown configs
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_conceal=0
+let g:vim_markdown_conceal_code_blocks=0
 
 " git-commentary additions for unsupported languages
 autocmd FileType rust setlocal commentstring=//\ %s
