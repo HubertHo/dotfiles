@@ -114,7 +114,7 @@ command! SDT tab new | Explore
 nnoremap <Leader>sdt :SDT<CR>
 
 " Fast capitalization
-inoremap <c-u> <esc>bveU<esc>A
+inoremap <c-u> <esc>bveU<esc>Ea
 
 "-------- Autocommands --------
 
