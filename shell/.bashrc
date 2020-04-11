@@ -44,6 +44,9 @@ software=(
 # Add sass to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"
 
+# Path to todo file
+export TODO=$HOME/.todo
+
 # Aliases
 alias rm='rm --interactive=never'
 alias cdh='cd ~'
@@ -67,7 +70,7 @@ alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
 alias et="vim ~/.tmux.conf"
-alias etodo="vim ~/.todo; lt"
+alias etodo="vim $TODO; lt"
 
 # xclip aliases
 alias y='xclip -selection clipboard -i'
@@ -86,7 +89,6 @@ alias ffs='rg -lF' # Get all file that match that contain the given string
 alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
 
 # tmux aliases
-alias t='tmux'
 alias tk='tmux kill-server'
 alias tsa='tmux attach-session -t'
 alias tsk='tmux kill-session -t'
@@ -95,11 +97,12 @@ alias twk='tmux kill-window -t'
 alias tcd='tmux detach-client'
 
 # Open tmux just the way I like it
-dev-mux() {
+devmux() {
     SESSION="dev"
     tmux start-server
     tmux new-session -d -s $SESSION -n spotify
-    tmux new-window -t $SESSION:1 -n code
+    tmux new-window -t $SESSION:1 -n code "nvim $TODO"
+    tmux new-window -t $SESSION:2 -n terminal
     tmux select-window -t $SESSION:0
     tmux attach-session -t $SESSION
 }
@@ -124,8 +127,9 @@ alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
 
 # Service aliases
-alias startspotify="systemctl --user start spotifyd"
-alias stopspotify="systemctl --user stop spotifyd"
+alias spotify="spt"
+alias startspotify="systemctl --user start spotifyd ; spt"
+alias stopspotify="systemctl --user stop spotifyd; printf 'Spotifyd stopped\n'"
 
 alias startbluetooth="sudo systemctl start bluetooth"
 alias stopbluetooth="sudo systemctl stop bluetooth"
@@ -158,10 +162,10 @@ st() {
 # List TODOs in the todo file
 lt () {
     echo "TODO"
-    if [ -f $HOME/.todo ]; then
-        cat $HOME/.todo
+    if [ -f $TODO ]; then
+        cat $TODO
     else
-        touch $HOME/.todo
+        touch $TODO
     fi
 }
 lt
