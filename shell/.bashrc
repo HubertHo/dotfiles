@@ -75,6 +75,8 @@ alias etodo="vim $TODO; lt"
 # xclip aliases
 alias y='xclip -selection clipboard -i'
 alias p='xclip -selection clipboard -o'
+
+# Clear the clipboard
 alias clsc="echo '' | y"
 
 # Open a new terminal window
