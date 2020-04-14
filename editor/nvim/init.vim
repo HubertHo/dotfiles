@@ -113,6 +113,11 @@ nnoremap <Leader>jnl :tab new ~/Documents/journal<CR>
 command! SDT tab new | Explore
 nnoremap <Leader>sdt :SDT<CR>
 
+" Shortcut for updating plugins
+command! PU PlugInstall | PlugUpgrade
+command! PC PlugClean!
+command! PUP PlugUpgrade
+
 " Fast capitalization
 inoremap <c-u> <esc>bveU<esc>Ea
 
@@ -156,14 +161,18 @@ let g:lightline = {
     \   'right': [ [ 'lineinfo' ],
     \              [ 'fileencoding', 'filetype' ] ]
     \ },
+    \ 'inactive': {
+    \   'left': [ [ 'filename', 'modified' ] ],
+    \ },
     \ 'component_function': {
-    \   'gitbranch': 'TruncateFugitiveHead'
+    \   'gitbranch': 'TruncateGitBranch'
     \ },
     \ }
 
 " Sometimes branch names are too long
-function! TruncateFugitiveHead()
+function! TruncateGitBranch()
     let len_limit=30
+    " This can be any function that returns the current HEAd
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction

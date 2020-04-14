@@ -20,9 +20,12 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\$ '
 # List of software/packages installed
 software=(
     alacritty
+    dmenu
     firefox
     git
     htop
+    i3-wm
+    i3lock
     keepassxc
     keychain
     neovim
@@ -71,6 +74,7 @@ alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
 alias et="vim ~/.tmux.conf"
 alias etodo="vim $TODO; lt"
+alias ei="vim ~/.config/i3/config"
 
 # xclip aliases
 alias y='xclip -selection clipboard -i'
