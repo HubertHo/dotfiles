@@ -4,6 +4,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
+Plug 'dense-analysis/ale'
 
 " Colourschemes
 " Plug 'morhetz/gruvbox'
