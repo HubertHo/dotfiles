@@ -2,13 +2,13 @@
 set $mod Mod1
 
 # Set command for locking screen
-set $lock i3lock --color=727272 --ignore-empty-password
+set $lock i3lock --color=1c1c1c --ignore-empty-password
 
 # Show the NetworkManager icon
 exec --no-startup-id nm-applet
 
 # Show gray desktop background
-exec --no-startup-id xsetroot -solid "#727272"
+exec --no-startup-id xsetroot -solid "#1c1c1c"
 
 # Set font for status and window bars
 font pango:Noto Sans Mono 9
