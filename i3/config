@@ -7,6 +7,9 @@ set $lock i3lock --color=1c1c1c --ignore-empty-password
 # Show the NetworkManager icon
 exec --no-startup-id nm-applet
 
+# Configure xss-lock to lock and suspend
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=1c1c1c --ignore-empty-password --no-fork
+
 # Show gray desktop background
 exec --no-startup-id xsetroot -solid "#1c1c1c"
 
@@ -21,8 +24,8 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ to
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
 # Add keyboard bindings to control screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -10
-bindsym XF86MonBrightnessUp exec xbacklight +10
+bindsym XF86MonBrightnessDown exec xbacklight -5
+bindsym XF86MonBrightnessUp exec xbacklight +5
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
