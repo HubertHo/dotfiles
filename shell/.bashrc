@@ -24,8 +24,9 @@ software=(
     firefox
     git
     htop
-    i3-wm
     i3lock
+    i3status
+    i3-wm
     keepassxc
     keychain
     neovim
@@ -67,14 +68,17 @@ if ! [ type zathura 2>/dev/null > /dev/null ]; then
     alias z='zathura'
 fi
 
-# Aliases for editing .files
+# Aliases for editing dotfiles
 alias eb='vim ~/.bashrc ; source ~/.bashrc'
 alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
 alias et="vim ~/.tmux.conf"
 alias etodo="vim $TODO; lt"
+
+# Aliases for editing i3 config files
 alias ei="vim ~/.config/i3/config"
+alias eis="vim ~/.config/i3status/config"
 
 # xclip aliases
 alias y='xclip -selection clipboard -i'
