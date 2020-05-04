@@ -20,6 +20,7 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\$ '
 # List of software/packages installed
 software=(
     alacritty
+    discord
     dmenu
     firefox
     git
@@ -30,6 +31,7 @@ software=(
     keepassxc
     keychain
     neovim
+    networkmanager
     nodejs
     noto-fonts
     open-ssh
@@ -45,8 +47,9 @@ software=(
     zathura
 )
 
-# Add sass to PATH
-export PATH="$HOME/repos/dart-sass:$PATH"
+# Add directories to PATH
+export PATH="$HOME/repos/dart-sass:$PATH"  # sass
+export PATH="$HOME/.local/bin:$PATH"  # local scripts
 
 # Path to todo file
 export TODO=$HOME/.todo
@@ -54,9 +57,9 @@ export TODO=$HOME/.todo
 # Aliases
 alias rm='rm --interactive=never'
 alias cdh='cd ~'
-alias d='cd ../'
-alias dd='cd ../../'
-alias ddd='cd ../../../'
+alias u='cd ../'
+alias uu='cd ../../'
+alias uuu='cd ../../../'
 alias ls='ls --color=auto'
 alias la='ls --color=auto -al'
 if ! [ type nvim 2>/dev/null > /dev/null ]; then
@@ -92,6 +95,9 @@ alias nw="alacritty &"
 
 # Testing utility aliases
 alias pyserve='python3 -m http.server 8002'
+
+# Setup black to use the custom config
+alias black='black --config $HOME/.config/blackconf.toml'
 
 # ripgrep aliases
 alias ff='rg -l' # Get all files that match the pattern in curdir
@@ -144,6 +150,15 @@ alias stopspotify="systemctl --user stop spotifyd; printf 'Spotifyd stopped\n'"
 alias startbluetooth="sudo systemctl start bluetooth"
 alias stopbluetooth="sudo systemctl stop bluetooth"
 
+# Aliases for keepassxc, a password manager
+export kpdb="$HOME/Documents/passdb.kdbx"
+alias kpopen="keepassxc-cli open $kpdb"
+alias kpshow="keepassxc-cli show -s $kpdb"
+alias kpclip="keepassxc-cli clip $kpdb"
+
+# Show available wifi networks (required network manager)
+alias wifictl="nmcli device wifi"
+
 # Make it easier to update packages
 update-pkgbuild() {
     declare -a pkgs=(
@@ -170,7 +185,7 @@ st() {
 }
 
 # List TODOs in the todo file
-lt () {
+lt() {
     echo "TODO"
     if [ -f $TODO ]; then
         cat $TODO
@@ -203,4 +218,9 @@ pdftex() {
         mkdir build;
         pdflatex -interaction=nonstopmode -output-directory=build $1;
     fi
+}
+
+# Power management
+suslock() {
+    i3lock --color=1c1c1c --ignore-empty-password && systemctl suspend
 }

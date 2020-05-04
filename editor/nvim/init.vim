@@ -177,3 +177,14 @@ function! TruncateGitBranch()
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction
+
+" vim-ale
+let g:ale_lint_delay=1000
+let g:ale_python_black_executable="~/.local/bin/black"
+let g:ale_python_black_use_global=1
+let g:ale_fixers = {
+    \ 'python': ['black'],
+\}
+let g:ale_linters = {
+    \ 'python': ['flake8'],
+\}

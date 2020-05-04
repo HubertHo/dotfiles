@@ -1,5 +1,5 @@
 # Set alt as modifier key
-set $mod Mod1
+set $mod Mod4
 
 # Set command for locking screen
 set $lock i3lock --color=1c1c1c --ignore-empty-password
@@ -34,7 +34,7 @@ floating_modifier $mod
 bindsym $mod+Return exec alacritty
 
 # fallback command for starting a terminal
-bindsym $mod+Shift+Return exec i3-sensible-terminal
+bindsym Mod1+Shift+Return exec i3-sensible-terminal
 
 # start a browser
 bindsym $mod+b exec firefox
@@ -44,7 +44,7 @@ bindsym $mod+Shift+b exec firefox --private-window
 bindsym $mod+v exec vim
 
 # shortcut to lock machine
-bindsym Mod4+l exec $lock
+bindsym ctrl+$mod+l exec $lock
 
 # kill focused window
 bindsym $mod+Shift+w kill
