@@ -4,7 +4,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'mhinz/vim-signify'
 Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
-Plug 'dense-analysis/ale'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Colourschemes
 " Plug 'morhetz/gruvbox'
@@ -25,7 +25,6 @@ endif
 if match($TERM, '-256color')
     set termguicolors
 endif
-set background=dark
 syntax on
 
 " Gruvbox
@@ -33,8 +32,14 @@ syntax on
 " let g:gruvbox_contrast_dark="hard"
 " let g:gruvbox_contrast_light="hard"
 
-" Seoul256
-let g:seoul256_background=234
+" Seoul256 - Dark
+" set background=dark
+" let g:seoul256_background=234
+" colorscheme seoul256
+
+" Seoul256 - Light
+set background=light
+let g:seoul256_background=252
 colorscheme seoul256
 
 "-------- Editor Configuration --------
@@ -177,14 +182,3 @@ function! TruncateGitBranch()
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction
-
-" vim-ale
-let g:ale_lint_delay=1000
-let g:ale_python_black_executable="~/.local/bin/black"
-let g:ale_python_black_use_global=1
-let g:ale_fixers = {
-    \ 'python': ['black'],
-\}
-let g:ale_linters = {
-    \ 'python': ['flake8'],
-\}

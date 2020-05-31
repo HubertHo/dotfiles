@@ -23,7 +23,9 @@ software=(
     calibre
     discord
     dmenu
+    feh
     firefox
+    flameshot
     git
     htop
     i3lock
@@ -34,6 +36,7 @@ software=(
     neovim
     networkmanager
     nodejs
+    npm
     noto-fonts
     open-ssh
     powertop
@@ -44,6 +47,7 @@ software=(
     texlive-most
     tlp
     tmux
+    vlc
     xclip
     zathura
 )
@@ -53,7 +57,7 @@ export PATH="$HOME/repos/dart-sass:$PATH"  # sass
 export PATH="$HOME/.local/bin:$PATH"  # local scripts
 
 # Path to todo file
-export TODO=$HOME/.todo
+export TODO=$HOME/.todo.md
 
 # Aliases
 alias rm='rm --interactive=never'
@@ -156,6 +160,9 @@ export kpdb="$HOME/Documents/passdb.kdbx"
 alias kpopen="keepassxc-cli open $kpdb"
 alias kpshow="keepassxc-cli show -s $kpdb"
 alias kpclip="keepassxc-cli clip $kpdb"
+
+alias snip="flameshot gui"
+alias screenshot="flameshot full -p $HOME/Pictures"
 
 # Show available wifi networks (required network manager)
 alias wifictl="nmcli device wifi"
