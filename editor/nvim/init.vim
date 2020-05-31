@@ -182,3 +182,10 @@ function! TruncateGitBranch()
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction
+
+" coc.nvim
+let g:coc_global_extensions = [
+    \ 'coc-python'.
+    \ 'coc-rust-analyzer',
+    \ 'coc-json'
+]
