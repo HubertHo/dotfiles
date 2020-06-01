@@ -185,7 +185,7 @@ endfunction
 
 " coc.nvim
 let g:coc_global_extensions = [
-    \ 'coc-python'.
+    \ 'coc-python',
     \ 'coc-rust-analyzer',
     \ 'coc-json'
 ]
