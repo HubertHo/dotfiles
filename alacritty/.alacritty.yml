@@ -1,35 +1,33 @@
-# Colors (Seoul256)
+# Colors (Pencil Light)
 colors:
-  # Default colors
+  # Default Colors
   primary:
-    background: '#1c1c1c'
-    foreground: '#d0d0d0'
-
+    background: '0xf1f1f1'
+    foreground: '0x424242'
   # Normal colors
   normal:
-    black:   '#4e4e4e'
-    red:     '#d68787'
-    green:   '#5f865f'
-    yellow:  '#d8af5f'
-    blue:    '#85add4'
-    magenta: '#d7afaf'
-    cyan:    '#87afaf'
-    white:   '#d0d0d0'
-
+    black:   '0x212121'
+    red:     '0xc30771'
+    green:   '0x10a778'
+    yellow:  '0xa89c14'
+    blue:    '0x008ec4'
+    magenta: '0x523c79'
+    cyan:    '0x20a5ba'
+    white:   '0xe0e0e0'
   # Bright colors
   bright:
-    black:   '#626262'
-    red:     '#d75f87'
-    green:   '#87af87'
-    yellow:  '#ffd787'
-    blue:    '#add4fb'
-    magenta: '#ffafaf'
-    cyan:    '#87d7d7'
-    white:   '#e4e4e4'
-
+    black:   '0x212121'
+    red:     '0xfb007a'
+    green:   '0x5fd7af'
+    yellow:  '0xf3e430'
+    blue:    '0x20bbfc'
+    magenta: '0x6855de'
+    cyan:    '0x4fb8cc'
+    white:   '0xf1f1f1'
 background_opacity: 1
 
 # Font configuration
+# Have to use size 6 when in i3
 font:
     normal:
         family: Noto Sans Mono
@@ -42,7 +40,8 @@ font:
     bold_italic:
         family: Noto Sans Mono
         style: Bold Italic
-    size: 10.0
+    size: 6.0
+    # size: 11.0
 
 # Cursor
 cursor:
@@ -53,17 +52,4 @@ scrolling:
   history: 100000
   multiplier: 3
 
-# key_bindings:
-  # (Windows/Linux only)
-  # - { key: V,        mods: Control|Shift, action: Paste            }
-  # - { key: C,        mods: Control|Shift, action: Copy             }
-  # - { key: Insert,   mods: Shift,         action: PasteSelection   }
-  # - { key: Key0,     mods: Control,       action: ResetFontSize    }
-  # - { key: Equals,   mods: Control,       action: IncreaseFontSize }
-  # - { key: Add,      mods: Control,       action: IncreaseFontSize }
-  # - { key: Subtract, mods: Control,       action: DecreaseFontSize }
-  # - { key: Minus,    mods: Control,       action: DecreaseFontSize }
-  # - { key: Return,   mods: Alt,           action: ToggleFullscreen }
-
 live_config_reload: true
-

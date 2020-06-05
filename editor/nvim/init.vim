@@ -8,7 +8,8 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Colourschemes
 " Plug 'morhetz/gruvbox'
-Plug 'junegunn/seoul256.vim'
+" Plug 'junegunn/seoul256.vim'
+Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
@@ -38,9 +39,13 @@ syntax on
 " colorscheme seoul256
 
 " Seoul256 - Light
+" set background=light
+" let g:seoul256_background=252
+" colorscheme seoul256
+
+" Tomorrow
 set background=light
-let g:seoul256_background=252
-colorscheme seoul256
+colorscheme Tomorrow
 
 "-------- Editor Configuration --------
 "
@@ -184,8 +189,8 @@ function! TruncateGitBranch()
 endfunction
 
 " coc.nvim
-let g:coc_global_extensions = [
-    \ 'coc-python'.
-    \ 'coc-rust-analyzer',
-    \ 'coc-json'
-]
+" let g:coc_global_extensions = [
+"     \ 'coc-python',
+"     \ 'coc-rust-analyzer',
+"     \ 'coc-json ',
+"     \ ]
