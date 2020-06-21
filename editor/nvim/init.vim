@@ -9,7 +9,6 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Colourschemes
 " Plug 'morhetz/gruvbox'
 " Plug 'junegunn/seoul256.vim'
-Plug 'chriskempson/tomorrow-theme', {'rtp': 'vim'}
 
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
@@ -43,9 +42,9 @@ syntax on
 " let g:seoul256_background=252
 " colorscheme seoul256
 
-" Tomorrow
-set background=light
-colorscheme Tomorrow
+" Base16-material
+set background=dark
+colorscheme base16-material
 
 "-------- Editor Configuration --------
 "
@@ -165,7 +164,7 @@ autocmd FileType rust setlocal commentstring=//\ %s
 
 " lightline config
 let g:lightline = {
-    \ 'colorscheme': 'seoul256',
+    \ 'colorscheme': 'powerline',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ],
@@ -189,8 +188,8 @@ function! TruncateGitBranch()
 endfunction
 
 " coc.nvim
-let g:coc_global_extensions = [
-    \ 'coc-python',
-    \ 'coc-rust-analyzer',
-    \ 'coc-json'
-    \ ]
+" let g:coc_global_extensions = [
+"     \ 'coc-python',
+"     \ 'coc-rust-analyzer',
+"     \ 'coc-json ',
+"     \ ]
