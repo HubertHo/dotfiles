@@ -42,9 +42,8 @@ syntax on
 " let g:seoul256_background=252
 " colorscheme seoul256
 
-" Base16-material
 set background=dark
-colorscheme base16-material
+colorscheme base16-gruvbox-hard
 
 "-------- Editor Configuration --------
 "
