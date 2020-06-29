@@ -14,8 +14,20 @@ HISTCONTROL=ignoreboth
 # Check and update window size, if necessary
 shopt -s checkwinsize
 
-# Colour prompt
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\$ '
+# Show branch name in prompt if in git repository
+prompt_branch(){
+    branch_name=$(git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/')
+    # Strip brackets from branch name
+    branch_name_length=${#branch_name}-2
+    branch_name=${branch_name:1:$branch_name_length}
+    if [ ${#branch_name} -gt 25 ]
+    then
+        echo "${branch_name:0:25}..."
+    else
+        echo $branch_name
+    fi
+}
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\[\033[01;31m\] ($(prompt_branch))\[\033[00m\] \$ '
 
 # List of software/packages installed
 software=(
@@ -106,8 +118,8 @@ alias black='black --config $HOME/.config/blackconf.toml'
 
 # ripgrep aliases
 alias ff='rg -l' # Get all files that match the pattern in curdir
-alias ffs='rg -lF' # Get all file that match that contain the given string
-alias ffc='rg -F -C=5' # Search for string and show 5 lines above and below
+alias ffs='rg -lF' # Get all files with name that matches given string
+alias ffc='rg -F -C=5' # Search for files with matching string
 
 # tmux aliases
 alias tk='tmux kill-server'
@@ -150,7 +162,8 @@ alias gua='git pull && git submodule update --recursive --remote'
 # Service aliases
 alias spotify="spt"
 alias startspotify="systemctl --user start spotifyd ; spt"
-alias stopspotify="systemctl --user stop spotifyd; printf 'Spotifyd stopped\n'"
+alias stopspotify="systemctl --user stop spotifyd;
+printf 'Spotifyd stopped\n'"
 
 alias startbluetooth="sudo systemctl start bluetooth"
 alias stopbluetooth="sudo systemctl stop bluetooth"
