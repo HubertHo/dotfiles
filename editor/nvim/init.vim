@@ -27,21 +27,6 @@ if match($TERM, '-256color')
 endif
 syntax on
 
-" Gruvbox
-" colorscheme gruvbox
-" let g:gruvbox_contrast_dark="hard"
-" let g:gruvbox_contrast_light="hard"
-
-" Seoul256 - Dark
-" set background=dark
-" let g:seoul256_background=234
-" colorscheme seoul256
-
-" Seoul256 - Light
-" set background=light
-" let g:seoul256_background=252
-" colorscheme seoul256
-
 set background=dark
 colorscheme base16-gruvbox-hard
 
@@ -94,6 +79,9 @@ endif
 
 "-------- Key Mappings and Commands --------
 
+" Map ; as :
+nnoremap ; :
+
 " Stop accidentally opening help
 map <F1> <Esc>
 imap <F1> <Esc>
@@ -138,9 +126,10 @@ autocmd BufRead journal set filetype=journal
 autocmd BufRead *.tex set filetype=tex
 
 " Set specific line length columns for different files
-" au FileType sh set colorcolumn=100
-" au FileType vim set colorcolumn=100
-" au FileType journal set colorcolumn=100
+au FileType sh setlocal colorcolumn=72
+au FileType vim setlocal colorcolumn=72
+au FileType journal setlocal colorcolumn=100 spell
+au FileType markdown setlocal colorcolumn=120 spell
 
 "-------- Plugin Configuration --------
 
@@ -187,6 +176,12 @@ function! TruncateGitBranch()
 endfunction
 
 " coc.nvim
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 " let g:coc_global_extensions = [
 "     \ 'coc-python',
 "     \ 'coc-rust-analyzer',

@@ -4,12 +4,12 @@
 export EDITOR="nvim"
 export TERMINAL="alacritty"
 
-# TODO(hubert): Look into bash history
 # Bash history settings
 shopt -s histappend
 HISTSIZE=999999999
 HISTFILESIZE=999999999
 HISTCONTROL=ignoreboth
+export HISTFILE=~/.bash_history
 
 # Check and update window size, if necessary
 shopt -s checkwinsize
@@ -20,14 +20,17 @@ prompt_branch(){
     # Strip brackets from branch name
     branch_name_length=${#branch_name}-2
     branch_name=${branch_name:1:$branch_name_length}
-    if [ ${#branch_name} -gt 25 ]
+    if [ ${#branch_name} -eq 0 ]
     then
-        echo "${branch_name:0:25}..."
+        echo ""
+    elif [ ${#branch_name} -gt 25 ]
+    then
+        echo "(${branch_name:0:25}...)"
     else
-        echo $branch_name
+        echo "($branch_name)"
     fi
 }
-PS1='\[\033[01;32m\]\u@\h\[\033[00m\]: \[\033[01;34m\]\w\[\033[00m\]\[\033[01;31m\] ($(prompt_branch))\[\033[00m\] \$ '
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;31m\]$(prompt_branch)\[\033[00m\] \$ '
 
 # List of software/packages installed
 software=(
@@ -77,6 +80,8 @@ alias cdh='cd ~'
 alias u='cd ../'
 alias uu='cd ../../'
 alias uuu='cd ../../../'
+alias uuuu='cd ../../../../'
+alias uuuuu='cd ../../../../../'
 alias ls='ls --color=auto'
 alias la='ls --color=auto -al'
 if ! [ type nvim 2>/dev/null > /dev/null ]; then

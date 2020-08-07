@@ -1,7 +1,11 @@
 {
+    "coc.preferences.formatOnSaveFiletypes": ["python"],
     "python.formatting.blackArgs": ["--line-length=100"],
     "python.formatting.blackPath": "/home/hubert/.local/bin/",
-    "python.sortImports.path": "/home/hubert/.local/bin/",
+    "python.formatting.provider": "black",
+    "python.linting.flake8Args": ["--show-source"],
+    "python.linting.flake8Enabled": true,
     "python.jediEnabled": true,
-    "python.jediPath": "/home/hubert/.local/lib/python3.8/site-packages"
+    "python.jediPath": "/home/hubert/.local/lib/python3.8/site-packages",
+    "python.sortImports.path": "/home/hubert/.local/bin/"
 }
