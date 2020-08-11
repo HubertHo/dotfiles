@@ -250,3 +250,12 @@ pdftex() {
 suslock() {
     i3lock --color=1c1c1c --ignore-empty-password && systemctl suspend
 }
+
+# Update python packages
+pip-upgrade() {
+    pip freeze > requirements.txt
+    pip install -r requirements.txt --upgrade
+    pip freeze --user > requirements.txt
+    pip install --user -r requirements.txt --upgrade
+    rm requirements.txt
+}

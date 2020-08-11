@@ -6,10 +6,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Colourschemes
-" Plug 'morhetz/gruvbox'
-" Plug 'junegunn/seoul256.vim'
-
 " Language syntax plugins
 Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
@@ -31,7 +27,7 @@ set background=dark
 colorscheme base16-gruvbox-hard
 
 "-------- Editor Configuration --------
-"
+
 let mapleader = "\<Space>"  " Map Leader to Space
 let g:netrw_banner=0  " Hide the banner in netrw
 let g:netrw_liststyle=3  " Use tree view when browsing files
