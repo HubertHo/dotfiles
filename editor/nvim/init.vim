@@ -125,6 +125,18 @@ command! PUP PlugUpgrade
 " Fast capitalization
 inoremap <c-u> <esc>bveU<esc>Ea
 
+" No arrow keys
+nnoremap <up> <nop>
+nnoremap <down> <nop>
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+" Left and right can switch buffers
+nnoremap <left> :bp<CR>
+nnoremap <right> :bn<CR>
+
 "-------- Autocommands --------
 
 " File detection
