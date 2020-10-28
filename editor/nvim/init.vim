@@ -14,6 +14,13 @@ Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
 call plug#end()
 
+" Avoid loading a file that does not exist
+function! SafelyLoadFile(file)
+    if filereadable(expand(a:file))
+        exe 'source' a:file
+    endif
+endfunction
+
 "-------- Colourscheme --------
 if !has('gui_running')
     set t_Co=256
@@ -72,6 +79,10 @@ if has("autocmd")
     au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1
                 \&& line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+" Allow neovim to copy to chromebook keyboard when over ssh
+call SafelyLoadFile("/home/hho/.config/nvim/plugins/osc52.vim")
+vmap <C-c> y:Oscyank<cr>
 
 "-------- Key Mappings and Commands --------
 
