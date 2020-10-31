@@ -3,6 +3,7 @@
 
 export EDITOR="nvim"
 export TERMINAL="alacritty"
+export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/"
 
 # Bash history settings
 shopt -s histappend
@@ -138,9 +139,8 @@ alias tcd='tmux detach-client'
 devmux() {
     SESSION="dev"
     tmux start-server
-    tmux new-session -d -s $SESSION -n spotify
-    tmux new-window -t $SESSION:1 -n code "nvim $TODO"
-    tmux new-window -t $SESSION:2 -n terminal
+    tmux new-session -d -s $SESSION -n code "nvim $TODO"
+    tmux new-window -t $session:1 -n terminal
     tmux select-window -t $SESSION:0
     tmux attach-session -t $SESSION
 }
@@ -173,12 +173,6 @@ printf 'Spotifyd stopped\n'"
 alias startbluetooth="sudo systemctl start bluetooth"
 alias stopbluetooth="sudo systemctl stop bluetooth"
 
-# Aliases for keepassxc, a password manager
-export kpdb="$HOME/Documents/passdb.kdbx"
-alias kpopen="keepassxc-cli open $kpdb"
-alias kpshow="keepassxc-cli show -s $kpdb"
-alias kpclip="keepassxc-cli clip $kpdb"
-
 alias snip="flameshot gui"
 alias screenshot="flameshot full -p $HOME/Pictures"
 
@@ -209,17 +203,6 @@ update-system() {
 st() {
     rg -F TODO\($1\)
 }
-
-# List TODOs in the todo file
-lt() {
-    echo "TODO"
-    if [ -f $TODO ]; then
-        cat $TODO
-    else
-        touch $TODO
-    fi
-}
-lt
 
 # Journal for keeping notes
 JOURNALDIR=$HOME/Documents
