@@ -99,10 +99,6 @@ imap <F1> <Esc>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
 
-" Faster buffer switching
-nmap <Leader>gp :bp<CR>
-nmap <Leader>gn :bn<CR>
-
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
