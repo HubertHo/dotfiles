@@ -14,6 +14,8 @@ Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
 call plug#end()
 
+
+"-------- Utilities --------
 " Avoid loading a file that does not exist
 function! SafelyLoadFile(file)
     if filereadable(expand(a:file))
