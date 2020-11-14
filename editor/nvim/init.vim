@@ -7,11 +7,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Language syntax plugins
-Plug 'pangloss/vim-javascript'
 Plug 'rust-lang/rust.vim'
 Plug 'cespare/vim-toml'
 Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 call plug#end()
 
 
@@ -82,10 +83,6 @@ if has("autocmd")
                 \&& line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
 
-" Allow neovim to copy to chromebook keyboard when over ssh
-call SafelyLoadFile("/home/hho/.config/nvim/plugins/osc52.vim")
-vmap <C-c> y:Oscyank<cr>
-
 "-------- Key Mappings and Commands --------
 
 " Map ; as :
@@ -98,6 +95,9 @@ imap <F1> <Esc>
 " Save and quit shortcuts
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
+
+" PDB shortcut
+nmap <Leader>pdb o__import__("pdb").set_trace()<Esc>
 
 " Move cursor on each line for wrapped line
 nnoremap j gj
@@ -184,14 +184,6 @@ let g:lightline = {
     \ },
     \ }
 
-" Sometimes branch names are too long
-function! TruncateGitBranch()
-    let len_limit=30
-    " This can be any function that returns the current HEAd
-    let head = FugitiveHead()
-    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
-endfunction
-
 " coc.nvim
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -199,8 +191,17 @@ if has('nvim')
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-" let g:coc_global_extensions = [
-"     \ 'coc-python',
-"     \ 'coc-rust-analyzer',
-"     \ 'coc-json ',
-"     \ ]
+let g:coc_global_extensions = [
+    \ 'coc-python',
+    \ 'coc-rust-analyzer',
+    \ 'coc-tsserver',
+    \ ]
+
+"-------- Utilities --------
+" Sometimes branch names are too long
+function! TruncateGitBranch()
+    let len_limit=30
+    " This can be any function that returns the current HEAd
+    let head = FugitiveHead()
+    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
+endfunction

@@ -405,6 +405,11 @@ call <sid>hi("StartifySpecial",  s:gui03, "", s:cterm03, "", "", "")
 " Java highlighting
 call <sid>hi("javaOperator",     s:gui0D, "", s:cterm0D, "", "", "")
 
+" React TSX Highlighting
+call <sid>hi("tsxTagName",        s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxCloseTagName",   s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxString",         s:gui0B, "", s:cterm0D, "", "", "")
+
 " Remove functions
 delf <sid>hi
 
