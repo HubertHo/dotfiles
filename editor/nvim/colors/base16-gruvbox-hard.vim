@@ -406,9 +406,20 @@ call <sid>hi("StartifySpecial",  s:gui03, "", s:cterm03, "", "", "")
 call <sid>hi("javaOperator",     s:gui0D, "", s:cterm0D, "", "", "")
 
 " React TSX Highlighting
-call <sid>hi("tsxTagName",        s:gui08, "", s:cterm08, "", "bold", "")
-call <sid>hi("tsxCloseTagName",   s:gui08, "", s:cterm08, "", "bold", "")
-call <sid>hi("tsxString",         s:gui0B, "", s:cterm0D, "", "", "")
+call <sid>hi("tsxTagName",              s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxCloseTagName",         s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxComponentName",        s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxCloseComponentName",   s:gui08, "", s:cterm08, "", "bold", "")
+call <sid>hi("tsxString",               s:gui0B, "", s:cterm0B, "", "", "")
+call <sid>hi("ReactState",              s:gui09, "", s:cterm09, "", "", "")
+call <sid>hi("ReactProps",              s:gui09, "", s:cterm09, "", "", "")
+
+
+" light-grey
+hi tsxTypeBraces guifg=#999999
+" dark-grey
+hi tsxTypes guifg=#666666
+
 
 " Remove functions
 delf <sid>hi
