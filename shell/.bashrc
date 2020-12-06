@@ -36,12 +36,16 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;31
 # List of software/packages installed
 software=(
     alacritty
+    base-devel
     calibre
+    dialog
     discord
     dmenu
+    efibootmgr
     feh
     firefox
     flameshot
+    grub
     git
     htop
     i3lock
@@ -49,8 +53,10 @@ software=(
     i3-wm
     keepassxc
     keychain
+    linux-headers
     neovim
     networkmanager
+    network-manager-applet
     nodejs
     npm
     noto-fonts
@@ -64,6 +70,8 @@ software=(
     tlp
     tmux
     vlc
+    wireless_tools
+    wpa_supplicant
     xclip
     zathura
 )
@@ -184,6 +192,7 @@ update-pkgbuild() {
     declare -a pkgs=(
         spotifyd
         spotify-tui
+        ifuse
     )
     for pkg in "${pkgs[@]}"
     do
@@ -242,3 +251,7 @@ pip-upgrade() {
     pip install --user -r requirements.txt --upgrade
     rm requirements.txt
 }
+
+# Temporary variables for testing
+export FLASK_APP=manga_scraper/server.py
+export FLASK_ENV=development
