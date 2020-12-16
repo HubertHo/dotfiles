@@ -33,55 +33,10 @@ prompt_branch(){
 }
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;31m\]$(prompt_branch)\[\033[00m\] \$ '
 
-# List of software/packages installed
-software=(
-    alacritty
-    base-devel
-    calibre
-    dialog
-    discord
-    dmenu
-    efibootmgr
-    feh
-    firefox
-    flameshot
-    grub
-    git
-    htop
-    i3lock
-    i3status
-    i3-wm
-    keepassxc
-    keychain
-    linux-headers
-    neovim
-    networkmanager
-    network-manager-applet
-    nodejs
-    npm
-    noto-fonts
-    open-ssh
-    powertop
-    python
-    python-pip
-    ripgrep
-    rsync
-    texlive-most
-    tlp
-    tmux
-    vlc
-    wireless_tools
-    wpa_supplicant
-    xclip
-    zathura
-)
 
 # Add directories to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"  # sass
 export PATH="$HOME/.local/bin:$PATH"  # local scripts
-
-# Path to todo file
-export TODO=$HOME/.todo.md
 
 # Aliases
 alias rm='rm --interactive=never'
@@ -108,7 +63,6 @@ alias sb="source ~/.bashrc"
 alias ev="vim ~/.config/nvim/init.vim"
 alias elc="vim ~/.alacritty.yml"
 alias et="vim ~/.tmux.conf"
-alias etodo="vim $TODO; lt"
 
 # Aliases for editing i3 config files
 alias ei="vim ~/.config/i3/config"
@@ -147,7 +101,7 @@ alias tcd='tmux detach-client'
 devmux() {
     SESSION="dev"
     tmux start-server
-    tmux new-session -d -s $SESSION -n code "nvim $TODO"
+    tmux new-session -d -s $SESSION -n editor "nvim"
     tmux new-window -t $session:1 -n terminal
     tmux select-window -t $SESSION:0
     tmux attach-session -t $SESSION
@@ -213,20 +167,6 @@ st() {
     rg -F TODO\($1\)
 }
 
-# Journal for keeping notes
-JOURNALDIR=$HOME/Documents
-JOURNAL=$JOURNALDIR/journal
-journal() {
-    if [ ! -f $JOURNAL ]; then
-        if [ ! -d $JOURNALDIR ]; then
-            mkdir $JOURNALDIR
-        fi
-        touch $JOURNAL
-    fi
-    vim $JOURNAL
-}
-alias j="journal"
-
 # LaTeX
 pdftex() {
     if ! [ type pdflatex 2>/dev/null > /dev/null ] && ! [ -z $1  ]; then
@@ -251,7 +191,3 @@ pip-upgrade() {
     pip install --user -r requirements.txt --upgrade
     rm requirements.txt
 }
-
-# Temporary variables for testing
-export FLASK_APP=manga_scraper/server.py
-export FLASK_ENV=development

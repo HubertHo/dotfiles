@@ -1,10 +1,13 @@
 call plug#begin('~/.config/nvim/plugins')
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'itchyny/lightline.vim'
+Plug 'mhinz/vim-signify'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'mhinz/vim-signify'
+Plug 'vimwiki/vimwiki'
 Plug 'Yggdroot/indentLine'
-Plug 'itchyny/lightline.vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Language syntax plugins
 Plug 'rust-lang/rust.vim'
@@ -25,6 +28,13 @@ function! SafelyLoadFile(file)
     endif
 endfunction
 
+" Sometimes branch names are too long
+function! TruncateGitBranch()
+    let len_limit=30
+    " This can be any function that returns the current HEAd
+    let head = FugitiveHead()
+    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
+endfunction
 "-------- Colourscheme --------
 if !has('gui_running')
     set t_Co=256
@@ -52,6 +62,7 @@ set guicursor=
 set hidden
 set laststatus=2
 set mouse=a
+set nocompatible
 set number relativenumber
 set ruler
 set scl=yes  " Show sign column
@@ -83,6 +94,8 @@ if has("autocmd")
     au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1
                 \&& line("'\"") <= line("$") | exe "normal! g'\"" | endif
 endif
+
+filetype plugin on
 
 "-------- Key Mappings and Commands --------
 
@@ -198,11 +211,8 @@ let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ ]
 
-"-------- Utilities --------
-" Sometimes branch names are too long
-function! TruncateGitBranch()
-    let len_limit=30
-    " This can be any function that returns the current HEAd
-    let head = FugitiveHead()
-    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
-endfunction
+" fuzzy finder
+noremap <leader>s :Rg<CR>
+
+" vimwiki
+let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
