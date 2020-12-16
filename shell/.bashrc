@@ -101,7 +101,7 @@ alias tcd='tmux detach-client'
 devmux() {
     SESSION="dev"
     tmux start-server
-    tmux new-session -d -s $SESSION -n editor "nvim"
+    tmux new-session -d -s $SESSION -n editor "nvim ~/Documents/vimwiki/index.wiki"
     tmux new-window -t $session:1 -n terminal
     tmux select-window -t $SESSION:0
     tmux attach-session -t $SESSION
