@@ -161,6 +161,7 @@ au FileType sh setlocal colorcolumn=72
 au FileType vim setlocal colorcolumn=72
 au FileType journal setlocal colorcolumn=100 spell
 au FileType markdown setlocal colorcolumn=120 spell
+au FileType vimwiki setlocal colorcolumn= spell
 
 "-------- Plugin Configuration --------
 
