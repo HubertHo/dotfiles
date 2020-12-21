@@ -1,11 +1,9 @@
 {
     "coc.preferences.formatOnSaveFiletypes": ["python"],
-    "python.formatting.blackArgs": ["--line-length=100"],
-    "python.formatting.blackPath": "/home/hubert/.local/bin/",
-    "python.formatting.provider": "black",
-    "python.linting.flake8Args": ["--show-source"],
-    "python.linting.flake8Enabled": true,
-    "python.jediEnabled": true,
-    "python.jediPath": "/home/hubert/.local/lib/python3.8/site-packages",
-    "python.sortImports.path": "/home/hubert/.local/bin/"
+    "jedi.enable": true,
+    "jedi.startupMessage": false,
+    "jedi.markupKindPreferred": "markdown",
+    "jedi.trace.server": "verbose",
+    "jedi.jediSettings.autoImportModules": [],
+    "jedi.workspace.extraPaths": ["$HOME/ff/web/django_apps", "$HOME/ff/libs/py/"]
 }
