@@ -1,9 +1,15 @@
 {
-    "coc.preferences.formatOnSaveFiletypes": ["python"],
     "jedi.enable": true,
+    "jedi.executable.command": "$HOME/.local/bin/jedi-language-server",
     "jedi.startupMessage": false,
     "jedi.markupKindPreferred": "markdown",
     "jedi.trace.server": "verbose",
-    "jedi.jediSettings.autoImportModules": [],
-    "jedi.workspace.extraPaths": ["$HOME/ff/web/django_apps", "$HOME/ff/libs/py/"]
+    "jedi.jediSettings.autoImportModules": [
+        "django",
+        "djangorestframework"
+    ],
+    "jedi.workspace.extraPaths": [
+        "$HOME/ff/web/django_apps",
+        "$HOME/ff/libs/py/"
+    ]
 }
