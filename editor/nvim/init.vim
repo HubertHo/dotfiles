@@ -35,6 +35,7 @@ function! TruncateGitBranch()
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
 endfunction
+
 "-------- Colourscheme --------
 if !has('gui_running')
     set t_Co=256
@@ -70,7 +71,7 @@ set shortmess+=c
 set showmatch  " Show matching parentheses
 set showtabline=2  " Show file tabs
 set ttyfast
-set updatetime=100  " Reduce update time to show git diffs
+set updatetime=300  " Reduce update time to show git diffs
 set visualbell  " Turn off bell sound
 
 " Search configuration
@@ -199,21 +200,32 @@ let g:lightline = {
     \ },
     \ }
 
-" coc.nvim
+" coc-nvim
+" Use Tab for trigger completion with characters ahead
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
 " Use <c-space> to trigger completion.
 if has('nvim')
   inoremap <silent><expr> <c-space> coc#refresh()
 else
   inoremap <silent><expr> <c-@> coc#refresh()
 endif
-let g:coc_global_extensions = [
-    \ 'coc-python',
-    \ 'coc-rust-analyzer',
-    \ 'coc-tsserver',
-    \ ]
+
+" Use Tab to navigate autocompletion
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " fuzzy finder
 noremap <leader>s :Rg<CR>
+nnoremap <leader>f :FZF<CR>
 
 " vimwiki
 let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
