@@ -33,7 +33,8 @@ function! TruncateGitBranch()
     let len_limit=30
     " This can be any function that returns the current HEAd
     let head = FugitiveHead()
-    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..." : head
+    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..."
+        \ : head
 endfunction
 
 "-------- Colourscheme --------
@@ -49,14 +50,14 @@ set background=dark
 colorscheme base16-gruvbox-hard
 
 "-------- Editor Configuration --------
-
 let mapleader = "\<Space>"  " Map Leader to Space
 let g:netrw_banner=0  " Hide the banner in netrw
 let g:netrw_liststyle=3  " Use tree view when browsing files
 let g:tex_conceal='' " Don't hide anything in LaTeX
 
-set autoread  " Automatically apply changes if file changes outside of nvim
-set colorcolumn=100
+" Automatically apply changes if file changes outside of nvim
+set autoread
+set colorcolumn=101
 set conceallevel=0
 set encoding=utf8
 set formatoptions+=tc
@@ -101,7 +102,6 @@ endif
 filetype plugin on
 
 "-------- Key Mappings and Commands --------
-
 " Map ; as :
 nnoremap ; :
 
@@ -125,8 +125,6 @@ nnoremap <Leader>ev :tab new $MYVIMRC<CR>
 nnoremap <Leader>sv :so $MYVIMRC<CR>
 nnoremap <Leader>eb :tab new ~/.bashrc<CR>
 nnoremap <Leader>elc :tab new ~/.alacritty.yml<CR>
-nnoremap <Leader>etodo :tab new ~/.todo<CR>
-nnoremap <Leader>jnl :tab new ~/Documents/journal<CR>
 
 " ShowDirectoryTree
 command! SDT tab new | Explore
@@ -153,10 +151,8 @@ nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
 
 "-------- Autocommands --------
-
 " File detection
 autocmd BufRead *.md set filetype=markdown
-autocmd BufRead journal set filetype=journal
 autocmd BufRead *.tex set filetype=tex
 
 " git-commentary additions for unsupported languages
@@ -165,12 +161,10 @@ autocmd FileType rust setlocal commentstring=//\ %s
 " Set specific line length columns for different files
 au FileType sh setlocal textwidth=80 colorcolumn=81
 au FileType vim setlocal textwidth=80 colorcolumn=81
-au FileType journal setlocal textwidth=80 colorcolumn=101 spell
 au FileType markdown setlocal textwidth=120 colorcolumn=121 spell
 au FileType vimwiki setlocal colorcolumn= spell
 
 "-------- Plugin Configuration --------
-
 " vim-signify configs
 let g:signify_sign_add='+'
 let g:signify_sign_delete='-'
@@ -184,6 +178,7 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
+
 
 " lightline config
 let g:lightline = {
@@ -203,6 +198,14 @@ let g:lightline = {
     \ }
 
 " coc-nvim
+" Extensions
+" coc-jedi
+" coc-tsserver
+" coc-texlab
+" coc-rust-analyzer
+" coc-json
+" coc-pyright
+
 " Use Tab for trigger completion with characters ahead
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
