@@ -59,6 +59,8 @@ set autoread  " Automatically apply changes if file changes outside of nvim
 set colorcolumn=100
 set conceallevel=0
 set encoding=utf8
+set formatoptions+=tc
+set formatoptions+=r
 set guicursor=
 set hidden
 set laststatus=2
@@ -157,11 +159,14 @@ autocmd BufRead *.md set filetype=markdown
 autocmd BufRead journal set filetype=journal
 autocmd BufRead *.tex set filetype=tex
 
+" git-commentary additions for unsupported languages
+autocmd FileType rust setlocal commentstring=//\ %s
+
 " Set specific line length columns for different files
-au FileType sh setlocal colorcolumn=72
-au FileType vim setlocal colorcolumn=72
-au FileType journal setlocal colorcolumn=100 spell
-au FileType markdown setlocal colorcolumn=120 spell
+au FileType sh setlocal textwidth=80 colorcolumn=81
+au FileType vim setlocal textwidth=80 colorcolumn=81
+au FileType journal setlocal textwidth=80 colorcolumn=101 spell
+au FileType markdown setlocal textwidth=120 colorcolumn=121 spell
 au FileType vimwiki setlocal colorcolumn= spell
 
 "-------- Plugin Configuration --------
@@ -179,9 +184,6 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 let g:vim_markdown_folding_disabled=1
 let g:vim_markdown_conceal=0
 let g:vim_markdown_conceal_code_blocks=0
-
-" git-commentary additions for unsupported languages
-autocmd FileType rust setlocal commentstring=//\ %s
 
 " lightline config
 let g:lightline = {
@@ -228,4 +230,4 @@ noremap <leader>s :Rg<CR>
 nnoremap <leader>f :FZF<CR>
 
 " vimwiki
-let g:vimwiki_list = [{'path': '~/Documents/vimwiki/'}]
+let g:vimwiki_list = [{'path': '$HOME/Documents/vimwiki/'}]
