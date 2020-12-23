@@ -1,4 +1,7 @@
+let g:ale_disable_lsp = 1
+
 call plug#begin('~/.config/nvim/plugins')
+Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
@@ -74,7 +77,7 @@ set shortmess+=c
 set showmatch  " Show matching parentheses
 set showtabline=2  " Show file tabs
 set ttyfast
-set updatetime=300  " Reduce update time to show git diffs
+set updatetime=100  " Reduce update time to show git diffs
 set visualbell  " Turn off bell sound
 
 " Search configuration
@@ -204,7 +207,6 @@ let g:lightline = {
 " coc-texlab
 " coc-rust-analyzer
 " coc-json
-" coc-pyright
 
 " Use Tab for trigger completion with characters ahead
 inoremap <silent><expr> <TAB>
@@ -234,3 +236,14 @@ nnoremap <leader>f :FZF<CR>
 
 " vimwiki
 let g:vimwiki_list = [{'path': '$HOME/Documents/vimwiki/'}]
+
+" ALE
+let g:ale_lint_on_text_changed = 0
+let g:ale_lint_on_insert_leave = 1
+let g:ale_lint_on_enter = 1
+let g:ale_lint_on_save = 1
+let g:ale_lint_on_filetype_changed = 0
+let g:ale_linters = {"python": ["flake8"], "javascript": ["eslint"]}
+let g:ale_python_flake8_executable = "/home/hubert/.local/bin/flake8"
+let g:ale_python_flake8_options = "--config /home/hubert/.config/flake8"
+let g:ale_python_flake8_use_global = 1

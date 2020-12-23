@@ -1,20 +1,11 @@
 {
     "coc.preferences.formatOnSaveFiletypes": ["python"],
+    "diagnostic.displayByAle": true,
     "jedi.enable": true,
     "jedi.executable.command": "/usr/bin/jedi-language-server",
     "jedi.startupMessage": false,
     "jedi.markupKindPreferred": "markdown",
     "jedi.trace.server": "verbose",
     "jedi.jediSettings.autoImportModules": [],
-    "jedi.workspace.extraPaths": [],
-    "python.analysis.autoImportCompletions": false,
-    "python.analysis.autoSearchPaths": true,
-    "python.analysis.diagnosticMode": "openFilesOnly",
-    "python.pythonPath": "/usr/bin/python3.8",
-    "python.formatting.provider": "none",
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "pyright.disableCompletion": true,
-    "pyright.disableLanguageServices": true,
-    "pyright.disableOrganizeImports": true
+    "jedi.workspace.extraPaths": []
 }
