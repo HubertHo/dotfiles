@@ -142,16 +142,11 @@ alias screenshot="flameshot full -p $HOME/Pictures"
 alias wifictl="nmcli device wifi"
 
 # Make it easier to update packages
-update-pkgbuild() {
-    declare -a pkgs=(
-        spotifyd
-        spotify-tui
-        ifuse
-    )
-    for pkg in "${pkgs[@]}"
+update-aurpkg() {
+    for PKG_DIR in $(find $HOME/aurpkg -maxdepth 1 -mindepth 1 -type d)
     do
-        cd $HOME/aurpkg/$pkg
-        echo "Updating $pkg"
+        cd $PKG_DIR
+        echo "Updating ${PKG_DIR}"
         git pull
         cd - > /dev/null
     done
@@ -159,7 +154,7 @@ update-pkgbuild() {
 
 update-system() {
     sudo pacman -Syu
-    update-pkgbuild
+    update-aurpkg
 }
 
 # Show TODOs in the current directory
@@ -181,13 +176,4 @@ pdftex() {
 # Power management
 suslock() {
     i3lock --color=1c1c1c --ignore-empty-password && systemctl suspend
-}
-
-# Update python packages
-pip-upgrade() {
-    pip freeze > requirements.txt
-    pip install -r requirements.txt --upgrade
-    pip freeze --user > requirements.txt
-    pip install --user -r requirements.txt --upgrade
-    rm requirements.txt
 }
