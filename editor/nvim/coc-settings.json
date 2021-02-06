@@ -7,5 +7,10 @@
     "jedi.markupKindPreferred": "markdown",
     "jedi.trace.server": "verbose",
     "jedi.jediSettings.autoImportModules": [],
-    "jedi.workspace.extraPaths": []
+    "jedi.workspace.extraPaths": [],
+    "rust-analyzer.enable": true,
+    "rust-analyzer.server.path": "/usr/bin/rust-analyzer",
+    "rust-analyzer.updates.prompt": false,
+    "rust-analyzer.updates.channel": "nightly",
+    "rust-analyzer.checkOnSave.enable": false
 }
