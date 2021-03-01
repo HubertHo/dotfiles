@@ -20,6 +20,9 @@ Plug 'plasticboy/vim-markdown'
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+
+" Use most updated version of python syntax
+Plug 'vim-python/python-syntax'
 call plug#end()
 
 
@@ -168,6 +171,12 @@ au FileType markdown setlocal textwidth=120 colorcolumn=121 spell
 au FileType vimwiki setlocal colorcolumn= spell
 
 "-------- Plugin Configuration --------
+" Python syntax options
+let g:python_highlight_string_format=1
+let g:python_highlight_string_templates=1
+let g:python_highlight_func_calls=1
+let g:python_highlight_class_vars=1
+
 " vim-signify configs
 let g:signify_sign_add='+'
 let g:signify_sign_delete='-'
@@ -231,8 +240,8 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " fuzzy finder
-noremap <leader>s :Rg<CR>
-nnoremap <leader>f :FZF<CR>
+noremap <leader>s :Rg $PWD<CR>
+nnoremap <leader>f :GFile $PWD<CR>
 
 " vimwiki
 let g:vimwiki_list = [{'path': '$HOME/Documents/vimwiki/'}]
