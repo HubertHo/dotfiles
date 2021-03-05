@@ -3,14 +3,13 @@
 
 export EDITOR="nvim"
 export TERMINAL="alacritty"
-export RUST_SRC_PATH="$HOME/.rustup/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/library/"
 
 # Bash history settings
 shopt -s histappend
 HISTSIZE=999999999
 HISTFILESIZE=999999999
 HISTCONTROL=ignoreboth
-export HISTFILE=~/.bash_history
+export HISTFILE=$HOME/.bash_history
 
 # Check and update window size, if necessary
 shopt -s checkwinsize
@@ -40,7 +39,7 @@ export PATH="$HOME/.local/bin:$PATH"  # local scripts
 
 # Aliases
 alias rm='rm --interactive=never'
-alias cdh='cd ~'
+alias cdh='cd $HOME'
 alias u='cd ../'
 alias uu='cd ../../'
 alias uuu='cd ../../../'
@@ -58,15 +57,15 @@ if ! [ type zathura 2>/dev/null > /dev/null ]; then
 fi
 
 # Aliases for editing dotfiles
-alias eb='vim ~/.bashrc ; source ~/.bashrc'
-alias sb="source ~/.bashrc"
-alias ev="vim ~/.config/nvim/init.vim"
-alias elc="vim ~/.alacritty.yml"
-alias et="vim ~/.tmux.conf"
+alias eb='vim $HOME/.bashrc ; source $HOME/.bashrc'
+alias sb="source $HOME/.bashrc"
+alias ev="vim $HOME/.config/nvim/init.vim"
+alias elc="vim $HOME/.alacritty.yml"
+alias et="vim $HOME/.tmux.conf"
 
 # Aliases for editing i3 config files
-alias ei="vim ~/.config/i3/config"
-alias eis="vim ~/.config/i3status/config"
+alias ei="vim $HOME/.config/i3/config"
+alias eis="vim $HOME/.config/i3status/config"
 
 # xclip aliases
 alias y='xclip -selection clipboard -i'
@@ -90,22 +89,13 @@ alias ffs='rg -lF' # Get all files with name that matches given string
 alias ffc='rg -F -C=5' # Search for files with matching string
 
 # tmux aliases
+alias t='tmux'
 alias tk='tmux kill-server'
 alias tsa='tmux attach-session -t'
 alias tsk='tmux kill-session -t'
 alias tsl='tmux list-session'
 alias twk='tmux kill-window -t'
 alias tcd='tmux detach-client'
-
-# Open tmux just the way I like it
-devmux() {
-    SESSION="dev"
-    tmux start-server
-    tmux new-session -d -s $SESSION -n editor "nvim ~/Documents/vimwiki/index.wiki"
-    tmux new-window -t $session:1 -n terminal
-    tmux select-window -t $SESSION:0
-    tmux attach-session -t $SESSION
-}
 
 # Git aliases
 alias ga='git add'
@@ -125,37 +115,6 @@ alias gtp='git stash push'
 alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
-
-# Service aliases
-alias spotify="spt"
-alias startspotify="systemctl --user start spotifyd ; spt"
-alias stopspotify="systemctl --user stop spotifyd;
-printf 'Spotifyd stopped\n'"
-
-alias startbluetooth="sudo systemctl start bluetooth"
-alias stopbluetooth="sudo systemctl stop bluetooth"
-
-alias snip="flameshot gui"
-alias screenshot="flameshot full -p $HOME/Pictures"
-
-# Show available wifi networks (required network manager)
-alias wifictl="nmcli device wifi"
-
-# Make it easier to update packages
-update-aurpkg() {
-    for PKG_DIR in $(find $HOME/aurpkg -maxdepth 1 -mindepth 1 -type d)
-    do
-        cd $PKG_DIR
-        echo "Updating ${PKG_DIR}"
-        git pull
-        cd - > /dev/null
-    done
-}
-
-update-system() {
-    sudo pacman -Syu
-    update-aurpkg
-}
 
 # Show TODOs in the current directory
 st() {

@@ -9,7 +9,6 @@ Plug 'mhinz/vim-signify'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
-Plug 'vimwiki/vimwiki'
 Plug 'Yggdroot/indentLine'
 
 " Language syntax plugins
@@ -157,9 +156,6 @@ nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
 
 "-------- Autocommands --------
-" File detection
-autocmd BufRead *.md set filetype=markdown
-autocmd BufRead *.tex set filetype=tex
 
 " git-commentary additions for unsupported languages
 autocmd FileType rust setlocal commentstring=//\ %s
@@ -169,6 +165,10 @@ au FileType sh setlocal textwidth=80 colorcolumn=81
 au FileType vim setlocal textwidth=80 colorcolumn=81
 au FileType markdown setlocal textwidth=120 colorcolumn=121 spell
 au FileType vimwiki setlocal colorcolumn= spell
+
+" File detection
+autocmd BufRead *.md set filetype=markdown
+autocmd BufRead *.tex set filetype=tex
 
 "-------- Plugin Configuration --------
 " Python syntax options
@@ -242,9 +242,6 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " fuzzy finder
 noremap <leader>s :Rg $PWD<CR>
 nnoremap <leader>f :GFile $PWD<CR>
-
-" vimwiki
-let g:vimwiki_list = [{'path': '$HOME/Documents/vimwiki/'}]
 
 " ALE
 let g:ale_lint_on_text_changed = 0
