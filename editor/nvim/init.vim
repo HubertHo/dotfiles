@@ -1,6 +1,6 @@
 let g:ale_disable_lsp = 1
 
-call plug#begin('~/.config/nvim/plugins')
+call plug#begin("$HOME/.nvim/plugged")
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
