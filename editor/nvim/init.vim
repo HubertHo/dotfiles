@@ -1,6 +1,6 @@
 let g:ale_disable_lsp = 1
 
-call plug#begin("$HOME/.nvim/plugged")
+call plug#begin(stdpath('data').'/plugged')
 Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
@@ -37,7 +37,7 @@ endfunction
 " Sometimes branch names are too long
 function! TruncateGitBranch()
     let len_limit=30
-    " This can be any function that returns the current HEAd
+    " This can be any function that returns the current HEAD
     let head = FugitiveHead()
     return len(head) > len_limit ? strpart(head, 0, len_limit) . "..."
         \ : head
@@ -59,7 +59,6 @@ colorscheme base16-gruvbox-hard
 let mapleader = "\<Space>"  " Map Leader to Space
 let g:netrw_banner=0  " Hide the banner in netrw
 let g:netrw_liststyle=3  " Use tree view when browsing files
-let g:tex_conceal='' " Don't hide anything in LaTeX
 
 " Automatically apply changes if file changes outside of nvim
 set autoread
@@ -119,9 +118,6 @@ imap <F1> <Esc>
 nmap <Leader>w :w<CR>
 nmap <Leader>q :q!<CR>
 
-" PDB shortcut
-nmap <Leader>pdb o__import__("pdb").set_trace()<Esc>
-
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
@@ -156,18 +152,7 @@ inoremap <right> <nop>
 nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
 
-"-------- Autocommands --------
-" File detection
-autocmd BufRead *.md set filetype=markdown
-autocmd BufRead *.tex set filetype=tex
-
 "-------- Plugin Configuration --------
-" Python syntax options
-let g:python_highlight_string_format=1
-let g:python_highlight_string_templates=1
-let g:python_highlight_func_calls=1
-let g:python_highlight_class_vars=1
-
 " vim-signify configs
 let g:signify_sign_add='+'
 let g:signify_sign_delete='-'
@@ -176,11 +161,6 @@ let g:signify_sign_change='!'
 highlight SignifySignAdd ctermfg=green ctermbg=green guifg=#00ff00 guibg=#00ff00
 highlight SignifySignChange ctermfg=yellow ctermbg=yellow guifg=#ffff00 guibg=#ffff00
 highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
-
-" vim-markdown configs
-let g:vim_markdown_folding_disabled=1
-let g:vim_markdown_conceal=0
-let g:vim_markdown_conceal_code_blocks=0
 
 " lightline config
 let g:lightline = {
