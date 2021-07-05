@@ -178,7 +178,8 @@ let g:coc_global_extensions = [
     \ 'coc-tsserver',
     \ 'coc-texlab',
     \ 'coc-rust-analyzer',
-    \ 'coc-json'
+    \ 'coc-json',
+    \ 'coc-lua',
     \ ]
 
 " Use Tab for trigger completion with characters ahead
