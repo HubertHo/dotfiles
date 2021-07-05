@@ -12,17 +12,12 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
 Plug 'Yggdroot/indentLine'
 
+" Neovim specific plugins
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
 " Language syntax plugins
 Plug 'rust-lang/rust.vim'
-Plug 'cespare/vim-toml'
-Plug 'stephpy/vim-yaml'
 Plug 'plasticboy/vim-markdown'
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-
-" Use most updated version of python syntax
-Plug 'vim-python/python-syntax'
 call plug#end()
 
 
@@ -225,3 +220,20 @@ let g:ale_linters = {"python": ["flake8"], "javascript": ["eslint"]}
 let g:ale_python_flake8_executable = "/home/hubert/.local/bin/flake8"
 let g:ale_python_flake8_options = "--config /home/hubert/.config/flake8"
 let g:ale_python_flake8_use_global = 1
+
+" nvim-treesitter
+lua <<EOF
+require('nvim-treesitter.configs').setup {
+    ensure_installed = {
+        "javascript",
+        "python",
+        "toml",
+        "tsx",
+        "typescript",
+        "yaml"
+    },
+    highlight = {
+        enable = true,
+    },
+}
+EOF
