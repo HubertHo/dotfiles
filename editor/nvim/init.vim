@@ -66,14 +66,12 @@ set guicursor=
 set hidden
 set laststatus=2
 set mouse=a
-set nocompatible
 set number relativenumber
 set ruler
 set scl=yes  " Show sign column
 set shortmess+=c
 set showmatch  " Show matching parentheses
 set showtabline=2  " Show file tabs
-set ttyfast
 set updatetime=100  " Reduce update time to show git diffs
 set visualbell  " Turn off bell sound
 
