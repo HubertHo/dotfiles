@@ -1,39 +1,45 @@
-# Base16 Gruvbox dark, hard - alacritty color config
-# Dawid Kurek (dawikur@gmail.com), morhetz (https://github.com/morhetz/gruvbox)
+# Base16 One Light 256 - alacritty color config
+# Daniel Pfeifer (http://github.com/purpleKarrot)
 colors:
   # Default colors
   primary:
-    background: '0x1d2021'
-    foreground: '0xd5c4a1'
+    background: '0xfafafa'
+    foreground: '0x383a42'
 
   # Colors the cursor will use if `custom_cursor_colors` is true
   cursor:
-    text: '0x1d2021'
-    cursor: '0xd5c4a1'
+    text: '0xfafafa'
+    cursor: '0x383a42'
 
   # Normal colors
   normal:
-    black:   '0x1d2021'
-    red:     '0xfb4934'
-    green:   '0xb8bb26'
-    yellow:  '0xfabd2f'
-    blue:    '0x83a598'
-    magenta: '0xd3869b'
-    cyan:    '0x8ec07c'
-    white:   '0xd5c4a1'
+    black:   '0xfafafa'
+    red:     '0xca1243'
+    green:   '0x50a14f'
+    yellow:  '0xc18401'
+    blue:    '0x4078f2'
+    magenta: '0xa626a4'
+    cyan:    '0x0184bc'
+    white:   '0x383a42'
 
   # Bright colors
   bright:
-    black:   '0x665c54'
-    red:     '0xfe8019'
-    green:   '0x3c3836'
-    yellow:  '0x504945'
-    blue:    '0xbdae93'
-    magenta: '0xebdbb2'
-    cyan:    '0xd65d0e'
-    white:   '0xfbf1c7'
+    black:   '0xa0a1a7'
+    red:     '0xca1243'
+    green:   '0x50a14f'
+    yellow:  '0xc18401'
+    blue:    '0x4078f2'
+    magenta: '0xa626a4'
+    cyan:    '0x0184bc'
+    white:   '0x090a0b'
 
-draw_bold_text_with_bright_colors: false
+  indexed_colors:
+    - { index: 16, color: '0xd75f00' }
+    - { index: 17, color: '0x986801' }
+    - { index: 18, color: '0xf0f0f1' }
+    - { index: 19, color: '0xe5e5e6' }
+    - { index: 20, color: '0x696c77' }
+    - { index: 21, color: '0x202227' }
 
 background_opacity: 1
 
