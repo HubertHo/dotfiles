@@ -23,15 +23,7 @@ Plug 'rust-lang/rust.vim'
 Plug 'plasticboy/vim-markdown'
 call plug#end()
 
-
 "-------- Utilities --------
-" Avoid loading a file that does not exist
-function! SafelyLoadFile(file)
-    if filereadable(expand(a:file))
-        exe 'source' a:file
-    endif
-endfunction
-
 " Sometimes branch names are too long
 function! TruncateGitBranch()
     let len_limit=30
@@ -106,8 +98,6 @@ set shortmess+=c
 
 "-------- Editor Configuration --------
 let mapleader = "\<Space>"  " Map Leader to Space
-let g:netrw_banner=0  " Hide the banner in netrw
-let g:netrw_liststyle=3  " Use tree view when browsing files
 
 " Automatically apply changes if file changes outside of nvim
 set autoread
@@ -168,16 +158,6 @@ nmap <Leader>q :q!<CR>
 " Move cursor on each line for wrapped line
 nnoremap j gj
 nnoremap k gk
-
-" Edit config shortcuts
-nnoremap <Leader>ev :tab new $MYVIMRC<CR>
-nnoremap <Leader>sv :so $MYVIMRC<CR>
-nnoremap <Leader>eb :tab new ~/.bashrc<CR>
-nnoremap <Leader>elc :tab new ~/.alacritty.yml<CR>
-
-" ShowDirectoryTree
-command! SDT tab new | Explore
-nnoremap <Leader>sdt :SDT<CR>
 
 " Shortcut for updating plugins
 command! PU PlugInstall | PlugUpgrade
