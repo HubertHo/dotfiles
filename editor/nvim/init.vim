@@ -12,6 +12,11 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'rktjmp/lush.nvim'
+
+" Treesitter colors
+Plug 'npxbr/gruvbox.nvim'
+Plug 'Th3Whit3Wolf/one-nvim'
 
 " Language syntax plugins
 Plug 'rust-lang/rust.vim'
@@ -206,7 +211,7 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 
 " lightline config
 let g:lightline = {
-    \ 'colorscheme': 'powerline',
+    \ 'colorscheme': 'one',
     \ 'active': {
     \   'left': [ [ 'mode', 'paste' ],
     \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ],
