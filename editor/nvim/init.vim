@@ -1,18 +1,16 @@
-let g:ale_disable_lsp = 1
-
 call plug#begin(stdpath('data').'/plugged')
-Plug 'dense-analysis/ale'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'itchyny/lightline.vim'
 Plug 'mhinz/vim-signify'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-obsession'
-Plug 'Yggdroot/indentLine'
 
 " Neovim specific plugins
+Plug 'lukas-reineke/indent-blankline.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Language syntax plugins
@@ -47,8 +45,59 @@ if match($TERM, '-256color')
 endif
 syntax on
 
-set background=dark
-colorscheme base16-gruvbox-hard
+set background=light
+colorscheme one-nvim
+
+" nvim-treesitter
+lua <<EOF
+require "nvim-treesitter.configs".setup {
+    ensure_installed = {
+        "javascript",
+        "json",
+        "latex",
+        "python",
+        "toml",
+        "tsx",
+        "typescript",
+        "yaml"
+    },
+    highlight = {
+        enable = true,
+    },
+}
+EOF
+
+"-------- LSP Config --------
+lua <<EOF
+local lspconfig = require 'lspconfig'
+local completion = require 'completion'
+
+lspconfig.jedi_language_server.setup{
+    on_attach=completion.on_attach
+}
+
+lspconfig.rust_analyzer.setup{
+    on_attach=completion.on_attach
+}
+
+lspconfig.tsserver.setup{
+    on_attach=completion.on_attach
+}
+EOF
+
+" Completion settings
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Manually trigger completion using ctrl + space
+imap <silent> <c-space> <Plug>(completion_trigger)
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
 
 "-------- Editor Configuration --------
 let mapleader = "\<Space>"  " Map Leader to Space
@@ -171,68 +220,3 @@ let g:lightline = {
     \   'gitbranch': 'TruncateGitBranch'
     \ },
     \ }
-
-" coc-nvim
-let g:coc_global_extensions = [
-    \ 'coc-jedi',
-    \ 'coc-tsserver',
-    \ 'coc-texlab',
-    \ 'coc-rust-analyzer',
-    \ 'coc-json',
-    \ 'coc-lua',
-    \ ]
-
-" Use Tab for trigger completion with characters ahead
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Use Tab to navigate autocompletion
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" fuzzy finder
-nnoremap <leader>s :Rg $PWD<CR>
-nnoremap <leader>f :GFile $PWD<CR>
-nnoremap <leader>b :Buffers<CR>
-
-" ALE
-let g:ale_lint_on_text_changed = 0
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_enter = 1
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_filetype_changed = 0
-let g:ale_linters = {"python": ["flake8"], "javascript": ["eslint"]}
-let g:ale_python_flake8_executable = "/home/hubert/.local/bin/flake8"
-let g:ale_python_flake8_options = "--config /home/hubert/.config/flake8"
-let g:ale_python_flake8_use_global = 1
-
-" nvim-treesitter
-lua <<EOF
-require('nvim-treesitter.configs').setup {
-    ensure_installed = {
-        "javascript",
-        "python",
-        "toml",
-        "tsx",
-        "typescript",
-        "yaml"
-    },
-    highlight = {
-        enable = true,
-    },
-}
-EOF
