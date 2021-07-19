@@ -10,7 +10,7 @@ Plug 'tpope/vim-obsession'
 " Neovim specific plugins
 Plug 'lukas-reineke/indent-blankline.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
+Plug 'hrsh7th/nvim-compe'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'rktjmp/lush.nvim'
 
@@ -67,34 +67,10 @@ EOF
 "-------- LSP Config --------
 lua <<EOF
 local lspconfig = require 'lspconfig'
-local completion = require 'completion'
-
-lspconfig.jedi_language_server.setup{
-    on_attach=completion.on_attach
-}
-
-lspconfig.rust_analyzer.setup{
-    on_attach=completion.on_attach
-}
-
-lspconfig.tsserver.setup{
-    on_attach=completion.on_attach
-}
+lspconfig.jedi_language_server.setup{}
+lspconfig.rust_analyzer.setup{}
+lspconfig.tsserver.setup{}
 EOF
-
-" Completion settings
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Manually trigger completion using ctrl + space
-imap <silent> <c-space> <Plug>(completion_trigger)
-
-" Set completeopt to have a better completion experience
-set completeopt=menuone,noinsert,noselect
-
-" Avoid showing message extra message when using completion
-set shortmess+=c
 
 "-------- Editor Configuration --------
 let mapleader = "\<Space>"  " Map Leader to Space
@@ -205,3 +181,54 @@ let g:lightline = {
     \   'gitbranch': 'TruncateGitBranch'
     \ },
     \ }
+
+" FZF
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+
+" nvim-compe
+lua <<EOF
+vim.o.completeopt = "menuone,noselect"
+
+require"compe".setup {
+    enabled = true,
+    autocomplete = true,
+    source = {
+        path = true,
+        buffer = true,
+        nvim_lsp = true,
+    },
+}
+
+local t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-n>"
+    else
+        return t "<Tab>"
+  end
+end
+_G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return t "<C-p>"
+    else
+        -- If <S-Tab> is not working in your terminal, change it to <C-h>
+        return t "<S-Tab>"
+    end
+end
+
+vim.api.nvim_set_keymap("i",
+    "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
+vim.api.nvim_set_keymap("i",
+    "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
+vim.api.nvim_set_keymap("i",
+    "<C-Space>", "compe#complete()", {expr = true, noremap = true})
+vim.api.nvim_set_keymap("i",
+    "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
+EOF
