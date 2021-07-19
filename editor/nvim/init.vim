@@ -45,8 +45,8 @@ syntax on
 set background=light
 colorscheme one-nvim
 
-" nvim-treesitter
 lua <<EOF
+-- nvim-treesitter
 require "nvim-treesitter.configs".setup {
     ensure_installed = {
         "javascript",
@@ -62,10 +62,8 @@ require "nvim-treesitter.configs".setup {
         enable = true,
     },
 }
-EOF
 
-"-------- LSP Config --------
-lua <<EOF
+-- lspconfig
 local lspconfig = require 'lspconfig'
 lspconfig.jedi_language_server.setup{}
 lspconfig.rust_analyzer.setup{}
@@ -165,29 +163,35 @@ highlight SignifySignAdd ctermfg=green ctermbg=green guifg=#00ff00 guibg=#00ff00
 highlight SignifySignChange ctermfg=yellow ctermbg=yellow guifg=#ffff00 guibg=#ffff00
 highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 
-" lightline config
-let g:lightline = {
-    \ 'colorscheme': 'one',
-    \ 'active': {
-    \   'left': [ [ 'mode', 'paste' ],
-    \             [ 'gitbranch', 'filename', 'readonly', 'modified' ] ],
-    \   'right': [ [ 'lineinfo' ],
-    \              [ 'fileencoding', 'filetype' ] ]
-    \ },
-    \ 'inactive': {
-    \   'left': [ [ 'filename', 'modified' ] ],
-    \ },
-    \ 'component_function': {
-    \   'gitbranch': 'TruncateGitBranch'
-    \ },
-    \ }
-
-" FZF
-nnoremap <Leader>f :Files<CR>
-nnoremap <Leader>b :Buffers<CR>
-
-" nvim-compe
 lua <<EOF
+-- lightline
+vim.g.lightline = {
+    colorscheme = "one",
+    active = {
+        left = {
+            {"mode", "past"},
+            {"gitbranch", "filename", "readonly", "modified"}
+        },
+        right = {
+            {"lineinfo"},
+            {"fileencoding", "filetype"},
+        },
+    },
+    inactive = {
+        left = {
+            {"filename", "modified"},
+        }
+    },
+    component_function = {
+        gitbranch = "TruncateGitBranch"
+    },
+}
+
+-- FZF
+vim.api.nvim_set_keymap("n", "<Leader>f", ":Files<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>b", ":Buffers<CR>", {noremap = true})
+
+-- nvim-compe
 vim.o.completeopt = "menuone,noselect"
 
 require"compe".setup {
@@ -200,7 +204,7 @@ require"compe".setup {
     },
 }
 
-local t = function(str)
+local compe_t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)
 end
 
@@ -209,17 +213,17 @@ end
 --- jump to prev/next snippet's placeholder
 _G.tab_complete = function()
     if vim.fn.pumvisible() == 1 then
-        return t "<C-n>"
+        return compe_t "<C-n>"
     else
-        return t "<Tab>"
+        return compe_t "<Tab>"
   end
 end
 _G.s_tab_complete = function()
     if vim.fn.pumvisible() == 1 then
-        return t "<C-p>"
+        return compe_t "<C-p>"
     else
         -- If <S-Tab> is not working in your terminal, change it to <C-h>
-        return t "<S-Tab>"
+        return compe_t "<S-Tab>"
     end
 end
 
