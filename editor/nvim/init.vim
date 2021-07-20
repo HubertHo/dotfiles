@@ -65,9 +65,38 @@ require "nvim-treesitter.configs".setup {
 
 -- lspconfig
 local lspconfig = require 'lspconfig'
-lspconfig.jedi_language_server.setup{}
-lspconfig.rust_analyzer.setup{}
-lspconfig.tsserver.setup{}
+
+local on_attach  = function(client, bufnr)
+    local options = {
+        noremap = true,
+        silent = true,
+    }
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.definition()<CR>", options
+    )
+    -- TODO: This is broken, not sure why
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
+    )
+end
+
+lspconfig.jedi_language_server.setup{
+    on_attach = on_attach,
+    root_dir = function(fname)
+        local found_path = lspconfig.util.root_pattern(
+            "pyproject.toml", ".git"
+        )(fname)
+        return found_path or vim.fn.getcwd()
+    end
+}
+
+lspconfig.rust_analyzer.setup{
+    on_attach = on_attach,
+}
+
+lspconfig.tsserver.setup{
+    on_attach = on_attach,
+}
 EOF
 
 "-------- Editor Configuration --------
