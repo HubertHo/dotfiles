@@ -217,8 +217,9 @@ vim.g.lightline = {
 }
 
 -- FZF
-vim.api.nvim_set_keymap("n", "<Leader>f", ":Files<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<Leader>b", ":Buffers<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>GFiles<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>f", "<Cmd>Files<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>b", "<Cmd>Buffers<CR>", {noremap = true})
 
 -- nvim-compe
 vim.o.completeopt = "menuone,noselect"
