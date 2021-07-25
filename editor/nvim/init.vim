@@ -34,6 +34,8 @@ syntax on
 
 set background=light
 colorscheme one-nvim
+" make the todo label more visible for one-nvim
+highlight Todo guifg=#383a42 guibg=#d0d0d0
 
 lua <<EOF
 -- nvim-treesitter
