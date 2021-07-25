@@ -1,27 +1,17 @@
-call plug#begin(stdpath('data').'/plugged')
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'itchyny/lightline.vim'
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
+lua <<EOF
+-- Ensure that packer is installed
+local fn = vim.fn
+local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
+if fn.empty(fn.glob(install_path)) > 0 then
+    fn.system({
+        "git", "clone", "https://github.com/wbthomason/packer.nvim",
+        install_path
+    })
+    vim.api.nvim_command "packadd packer.nvim"
+end
 
-" Neovim specific plugins
-Plug 'lukas-reineke/indent-blankline.nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'rktjmp/lush.nvim'
-
-" Treesitter colors
-Plug 'npxbr/gruvbox.nvim'
-Plug 'Th3Whit3Wolf/one-nvim'
-
-" Language syntax plugins
-Plug 'rust-lang/rust.vim'
-Plug 'plasticboy/vim-markdown'
-call plug#end()
+require("plugins")
+EOF
 
 "-------- Utilities --------
 " Sometimes branch names are too long
@@ -47,7 +37,7 @@ colorscheme one-nvim
 
 lua <<EOF
 -- nvim-treesitter
-require "nvim-treesitter.configs".setup {
+require("nvim-treesitter.configs").setup {
     ensure_installed = {
         "javascript",
         "json",
@@ -64,7 +54,7 @@ require "nvim-treesitter.configs".setup {
 }
 
 -- lspconfig
-local lspconfig = require 'lspconfig'
+local lspconfig = require("lspconfig")
 
 local on_attach  = function(client, bufnr)
     local options = {
@@ -224,7 +214,7 @@ vim.api.nvim_set_keymap("n", "<Leader>b", "<Cmd>Buffers<CR>", {noremap = true})
 -- nvim-compe
 vim.o.completeopt = "menuone,noselect"
 
-require"compe".setup {
+require("compe").setup {
     enabled = true,
     autocomplete = true,
     source = {
