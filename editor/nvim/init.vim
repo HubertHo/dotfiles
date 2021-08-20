@@ -23,21 +23,18 @@ function! TruncateGitBranch()
         \ : head
 endfunction
 
-"-------- Colourscheme --------
-if !has('gui_running')
-    set t_Co=256
-endif
-if match($TERM, '-256color')
-    set termguicolors
-endif
-syntax on
-
-set background=light
-colorscheme one-nvim
-" make the todo label more visible for one-nvim
-highlight Todo guifg=#383a42 guibg=#d0d0d0
-
 lua <<EOF
+-- Colorscheme
+local color_term_values = {"-256color", "alacritty"}
+for _, term_value in ipairs(color_term_values) do
+    if vim.endswith(vim.env.TERM, term_value) then
+        vim.opt.termguicolors = true
+    end
+end
+vim.cmd("syntax on")
+vim.opt.background = "dark"
+vim.cmd("colorscheme gruvbox")
+
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
@@ -187,7 +184,7 @@ highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
 lua <<EOF
 -- lightline
 vim.g.lightline = {
-    colorscheme = "one",
+    colorscheme = "powerline",
     active = {
         left = {
             {"mode", "past"},
@@ -212,6 +209,7 @@ vim.g.lightline = {
 vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>GFiles<CR>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Leader>f", "<Cmd>Files<CR>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Leader>b", "<Cmd>Buffers<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<Leader>s", "<Cmd>Rg<CR>", {noremap = true})
 
 -- nvim-compe
 vim.o.completeopt = "menuone,noselect"

@@ -1,7 +1,7 @@
 return require("packer").startup(function()
+    use "itchyny/lightline.vim"
     use {"junegunn/fzf", run=function() vim.fn["fzf#install"]() end}
     use "junegunn/fzf.vim"
-    use "itchyny/lightline.vim"
     use "mhinz/vim-signify"
     use "tpope/vim-commentary"
     use "tpope/vim-fugitive"
@@ -12,12 +12,10 @@ return require("packer").startup(function()
     use "neovim/nvim-lspconfig"
     use "hrsh7th/nvim-compe"
     use {"nvim-treesitter/nvim-treesitter", run=":TSUpdate"}
-    use "rktjmp/lush.nvim"
     use 'wbthomason/packer.nvim'
 
     -- Treesitter colors
-    -- TODO: Try seoul256
-    use "Th3Whit3Wolf/one-nvim"
+    use {"HubertHo/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
 
     -- Language syntax plugins
     use "rust-lang/rust.vim"
