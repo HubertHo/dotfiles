@@ -86,6 +86,37 @@ lspconfig.rust_analyzer.setup{
 lspconfig.tsserver.setup{
     on_attach = on_attach,
 }
+
+lspconfig.ccls.setup{
+    on_attach = on_attach,
+}
+
+-- Linter Config
+local nvim_lint = require("lint")
+
+-- A \n character is written when closing stdin to flush the buffer. Since vim
+-- implicitly appends a newline character to the end of the file, this causes
+-- flake8 to interpret the file as having two blank lines at the end, raising a
+-- W391 warning.
+local pattern = '[^:]+:(%d+):(%d+):(%w+):(.+)'
+local groups = { 'lnum', 'col', 'code', 'message' }
+nvim_lint.linters.flake8 = {
+  cmd = 'flake8',
+  stdin = false,
+  args = {
+    '--format=%(path)s:%(row)d:%(col)d:%(code)s:%(text)s',
+    '--no-show-source',
+    '-',
+  },
+  ignore_exitcode = true,
+  parser = require('lint.parser').from_pattern(pattern, groups, nil, {
+    ['source'] = 'flake8',
+    ['severity'] = vim.diagnostic.severity.WARN,
+  }),
+}
+nvim_lint.linters_by_ft = {
+    python = {"flake8",}
+}
 EOF
 
 "-------- Editor Configuration --------
