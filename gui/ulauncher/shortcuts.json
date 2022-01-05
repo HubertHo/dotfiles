@@ -1,0 +1,22 @@
+{
+    "a74d172a-7ad0-460a-81c1-d6c51bac3a8d": {
+        "id": "a74d172a-7ad0-460a-81c1-d6c51bac3a8d",
+        "name": "Shutdown",
+        "keyword": "shutdown",
+        "cmd": "systemctl poweroff",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1641346458.7442064
+    },
+    "c4f94480-1388-4d0e-8731-79b9402d139f": {
+        "id": "c4f94480-1388-4d0e-8731-79b9402d139f",
+        "name": "Reboot",
+        "keyword": "reboot",
+        "cmd": "systemctl reboot",
+        "icon": null,
+        "is_default_search": false,
+        "run_without_argument": true,
+        "added": 1641346474.0742388
+    }
+}
