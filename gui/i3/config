@@ -1,24 +1,33 @@
-# Set alt as modifier key
+# Set super as modifier key
 set $mod Mod4
 
-# Set command for locking screen
-set $lock i3lock --color=1c1c1c --ignore-empty-password
+set $background_img "$HOME/Pictures/wallpapers/neon_hong_kong_skyline.png"
 
-# Show the NetworkManager icon
-exec --no-startup-id nm-applet
+# Set command for locking screen
+set $lock i3lock -c 1c1c1c --ignore-empty-password
 
 # Configure xss-lock to lock and suspend
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=1c1c1c --ignore-empty-password --nofork
 
-# Show gray desktop background
-exec --no-startup-id xsetroot -solid "#1c1c1c"
+exec --no-startup-id feh --bg-scale $background_img
 
 # Set font for status and window bars
 font pango:Noto Sans Mono 9
 
+# Config for i3-gaps
+hide_edge_borders both
+for_window [class="^.*"] border pixel 1
+gaps inner 5
+gaps outer 5
+smart_gaps on
+smart_borders on
+
+# Do not automatically focus on new windows
+no_focus [window_role="pop-up"]
+
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
@@ -43,17 +52,14 @@ bindsym $mod+Shift+b exec firefox --private-window
 # use thunderbird for emails
 bindsym $mod+t exec thunderbird
 
-# Open discord
-bindsym $mod+Shift+d exec discord
-
 # shortcut to lock machine
 bindsym ctrl+$mod+l exec $lock
 
 # kill focused window
 bindsym $mod+Shift+w kill
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
+# start ulauncher (a program launcher)
+bindsym $mod+d exec ulauncher
 
 # change focus
 bindsym $mod+j focus left
