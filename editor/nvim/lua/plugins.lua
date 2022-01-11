@@ -13,6 +13,7 @@ return require("packer").startup(function()
     use "hrsh7th/nvim-compe"
     use {"nvim-treesitter/nvim-treesitter", run=":TSUpdate"}
     use 'wbthomason/packer.nvim'
+    use 'mfussenegger/nvim-lint'
 
     -- Treesitter colors
     use {"HubertHo/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
