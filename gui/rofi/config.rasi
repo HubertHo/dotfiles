@@ -1,13 +1,16 @@
 configuration {
     modi: "run,window";
-    font: "mono 12";
+    font: "mono 14";
     location: 0;
-    yoffset: -200;
+    yoffset: -400;
     xoffset: 0;
     fixed-num-lines: false;
     show-icons: false;
     terminal: "alacritty";
     max-history-size: 8;
+    matching: "fuzzy";
+    sorting: "fzf";
+    cycle: false;
     kb-select-1: "Alt+1";
     kb-select-2: "Alt+2";
     kb-select-3: "Alt+3";
@@ -41,4 +44,18 @@ configuration {
     }
 }
 
-@theme "themes/gruvbox/gruvbox-dark-soft.rasi"
+@theme "/usr/share/rofi/themes/gruvbox-dark-soft.rasi"
+
+element {
+    children: [element-index, element-text];
+}
+
+element-text, element-index {
+    background-color: inherit;
+    text-color:       inherit;
+    padding: 10px;
+}
+
+listview {
+    scrollbar: false;
+}
