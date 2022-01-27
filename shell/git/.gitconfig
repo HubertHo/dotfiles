@@ -1,5 +1,8 @@
 [user]
 	email = ho.hubert3@gmail.com
 	name = Hubert Ho
+[diff]
+	algorithm = patience
+	compactionHeuristic = true
 [pull]
-    ff = only
+	ff = only
