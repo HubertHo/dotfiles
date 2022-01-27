@@ -204,13 +204,10 @@ nnoremap <right> :bn<CR>
 
 "-------- Plugin Configuration --------
 " vim-signify configs
-let g:signify_sign_add='+'
-let g:signify_sign_delete='-'
-let g:signify_sign_delete_first_line='-'
-let g:signify_sign_change='!'
-highlight SignifySignAdd ctermfg=green ctermbg=green guifg=#00ff00 guibg=#00ff00
-highlight SignifySignChange ctermfg=yellow ctermbg=yellow guifg=#ffff00 guibg=#ffff00
-highlight SignifySignDelete ctermfg=red ctermbg=red guifg=#ff0000 guibg=#ff0000
+let g:signify_sign_add='++'
+let g:signify_sign_delete='--'
+let g:signify_sign_delete_first_line='--'
+let g:signify_sign_change='=='
 
 lua <<EOF
 -- lightline
