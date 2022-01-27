@@ -24,10 +24,10 @@ colors:
     cyan:    '0x89b482'
     white:   '0xdfbf8e'
 
-background_opacity: 1
+window:
+  opacity: 1.0
 
 # Font configuration
-# Have to use size 6 when in i3
 font:
     normal:
         family: Noto Sans Mono
@@ -41,7 +41,6 @@ font:
         family: Noto Sans Mono
         style: Bold Italic
     size: 6.0
-    # size: 11.0
 
 # Cursor
 cursor:
