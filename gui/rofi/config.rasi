@@ -9,7 +9,6 @@ configuration {
     terminal: "alacritty";
     max-history-size: 8;
     matching: "fuzzy";
-    sorting: "fzf";
     cycle: false;
     kb-select-1: "Alt+1";
     kb-select-2: "Alt+2";
