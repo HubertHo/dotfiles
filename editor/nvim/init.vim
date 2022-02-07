@@ -202,6 +202,72 @@ inoremap <right> <nop>
 nnoremap <left> :bp<CR>
 nnoremap <right> :bn<CR>
 
+
+lua << EOF
+-- Diagnostics
+function format_float_diagnostic_message(diagnostic)
+    return string.format(
+        "L%s %s:%s - %s",
+        diagnostic.lnum,
+        diagnostic.col,
+        diagnostic.end_col,
+        diagnostic.message
+    )
+end
+
+vim.diagnostic.config({
+    virtual_text = false,
+    float = {
+        format = format_float_diagnostic_message,
+    },
+    severity_sort = true,
+})
+
+vim.fn.sign_define("DiagnosticSignError", {
+    text=" E",
+    texthl="DiagnosticSignError",
+    linehl = "",
+    numhl = ""
+})
+vim.fn.sign_define("DiagnosticSignWarn", {
+    text=" W",
+    texthl="DiagnosticSignWarn",
+    linehl = "",
+    numhl = ""
+})
+vim.fn.sign_define("DiagnosticSignInfo", {
+    text=" I",
+    texthl="DiagnosticSignInfo",
+    linehl = "",
+    numhl = ""
+})
+vim.fn.sign_define("DiagnosticSignHint", {
+    text=" H",
+    texthl="DiagnosticSignHint",
+    linehl = "",
+    numhl = ""
+})
+EOF
+
+" TODO: Figure out a nicer way of declaring these mappings
+function OpenDiagnosticFloatFunc()
+    lua vim.diagnostic.open_float()
+endfunction
+command! OpenDiagnosticFloat call OpenDiagnosticFloatFunc()
+nnoremap <leader>e :OpenDiagnosticFloat<CR>
+
+function GotoNextDiagnosticFunc()
+    lua vim.diagnostic.goto_next()
+endfunction
+command! GotoNextDiagnostic call GotoNextDiagnosticFunc()
+nnoremap ]e :GotoNextDiagnostic<CR>
+
+function GotoPrevDiagnosticFunc()
+    lua vim.diagnostic.goto_prev()
+endfunction
+command! GotoPrevDiagnostic call GotoPrevDiagnosticFunc()
+nnoremap [e :GotoPrevDiagnostic<CR>
+
 "-------- Plugin Configuration --------
 " vim-signify configs
 let g:signify_sign_add='++'
