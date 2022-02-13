@@ -182,11 +182,6 @@ nmap <Leader>q :q!<CR>
 nnoremap j gj
 nnoremap k gk
 
-" Shortcut for updating plugins
-command! PU PlugInstall | PlugUpgrade
-command! PC PlugClean!
-command! PUP PlugUpgrade
-
 " Fast capitalization
 inoremap <c-u> <esc>bveU<esc>Ea
 
@@ -247,35 +242,27 @@ vim.fn.sign_define("DiagnosticSignHint", {
     linehl = "",
     numhl = ""
 })
+
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap(
+    'n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts
+)
+vim.api.nvim_set_keymap(
+    'n', '[e', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts
+)
+vim.api.nvim_set_keymap(
+    'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
+)
 EOF
 
-" TODO: Figure out a nicer way of declaring these mappings
-function OpenDiagnosticFloatFunc()
-    lua vim.diagnostic.open_float()
-endfunction
-command! OpenDiagnosticFloat call OpenDiagnosticFloatFunc()
-nnoremap <leader>e :OpenDiagnosticFloat<CR>
-
-function GotoNextDiagnosticFunc()
-    lua vim.diagnostic.goto_next()
-endfunction
-command! GotoNextDiagnostic call GotoNextDiagnosticFunc()
-nnoremap ]e :GotoNextDiagnostic<CR>
-
-function GotoPrevDiagnosticFunc()
-    lua vim.diagnostic.goto_prev()
-endfunction
-command! GotoPrevDiagnostic call GotoPrevDiagnosticFunc()
-nnoremap [e :GotoPrevDiagnostic<CR>
-
 "-------- Plugin Configuration --------
-" vim-signify configs
-let g:signify_sign_add='++'
-let g:signify_sign_delete='--'
-let g:signify_sign_delete_first_line='--'
-let g:signify_sign_change='=='
-
 lua <<EOF
+-- vim-signify
+vim.g.signify_sign_add = "++"
+vim.g.signify_sign_delete="--"
+vim.g.signify_sign_delete_first_line="--"
+vim.g.signify_sign_change="=="
+
 -- lightline
 vim.g.lightline = {
     colorscheme = "powerline",
