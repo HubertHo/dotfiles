@@ -1,6 +1,6 @@
 configuration {
     modi: "run,window";
-    font: "mono 14";
+    font: "mono 12";
     location: 0;
     yoffset: -400;
     xoffset: 0;

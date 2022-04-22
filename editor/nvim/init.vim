@@ -38,6 +38,7 @@ vim.cmd("colorscheme gruvbox")
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
+        "dart",
         "javascript",
         "json",
         "latex",
@@ -88,6 +89,10 @@ lspconfig.tsserver.setup{
 }
 
 lspconfig.ccls.setup{
+    on_attach = on_attach,
+}
+
+lspconfig.dartls.setup{
     on_attach = on_attach,
 }
 
