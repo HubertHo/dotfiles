@@ -38,14 +38,18 @@ vim.cmd("colorscheme gruvbox")
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
-        "dart",
+        "bash",
+        "html",
         "javascript",
         "json",
         "latex",
+        "lua",
+        "markdown",
         "python",
         "toml",
         "tsx",
         "typescript",
+        "vim",
         "yaml"
     },
     highlight = {

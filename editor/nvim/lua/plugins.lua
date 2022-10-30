@@ -16,9 +16,8 @@ return require("packer").startup(function()
     use 'mfussenegger/nvim-lint'
 
     -- Treesitter colors
-    use {"HubertHo/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+    use "ellisonleao/gruvbox.nvim"
 
     -- Language syntax plugins
     use "rust-lang/rust.vim"
-    use "plasticboy/vim-markdown"
 end)
