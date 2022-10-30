@@ -1,9 +1,7 @@
 configuration {
     modi: "run,window";
     font: "mono 12";
-    location: 0;
-    yoffset: -400;
-    xoffset: 0;
+    location: 2;
     fixed-num-lines: false;
     show-icons: false;
     terminal: "alacritty";
