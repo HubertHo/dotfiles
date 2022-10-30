@@ -32,14 +32,9 @@ prompt_branch(){
 }
 PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;31m\]$(prompt_branch)\[\033[00m\] \$ '
 
-
 # Add directories to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"  # sass
 export PATH="$HOME/.local/bin:$PATH"  # local scripts
-
-# Flutter development
-export CHROME_EXECUTABLE="/usr/bin/google-chrome-stable"
-export FLUTTER_SDK="/opt/flutter/bin/"
 
 # Aliases
 alias rm='rm --interactive=never'
