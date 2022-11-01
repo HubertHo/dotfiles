@@ -260,7 +260,6 @@ local truncateBranchName = function(str)
     if (string.len(branchName) > branchNameLengthLimit) then
         branchName = string.sub(branchName, 0, branchNameLengthLimit) .. "..."
     end
-    print(branchName)
     return branchName
 end
 
