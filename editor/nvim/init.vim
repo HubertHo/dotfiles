@@ -9,21 +9,8 @@ if fn.empty(fn.glob(install_path)) > 0 then
     })
     vim.api.nvim_command "packadd packer.nvim"
 end
-
 require("plugins")
-EOF
 
-"-------- Utilities --------
-" Sometimes branch names are too long
-function! TruncateGitBranch()
-    let len_limit=30
-    " This can be any function that returns the current HEAD
-    let head = FugitiveHead()
-    return len(head) > len_limit ? strpart(head, 0, len_limit) . "..."
-        \ : head
-endfunction
-
-lua <<EOF
 -- Colorscheme
 local color_term_values = {"-256color", "alacritty"}
 for _, term_value in ipairs(color_term_values) do
@@ -33,6 +20,23 @@ for _, term_value in ipairs(color_term_values) do
 end
 vim.cmd("syntax on")
 vim.opt.background = "dark"
+require("gruvbox").setup({
+    undercurl = true,
+    underline = true,
+    bold = true,
+    italic = true,
+    strikethrough = true,
+    invert_selection = false,
+    invert_signs = false,
+    invert_tabline = false,
+    invert_intend_guides = false,
+    inverse = true,
+    contrast = "hard",
+    palette_overrides = {},
+    overrides = {},
+    dim_inactive = false,
+    transparent_mode = false,
+})
 vim.cmd("colorscheme gruvbox")
 
 -- nvim-treesitter
@@ -83,20 +87,13 @@ lspconfig.jedi_language_server.setup{
         return found_path or vim.fn.getcwd()
     end
 }
-
 lspconfig.rust_analyzer.setup{
     on_attach = on_attach,
 }
-
 lspconfig.tsserver.setup{
     on_attach = on_attach,
 }
-
 lspconfig.ccls.setup{
-    on_attach = on_attach,
-}
-
-lspconfig.dartls.setup{
     on_attach = on_attach,
 }
 
@@ -250,26 +247,66 @@ vim.g.signify_sign_delete="--"
 vim.g.signify_sign_delete_first_line="--"
 vim.g.signify_sign_change="=="
 
--- lightline
-vim.g.lightline = {
-    colorscheme = "powerline",
-    active = {
-        left = {
-            {"mode", "past"},
-            {"gitbranch", "filename", "readonly", "modified"}
-        },
-        right = {
-            {"lineinfo"},
-            {"fileencoding", "filetype"},
-        },
-    },
-    inactive = {
-        left = {
-            {"filename", "modified"},
+-- lualine
+local filenameConfig = {
+    "filename",
+    file_status = true,
+    newfile_status = true,
+    path = 0,
+}
+local truncateBranchName = function(str)
+    local branchNameLengthLimit = 40
+    local branchName = str
+    if (string.len(branchName) > branchNameLengthLimit) then
+        branchName = string.sub(branchName, 0, branchNameLengthLimit) .. "..."
+    end
+    print(branchName)
+    return branchName
+end
+
+require('lualine').setup {
+    options = {
+        icons_enabled = false,
+        theme = 'auto',
+        component_separators = {left = "|", right = "|"},
+        section_separators = '',
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
         }
     },
-    component_function = {
-        gitbranch = "TruncateGitBranch"
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {
+            {
+                'branch',
+                icons_enabled = false,
+                fmt = truncateBranchName,
+            },
+            'diff',
+            'diagnostics'
+        },
+        lualine_c = {filenameConfig},
+        lualine_x = {'encoding', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {filenameConfig},
+        lualine_x = {'progress'},
+        lualine_y = {'location'},
+        lualine_z = {}
+    },
+    tabline = {
+        lualine_a = {
+            {"tabs", mode = 2}
+        },
     },
 }
 
