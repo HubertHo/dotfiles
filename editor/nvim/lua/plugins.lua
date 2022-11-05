@@ -1,5 +1,4 @@
 return require("packer").startup(function()
-    use "itchyny/lightline.vim"
     use {"junegunn/fzf", run=function() vim.fn["fzf#install"]() end}
     use "junegunn/fzf.vim"
     use "mhinz/vim-signify"
@@ -14,11 +13,11 @@ return require("packer").startup(function()
     use {"nvim-treesitter/nvim-treesitter", run=":TSUpdate"}
     use 'wbthomason/packer.nvim'
     use 'mfussenegger/nvim-lint'
+    use 'nvim-lualine/lualine.nvim'
 
     -- Treesitter colors
-    use {"HubertHo/gruvbox.nvim", requires = {"rktjmp/lush.nvim"}}
+    use "ellisonleao/gruvbox.nvim"
 
     -- Language syntax plugins
     use "rust-lang/rust.vim"
-    use "plasticboy/vim-markdown"
 end)
