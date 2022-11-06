@@ -79,10 +79,10 @@ _G.packer_plugins = {
     path = "/home/hubert/.local/share/nvim/site/pack/packer/start/fzf",
     url = "https://github.com/junegunn/fzf"
   },
-  ["fzf.vim"] = {
+  ["fzf-lua"] = {
     loaded = true,
-    path = "/home/hubert/.local/share/nvim/site/pack/packer/start/fzf.vim",
-    url = "https://github.com/junegunn/fzf.vim"
+    path = "/home/hubert/.local/share/nvim/site/pack/packer/start/fzf-lua",
+    url = "https://github.com/ibhagwan/fzf-lua"
   },
   ["gruvbox.nvim"] = {
     loaded = true,

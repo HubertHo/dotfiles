@@ -310,10 +310,22 @@ require('lualine').setup {
 }
 
 -- FZF
-vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>GFiles<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<Leader>f", "<Cmd>Files<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<Leader>b", "<Cmd>Buffers<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<Leader>s", "<Cmd>Rg<CR>", {noremap = true})
+local set_fzf_keymaps = function(keymap)
+    local keymap_options = {noremap = true, silent = true}
+    local keymap_template = "<Leader>%s"
+    local command_template = "<Cmd>lua require('fzf-lua').%s()<CR>"
+    for shortcut, command in pairs(keymap) do
+        local mapping_str = string.format(keymap_template, shortcut)
+        local command_str = string.format(command_template, command)
+        vim.api.nvim_set_keymap("n", mapping_str, command_str, keymap_options)
+    end
+end
+set_fzf_keymaps({
+    s = "grep_project",
+    b = "buffers",
+    f = "files",
+    g = "git_files",
+})
 
 -- nvim-compe
 vim.o.completeopt = "menuone,noselect"
