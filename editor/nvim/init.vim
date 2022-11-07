@@ -150,39 +150,38 @@ endif
 
 filetype plugin on
 
-"-------- Key Mappings and Commands --------
-" Map ; as :
-nnoremap ; :
-
-" Stop accidentally opening help
-map <F1> <Esc>
-imap <F1> <Esc>
-
-" Save and quit shortcuts
-nmap <Leader>w :w<CR>
-nmap <Leader>q :q!<CR>
-
-" Move cursor on each line for wrapped line
-nnoremap j gj
-nnoremap k gk
-
-" Fast capitalization
-inoremap <c-u> <esc>bveU<esc>Ea
-
-" No arrow keys
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-" Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
-
-
 lua << EOF
+-------- Key Mappings and Commands --------
+-- Map ; as :
+vim.api.nvim_set_keymap("n", ";", ":", {noremap = true})
+
+-- Stop accidentally opening help
+vim.api.nvim_set_keymap("", "<F1>", "<Esc>", {})
+vim.api.nvim_set_keymap("i", "<F1>", "<Esc>", {})
+
+-- Save and quit
+vim.api.nvim_set_keymap("n", "<Leader>w", ":w<CR>", {})
+vim.api.nvim_set_keymap("n", "<Leader>q", ":q!<CR>", {})
+
+-- Move cursor between each "line" for a wrapped line
+vim.api.nvim_set_keymap("n", "j", "gj", {noremap = true})
+vim.api.nvim_set_keymap("n", "k", "gk", {noremap = true})
+
+-- Fast capitalization
+vim.api.nvim_set_keymap("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
+
+-- No arrow keys
+vim.api.nvim_set_keymap("n", "<up>", "<nop>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<down>", "<nop>", {noremap = true})
+vim.api.nvim_set_keymap("i", "<up>", "<nop>", {noremap = true})
+vim.api.nvim_set_keymap("i", "<down>", "<nop>", {noremap = true})
+vim.api.nvim_set_keymap("i", "<left>", "<nop>", {noremap = true})
+vim.api.nvim_set_keymap("i", "<right>", "<nop>", {noremap = true})
+
+-- Use left and right arrow keys to switch between buffers
+vim.api.nvim_set_keymap("n", "<left>", ":bp<CR>", {noremap = true})
+vim.api.nvim_set_keymap("n", "<right>", ":bn<CR>", {noremap = true})
+
 -- Diagnostics
 function format_float_diagnostic_message(diagnostic)
     return string.format(
@@ -193,7 +192,6 @@ function format_float_diagnostic_message(diagnostic)
         diagnostic.message
     )
 end
-
 vim.diagnostic.config({
     virtual_text = false,
     float = {
@@ -237,10 +235,8 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
     'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
 )
-EOF
 
-"-------- Plugin Configuration --------
-lua <<EOF
+-------- Plugin Configuration --------
 -- vim-signify
 vim.g.signify_sign_add = "++"
 vim.g.signify_sign_delete="--"
