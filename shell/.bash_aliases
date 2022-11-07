@@ -8,8 +8,10 @@ alias uuuu='cd ../../../../'
 alias uuuuu='cd ../../../../../'
 alias ls='ls --color=auto'
 alias la='ls --color=auto -al'
-alias vim='open_nvim'
-alias v='open_nvim'
+if ! [ type nvim 2>/dev/null > /dev/null ]; then
+    alias vim='nvim'
+fi
+alias v='vim'
 alias sp='ps aux | rg -F'
 if ! [ type zathura 2>/dev/null > /dev/null ]; then
     alias z='zathura'
@@ -74,3 +76,4 @@ alias gtp='git stash push'
 alias gto='git stash pop'
 alias gts='git stash show -p'
 alias gua='git pull && git submodule update --recursive --remote'
+alias gds='git diff --staged'
