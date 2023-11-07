@@ -45,6 +45,13 @@ require("gruvbox").setup({
 })
 vim.cmd("colorscheme gruvbox")
 
+-- Indent indicator
+require("ibl").setup({
+    scope = {
+        enabled = false
+    }
+})
+
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
