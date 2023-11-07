@@ -62,6 +62,7 @@ require("nvim-treesitter.configs").setup {
         "latex",
         "lua",
         "markdown",
+        "markdown_inline",
         "python",
         "toml",
         "tsx",
@@ -89,6 +90,10 @@ local on_attach  = function(client, bufnr)
     vim.api.nvim_buf_set_keymap(
         bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
     )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
+    )
 end
 
 lspconfig.jedi_language_server.setup{
@@ -107,6 +112,9 @@ lspconfig.tsserver.setup{
     on_attach = on_attach,
 }
 lspconfig.ccls.setup{
+    on_attach = on_attach,
+}
+lspconfig.svelte.setup{
     on_attach = on_attach,
 }
 
@@ -179,6 +187,10 @@ vim.api.nvim_set_keymap("n", "<Leader>q", ":q!<CR>", {})
 -- Move cursor between each "line" for a wrapped line
 vim.api.nvim_set_keymap("n", "j", "gj", {noremap = true})
 vim.api.nvim_set_keymap("n", "k", "gk", {noremap = true})
+
+-- Move up/down half page but also center the view
+vim.api.nvim_set_keymap("n", "<c-u>", "<c-u>zz", {noremap = true})
+vim.api.nvim_set_keymap("n", "<c-d>", "<c-d>zz", {noremap = true})
 
 -- Fast capitalization
 vim.api.nvim_set_keymap("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
@@ -334,6 +346,27 @@ set_fzf_keymaps({
     b = "buffers",
     f = "files",
     g = "git_files",
+})
+
+local fzf_lua = require("fzf-lua")
+local fzf_actions = fzf_lua.actions
+fzf_lua.setup({
+    actions = {
+        files = {
+            ["default"] = fzf_actions.file_edit_or_qf,
+            ["ctrl-h"] = fzf_actions.file_split,
+            ["ctrl-v"] = fzf_actions.file_vsplit,
+            ["ctrl-s"] = fzf_actions.file_tabedit,
+            ["alt-q"] = fzf_actions.file_sel_to_qf,
+            ["alt-l"] = fzf_actions.file_sel_to_ll,
+        },
+        buffers = {
+            ["default"] = fzf_actions.buf_edit,
+            ["ctrl-h"] = fzf_actions.buf_split,
+            ["ctrl-v"] = fzf_actions.buf_vsplit,
+            ["ctrl-s"] = fzf_actions.buf_tabedit,
+        }
+    }
 })
 
 -- nvim-compe
