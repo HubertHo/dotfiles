@@ -35,8 +35,9 @@ PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\] \[\033[01;31
 # Add directories to PATH
 export PATH="$HOME/repos/dart-sass:$PATH"  # sass
 export PATH="$HOME/.local/bin:$PATH"  # local scripts
+export PATH="$HOME/.cargo/bin:$PATH"  # Rust binaries
 
-source /usr/share/bash-completion/completions/git
+# Add bash aliases
 source $HOME/.bash_aliases
 
 # Show TODOs in the current directory

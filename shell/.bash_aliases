@@ -49,6 +49,8 @@ alias ff='rg -l' # Get all files that match the pattern in curdir
 alias ffs='rg -lF' # Get all files with name that matches given string
 alias ffc='rg -F -C=5' # Search for files with matching string
 
+alias spotify='spotify-launcher'
+
 # tmux aliases
 alias t='tmux'
 alias tk='tmux kill-server'
