@@ -1,5 +1,4 @@
 setlocal colorcolumn=101
-setlocal textwidth=100
 
 " PDB shortcut
 nmap <buffer> <Leader>pdb o__import__("pdb").set_trace()<Esc>
