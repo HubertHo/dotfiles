@@ -3,4 +3,5 @@ if exists("did_load_filetypes")
 endif
 augroup filetypedetect
     au! BufRead,BufNewFile *.tex setfiletype tex
+    au! BufREad,BufNewFile *njk setfiletype htmldjango
 augroup END
