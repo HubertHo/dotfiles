@@ -9,7 +9,12 @@ return require("packer").startup(function()
     -- Neovim specific plugins
     use "lukas-reineke/indent-blankline.nvim"
     use "neovim/nvim-lspconfig"
-    use "hrsh7th/nvim-compe"
+    use "hrsh7th/nvim-cmp"
+    use "hrsh7th/cmp-buffer"
+    use "hrsh7th/cmp-path"
+    use "hrsh7th/cmp-nvim-lsp"
+    use "L3MON4D3/LuaSnip"
+    use "saadparwaiz1/cmp_luasnip"
     use {"nvim-treesitter/nvim-treesitter", run=":TSUpdate"}
     use 'wbthomason/packer.nvim'
     use 'mfussenegger/nvim-lint'
