@@ -40,7 +40,7 @@ font:
     bold_italic:
         family: Noto Sans Mono
         style: Bold Italic
-    size: 6.0
+    size: 5.5
 
 # Cursor
 cursor:
