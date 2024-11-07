@@ -67,6 +67,30 @@ require("nvim-treesitter.configs").setup {
     },
 }
 
+-- nvim-cmp
+local cmp = require"cmp"
+cmp.setup({
+    snippet={
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
+    sources = {
+        {name = "nvim_lsp"},
+        {name = "luasnip"},
+        {name = "buffer"},
+    },
+    mapping = cmp.mapping.preset.insert({
+      ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+      ["<C-f>"] = cmp.mapping.scroll_docs(4),
+      ["<C-Space>"] = cmp.mapping.complete(),
+      ["<C-e>"] = cmp.mapping.abort(),
+      ["<CR>"] = cmp.mapping.confirm({ select = true }),
+      ["<Tab>"] = cmp.mapping.select_next_item(),
+      ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    }),
+})
+
 -- lspconfig
 local lspconfig = require("lspconfig")
 
@@ -77,6 +101,9 @@ local on_attach  = function(client, bufnr)
     }
     vim.api.nvim_buf_set_keymap(
         bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.definition()<CR>", options
+    )
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
     )
     -- TODO: This is broken, not sure why
     vim.api.nvim_buf_set_keymap(
@@ -96,7 +123,7 @@ lspconfig.jedi_language_server.setup{
 lspconfig.rust_analyzer.setup{
     on_attach = on_attach,
 }
-lspconfig.tsserver.setup{
+lspconfig.ts_ls.setup{
     on_attach = on_attach,
 }
 lspconfig.ccls.setup{
@@ -320,49 +347,4 @@ vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>GFiles<CR>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Leader>f", "<Cmd>Files<CR>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Leader>b", "<Cmd>Buffers<CR>", {noremap = true})
 vim.api.nvim_set_keymap("n", "<Leader>s", "<Cmd>Rg<CR>", {noremap = true})
-
--- nvim-compe
-vim.o.completeopt = "menuone,noselect"
-
-require("compe").setup {
-    enabled = true,
-    autocomplete = true,
-    source = {
-        path = true,
-        buffer = true,
-        nvim_lsp = true,
-    },
-}
-
-local compe_t = function(str)
-  return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
-
--- Use (s-)tab to:
---- move to prev/next item in completion menuone
---- jump to prev/next snippet's placeholder
-_G.tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return compe_t "<C-n>"
-    else
-        return compe_t "<Tab>"
-  end
-end
-_G.s_tab_complete = function()
-    if vim.fn.pumvisible() == 1 then
-        return compe_t "<C-p>"
-    else
-        -- If <S-Tab> is not working in your terminal, change it to <C-h>
-        return compe_t "<S-Tab>"
-    end
-end
-
-vim.api.nvim_set_keymap("i",
-    "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
-vim.api.nvim_set_keymap("i",
-    "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
-vim.api.nvim_set_keymap("i",
-    "<C-Space>", "compe#complete()", {expr = true, noremap = true})
-vim.api.nvim_set_keymap("i",
-    "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
 EOF
