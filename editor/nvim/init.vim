@@ -55,6 +55,7 @@ require("ibl").setup({
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
+        "astro",
         "bash",
         "html",
         "javascript",
@@ -108,7 +109,7 @@ lspconfig.jedi_language_server.setup{
 lspconfig.rust_analyzer.setup{
     on_attach = on_attach,
 }
-lspconfig.tsserver.setup{
+lspconfig.ts_ls.setup{
     on_attach = on_attach,
 }
 lspconfig.ccls.setup{
@@ -379,18 +380,32 @@ fzf_lua.setup({
     }
 })
 
--- nvim-compe
-vim.o.completeopt = "menuone,noselect"
-
-require("compe").setup {
-    enabled = true,
-    autocomplete = true,
-    source = {
-        path = true,
-        buffer = true,
-        nvim_lsp = true,
+-- nvim-cmp
+local cmp = require"cmp"
+cmp.setup({
+    snippet = {
+      expand = function(args)
+          require('luasnip').lsp_expand(args.body)
+      end,
     },
-}
+    sources = {
+        {name = "nvim_lsp", group_index = 1},
+        {name = "buffers", group_index = 2},
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert, count = 1}),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item({
+            behavior = cmp.SelectBehavior.Insert,
+            count = 1,
+        }),
+    }),
+})
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
 local compe_t = function(str)
   return vim.api.nvim_replace_termcodes(str, true, true, true)

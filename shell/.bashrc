@@ -60,3 +60,6 @@ pdftex() {
 suslock() {
     i3lock --color=1c1c1c --ignore-empty-password && systemctl suspend
 }
+
+# Ensure Node Version Manager is active
+source /usr/share/nvm/init-nvm.sh
