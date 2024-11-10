@@ -118,6 +118,9 @@ lspconfig.ccls.setup{
 lspconfig.svelte.setup{
     on_attach = on_attach,
 }
+lspconfig.astro.setup{
+    on_attach = on_attach,
+}
 
 -- Linter Config
 require("lint").linters_by_ft = {
