@@ -21,10 +21,10 @@
 
     ### Geometry ###
 
-    width = 500
+    width = (500, 500)
 
     # The maximum height of a single notification, excluding the frame.
-    height = 300
+    height = (0, 300)
 
     origin = bottom-right
 
