@@ -19,31 +19,8 @@ for _, term_value in ipairs(color_term_values) do
     end
 end
 vim.cmd("syntax on")
-vim.opt.background = "dark"
-require("gruvbox").setup({
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-        strings = true,
-        emphasis = true,
-        comments = true,
-        operators = false,
-        folds = true,
-    },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true,
-    contrast = "hard",
-    palette_overrides = {},
-    overrides = {},
-    dim_inactive = false,
-    transparent_mode = false,
-})
-vim.cmd("colorscheme gruvbox")
+vim.opt.background = "light"
+vim.cmd("colorscheme catppuccin")
 
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
