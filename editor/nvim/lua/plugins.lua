@@ -11,6 +11,8 @@ return require("packer").startup(function()
     use {"nvim-treesitter/nvim-treesitter", run=":TSUpdate"}
     use "hrsh7th/cmp-nvim-lsp"
     use "hrsh7th/nvim-cmp"
+    use "L3MON4D3/LuaSnip"
+    use "saadparwaiz1/cmp_luasnip"
     use "wbthomason/packer.nvim"
     use "mfussenegger/nvim-lint"
     use "nvim-lualine/lualine.nvim"
@@ -18,6 +20,7 @@ return require("packer").startup(function()
 
     -- Treesitter colors
     use "ellisonleao/gruvbox.nvim"
+    use "catppuccin/nvim"
 
     -- Language syntax plugins
     use "rust-lang/rust.vim"

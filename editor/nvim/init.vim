@@ -19,7 +19,7 @@ for _, term_value in ipairs(color_term_values) do
     end
 end
 vim.cmd("syntax on")
-vim.opt.background = "dark"
+vim.opt.background = "light"
 require("gruvbox").setup({
     undercurl = true,
     underline = true,
@@ -43,7 +43,7 @@ require("gruvbox").setup({
     dim_inactive = false,
     transparent_mode = false,
 })
-vim.cmd("colorscheme gruvbox")
+vim.cmd("colorscheme catppuccin")
 
 -- Indent indicator
 require("ibl").setup({
@@ -57,6 +57,9 @@ require("nvim-treesitter.configs").setup {
     ensure_installed = {
         "astro",
         "bash",
+        "css",
+        "dart",
+        "dockerfile",
         "html",
         "javascript",
         "json",
