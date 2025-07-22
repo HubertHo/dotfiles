@@ -48,7 +48,9 @@ vim.cmd("colorscheme gruvbox")
 -- nvim-treesitter
 require("nvim-treesitter.configs").setup {
     ensure_installed = {
+        "astro",
         "bash",
+        "css",
         "html",
         "javascript",
         "json",
@@ -56,6 +58,7 @@ require("nvim-treesitter.configs").setup {
         "lua",
         "markdown",
         "python",
+        "svelte",
         "toml",
         "tsx",
         "typescript",
@@ -127,6 +130,12 @@ lspconfig.ts_ls.setup{
     on_attach = on_attach,
 }
 lspconfig.ccls.setup{
+    on_attach = on_attach,
+}
+lspconfig.astro.setup{
+    on_attach = on_attach,
+}
+lspconfig.svelte.setup{
     on_attach = on_attach,
 }
 
@@ -341,6 +350,8 @@ require('lualine').setup {
         },
     },
 }
+
+require("ibl").setup()
 
 -- FZF
 vim.api.nvim_set_keymap("n", "<Leader>g", "<Cmd>GFiles<CR>", {noremap = true})
