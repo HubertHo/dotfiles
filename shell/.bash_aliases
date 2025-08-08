@@ -20,7 +20,7 @@ fi
 # Aliases for editing dotfiles
 alias eb='vim $HOME/.bashrc ; source $HOME/.bashrc'
 alias sb="source $HOME/.bashrc"
-alias ev="vim $HOME/.config/nvim/init.vim"
+alias ev="vim $HOME/.config/nvim/init.lua"
 alias elc="vim $HOME/.alacritty.yml"
 alias et="vim $HOME/.tmux.conf"
 

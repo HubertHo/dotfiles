@@ -19,8 +19,7 @@ return require("packer").startup(function()
     use "ibhagwan/fzf-lua"
 
     -- Treesitter colors
-    use "ellisonleao/gruvbox.nvim"
-    use "catppuccin/nvim"
+    use {"catppuccin/nvim", as = "catppuccin"}
 
     -- Language syntax plugins
     use "rust-lang/rust.vim"

@@ -37,6 +37,9 @@ export PATH="$HOME/repos/dart-sass:$PATH"  # sass
 export PATH="$HOME/.local/bin:$PATH"  # local scripts
 export PATH="$HOME/.cargo/bin:$PATH"  # Rust binaries
 
+# Android development
+# export CHROME_EXECUTABLE='/usr/bin/google-chrome-stable'
+
 # Add bash aliases
 source $HOME/.bash_aliases
 

@@ -1,7 +1,7 @@
 # Set super as modifier key
 set $mod Mod4
 
-set $background_img "$HOME/Pictures/wallpapers/neon_hong_kong_skyline.png"
+set $background_img "$HOME/Pictures/wallpapers/calvin_and_hobbes.jpg"
 
 # Set command for locking screen
 set $lock i3lock -c 1c1c1c --ignore-empty-password

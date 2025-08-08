@@ -1,15 +1,76 @@
-lua <<EOF
--- Ensure that packer is installed
+-- Ensure that the package manager is installed
 local fn = vim.fn
-local install_path = fn.stdpath("data").."/site/pack/packer/start/packer.nvim"
+local install_path = fn.stdpath("data") .. "/lazy/lazy.nvim"
 if fn.empty(fn.glob(install_path)) > 0 then
+    local lazy_repo = "https://github.com/folke/lazy.nvim.git"
     fn.system({
-        "git", "clone", "https://github.com/wbthomason/packer.nvim",
+        "git", "clone", "--filter=blob:none", "--branch=stable", lazy_repo,
         install_path
     })
-    vim.api.nvim_command "packadd packer.nvim"
 end
-require("plugins")
+vim.opt.rtp:prepend(install_path)
+
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
+vim.g.mapleader = " "
+
+-- Automatically apply changes if the file changes outside of neovim
+vim.opt.autoread = true
+vim.opt.colorcolumn = "101"
+vim.opt.conceallevel = 0
+vim.opt.encoding = "utf8"
+vim.opt.formatoptions:append({t = true, c = true, r = true})
+vim.opt.guicursor = ""
+vim.opt.hidden = true
+vim.opt.laststatus = 2
+vim.opt.mouse = "a"
+vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.ruler = true
+vim.opt.scl = "yes"
+vim.opt.shortmess:append("c")
+
+-- Show matching parentheses
+vim.opt.showmatch = true
+vim.opt.showtabline = 2
+
+-- Reduce update time to show git diffs
+vim.opt.updatetime = 100
+vim.opt.visualbell = true
+
+-- Splits that make sense
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
+-- Search configuration
+vim.opt.incsearch = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+-- Tabbing
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.smarttab = true
+vim.opt.softtabstop = 0
+vim.opt.tabstop = 8
+
+vim.api.nvim_command("filetype plugin on")
+
+-- jump to last edit position on opening file
+vim.api.nvim_create_autocmd(
+    'BufReadPost',
+    {
+        pattern = '*',
+        callback = function(ev)
+            if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+                -- except for in git commit messages
+                -- https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
+                if not vim.fn.expand('%:p'):find('.git', 1, true) then
+                        vim.cmd('exe "normal! g\'\\""')
+                end
+            end
+        end
+    }
+)
 
 -- Colorscheme
 local color_term_values = {"-256color", "alacritty"}
@@ -20,29 +81,6 @@ for _, term_value in ipairs(color_term_values) do
 end
 vim.cmd("syntax on")
 vim.opt.background = "light"
-require("gruvbox").setup({
-    undercurl = true,
-    underline = true,
-    bold = true,
-    italic = {
-        strings = true,
-        emphasis = true,
-        comments = true,
-        operators = false,
-        folds = true,
-    },
-    strikethrough = true,
-    invert_selection = false,
-    invert_signs = false,
-    invert_tabline = false,
-    invert_intend_guides = false,
-    inverse = true,
-    contrast = "hard",
-    palette_overrides = {},
-    overrides = {},
-    dim_inactive = false,
-    transparent_mode = false,
-})
 vim.cmd("colorscheme catppuccin")
 
 -- Indent indicator
@@ -60,6 +98,7 @@ require("nvim-treesitter.configs").setup {
         "css",
         "dart",
         "dockerfile",
+        "haskell",
         "html",
         "javascript",
         "json",
@@ -115,13 +154,16 @@ lspconfig.rust_analyzer.setup{
 lspconfig.ts_ls.setup{
     on_attach = on_attach,
 }
-lspconfig.ccls.setup{
-    on_attach = on_attach,
-}
 lspconfig.svelte.setup{
     on_attach = on_attach,
 }
 lspconfig.astro.setup{
+    on_attach = on_attach,
+}
+lspconfig.dartls.setup{
+    on_attach = on_attach,
+}
+lspconfig.hls.setup {
     on_attach = on_attach,
 }
 
@@ -129,56 +171,15 @@ lspconfig.astro.setup{
 require("lint").linters_by_ft = {
     python = {"flake8",}
 }
-EOF
 
-"-------- Editor Configuration --------
-let mapleader = "\<Space>"  " Map Leader to Space
-
-" Automatically apply changes if file changes outside of nvim
-set autoread
-set colorcolumn=101
-set conceallevel=0
-set encoding=utf8
-set formatoptions+=tc
-set formatoptions+=r
-set guicursor=
-set hidden
-set laststatus=2
-set mouse=a
-set number relativenumber
-set ruler
-set scl=yes  " Show sign column
-set shortmess+=c
-set showmatch  " Show matching parentheses
-set showtabline=2  " Show file tabs
-set updatetime=100  " Reduce update time to show git diffs
-set visualbell  " Turn off bell sound
-
-" Search configuration
-set incsearch
-set ignorecase
-set smartcase
-
-" Tabbing
-set expandtab
-set shiftwidth=4
-set smarttab
-set softtabstop=0
-set tabstop=8
-
-" Splits that make sense
-set splitbelow
-set splitright
-
-" Jump to last-edit position when opening files
-if has("autocmd")
-    au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1
-                \&& line("'\"") <= line("$") | exe "normal! g'\"" | endif
-endif
-
-filetype plugin on
-
-lua << EOF
+-- Ruff config
+-- local parse_ruff_diagnostics = function(output, bufnr)
+-- end
+-- require("lint").linters.ruff = {
+--     cmd = "ruff",
+--     stdin = false,
+--     ignore_exitcode = true,
+-- }
 
 vim.g.python_indent = {
     disable_parentheses_indenting = false,
@@ -444,4 +445,3 @@ vim.api.nvim_set_keymap("i",
     "<C-Space>", "compe#complete()", {expr = true, noremap = true})
 vim.api.nvim_set_keymap("i",
     "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
-EOF
