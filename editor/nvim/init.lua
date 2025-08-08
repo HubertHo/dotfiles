@@ -118,6 +118,15 @@ require("lazy").setup({
     {"tpope/vim-fugitive"},
     {"tpope/vim-obsession"},
     {
+        "mhinz/vim-signify",
+        config = function()
+            vim.g.signify_sign_add = "++"
+            vim.g.signify_sign_delete="--"
+            vim.g.signify_sign_delete_first_line="--"
+            vim.g.signify_sign_change="=="
+        end
+    },
+    {
         "junegunn/fzf",
         build = ":fzf#install()",
     },
@@ -490,10 +499,3 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap(
     'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
 )
-
--------- Plugin Configuration --------
--- vim-signify
-vim.g.signify_sign_add = "++"
-vim.g.signify_sign_delete="--"
-vim.g.signify_sign_delete_first_line="--"
-vim.g.signify_sign_change="=="
