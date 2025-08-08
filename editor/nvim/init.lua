@@ -128,7 +128,7 @@ require("lazy").setup({
     },
     {
         "junegunn/fzf",
-        build = ":fzf#install()",
+        build = ":call fzf#install()",
     },
     {
         "ibhagwan/fzf-lua",
@@ -174,13 +174,12 @@ require("lazy").setup({
     },
     {
         "lukas-reineke/indent-blankline.nvim",
-        config = function()
-            require("ibl").setup({
-                scope = {
-                    enabled = false
-                }
-            })
-        end
+        name = "ibl",
+        opts = {
+            scope = {
+                enabled = true
+            }
+        }
     },
     {
         "nvim-treesitter/nvim-treesitter",
