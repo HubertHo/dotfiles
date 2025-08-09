@@ -6,6 +6,7 @@
   "cmp_luasnip": { "branch": "master", "commit": "98d9cb5c2c38532bd9bdb481067b20fea8f32e90" },
   "fzf": { "branch": "master", "commit": "1afd14381079a35eac0a4c2a5cacb86e2a3f476b" },
   "fzf-lua": { "branch": "main", "commit": "4502c48d4a1fdb7ac735881e6fbd3ce65893c140" },
+  "gitsigns.nvim": { "branch": "main", "commit": "c7d37ca22b461f64e26f8f6701b2586128ed0bef" },
   "ibl": { "branch": "master", "commit": "005b56001b2cb30bfa61b7986bc50657816ba4ba" },
   "lazy.nvim": { "branch": "main", "commit": "6c3bda4aca61a13a9c63f1c1d1b16b9d3be90d7a" },
   "lualine.nvim": { "branch": "master", "commit": "a94fc68960665e54408fe37dcf573193c4ce82c9" },
@@ -16,6 +17,5 @@
   "rust.vim": { "branch": "master", "commit": "889b9a7515db477f4cb6808bef1769e53493c578" },
   "vim-commentary": { "branch": "master", "commit": "64a654ef4a20db1727938338310209b6a63f60c9" },
   "vim-fugitive": { "branch": "master", "commit": "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
-  "vim-obsession": { "branch": "master", "commit": "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63" },
-  "vim-signify": { "branch": "master", "commit": "54346382be614ef5934cbbe204fd58ba3247a84d" }
+  "vim-obsession": { "branch": "master", "commit": "ed9dfc7c2cc917ace8b24f4f9f80a91e05614b63" }
 }
