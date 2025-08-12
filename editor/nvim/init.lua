@@ -46,38 +46,38 @@ vim.api.nvim_command("filetype plugin on")
 
 -------- Key Mappings and Commands --------
 -- Map ; as :
-vim.api.nvim_set_keymap("n", ";", ":", {noremap = true})
+vim.keymap.set("n", ";", ":", {noremap = true})
 
 -- Stop accidentally opening help
-vim.api.nvim_set_keymap("", "<F1>", "<Esc>", {})
-vim.api.nvim_set_keymap("i", "<F1>", "<Esc>", {})
+vim.keymap.set("", "<F1>", "<Esc>", {})
+vim.keymap.set("i", "<F1>", "<Esc>", {})
 
 -- Save and quit
-vim.api.nvim_set_keymap("n", "<Leader>w", ":w<CR>", {})
-vim.api.nvim_set_keymap("n", "<Leader>q", ":q!<CR>", {})
+vim.keymap.set("n", "<Leader>w", ":w<CR>", {})
+vim.keymap.set("n", "<Leader>q", ":q!<CR>", {})
 
 -- Move cursor between each "line" for a wrapped line
-vim.api.nvim_set_keymap("n", "j", "gj", {noremap = true})
-vim.api.nvim_set_keymap("n", "k", "gk", {noremap = true})
+vim.keymap.set("n", "j", "gj", {noremap = true})
+vim.keymap.set("n", "k", "gk", {noremap = true})
 
 -- Move up/down half page but also center the view
-vim.api.nvim_set_keymap("n", "<c-u>", "<c-u>zz", {noremap = true})
-vim.api.nvim_set_keymap("n", "<c-d>", "<c-d>zz", {noremap = true})
+vim.keymap.set("n", "<c-u>", "<c-u>zz", {noremap = true})
+vim.keymap.set("n", "<c-d>", "<c-d>zz", {noremap = true})
 
 -- Fast capitalization
-vim.api.nvim_set_keymap("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
+vim.keymap.set("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
 
 -- No arrow keys
-vim.api.nvim_set_keymap("n", "<up>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<down>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<up>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<down>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<left>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<right>", "<nop>", {noremap = true})
+vim.keymap.set("n", "<up>", "<nop>", {noremap = true})
+vim.keymap.set("n", "<down>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<up>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<down>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<left>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<right>", "<nop>", {noremap = true})
 
 -- Use left and right arrow keys to switch between buffers
-vim.api.nvim_set_keymap("n", "<left>", ":bp<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<right>", ":bn<CR>", {noremap = true})
+vim.keymap.set("n", "<left>", ":bp<CR>", {noremap = true})
+vim.keymap.set("n", "<right>", ":bn<CR>", {noremap = true})
 
 -- jump to last edit position on opening file
 vim.api.nvim_create_autocmd(
@@ -140,7 +140,7 @@ require("lazy").setup({
                 for shortcut, command in pairs(keymap) do
                     local mapping_str = string.format(keymap_template, shortcut)
                     local command_str = string.format(command_template, command)
-                    vim.api.nvim_set_keymap("n", mapping_str, command_str, keymap_options)
+                    vim.keymap.set("n", mapping_str, command_str, keymap_options)
                 end
             end
             set_fzf_keymaps({
@@ -421,13 +421,13 @@ require("lazy").setup({
                 end
             end
 
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<C-Space>", "compe#complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
         end
     },
@@ -446,55 +446,35 @@ vim.opt.background = "light"
 vim.cmd("colorscheme catppuccin")
 
 -- Diagnostics
-function format_float_diagnostic_message(diagnostic)
-    return string.format(
-        "L%s %s:%s - %s",
-        diagnostic.lnum,
-        diagnostic.col,
-        diagnostic.end_col,
-        diagnostic.message
-    )
-end
 vim.diagnostic.config({
     virtual_text = false,
     float = {
-        format = format_float_diagnostic_message,
+        format = function(diagnostic)
+            return string.format(
+                "L%s %s:%s - %s",
+                diagnostic.lnum,
+                diagnostic.col,
+                diagnostic.end_col,
+                diagnostic.message
+            )
+        end,
     },
     severity_sort = true,
-})
-
-vim.fn.sign_define("DiagnosticSignError", {
-    text=" E",
-    texthl="DiagnosticSignError",
-    linehl = "",
-    numhl = ""
-})
-vim.fn.sign_define("DiagnosticSignWarn", {
-    text=" W",
-    texthl="DiagnosticSignWarn",
-    linehl = "",
-    numhl = ""
-})
-vim.fn.sign_define("DiagnosticSignInfo", {
-    text=" I",
-    texthl="DiagnosticSignInfo",
-    linehl = "",
-    numhl = ""
-})
-vim.fn.sign_define("DiagnosticSignHint", {
-    text=" H",
-    texthl="DiagnosticSignHint",
-    linehl = "",
-    numhl = ""
+    signs = {
+        [vim.diagnostic.severity.ERROR] = "E",
+        [vim.diagnostic.severity.WARN] = "W",
+        [vim.diagnostic.severity.INFO] = "I",
+        [vim.diagnostic.severity.HINT] = "H",
+    },
 })
 
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', '[e', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
 )
