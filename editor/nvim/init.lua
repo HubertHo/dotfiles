@@ -118,6 +118,13 @@ require("lazy").setup({
     {"tpope/vim-fugitive"},
     {"tpope/vim-obsession"},
     {
+        "HubertHo/memo.nvim",
+        opts = {
+            height = 60,
+            width = 180
+        }
+    },
+    {
         "mhinz/vim-signify",
         config = function()
             vim.g.signify_sign_add = "++"
