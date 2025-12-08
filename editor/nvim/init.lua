@@ -119,10 +119,22 @@ require("lazy").setup({
     {"tpope/vim-obsession"},
     {
         "HubertHo/memo.nvim",
-        opts = {
-            height = 60,
-            width = 180
-        }
+        config = function()
+            local memo = require("memo")
+            memo.setup({
+                height = 60,
+                width = 180,
+            })
+            vim.keymap.set("n", "<Leader>nt", function()
+                require("memo").open_note("notes")
+            end)
+            vim.api.nvim_create_user_command("Memo",
+                function(opts)
+                    memo.open_note(opts["fargs"][1])
+                end,
+                {nargs = 1}
+            )
+        end
     },
     {
         "mhinz/vim-signify",
@@ -199,20 +211,20 @@ require("lazy").setup({
                     "astro",
                     "bash",
                     "css",
-                    "dart",
                     "dockerfile",
-                    "haskell",
                     "html",
                     "javascript",
                     "json",
                     "lua",
                     "markdown",
                     "markdown_inline",
+                    "ocaml",
                     "python",
                     "toml",
                     "tsx",
                     "typescript",
                     "vim",
+                    "vue",
                     "yaml"
                 },
                 highlight = {
@@ -312,58 +324,7 @@ require("lazy").setup({
             }
         end
     },
-    {
-        "neovim/nvim-lspconfig",
-        config = function ()
-            local lspconfig = require("lspconfig")
-
-            local on_attach  = function(client, bufnr)
-                local options = {
-                    noremap = true,
-                    silent = true,
-                }
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.definition()<CR>", options
-                )
-                -- TODO: This is broken, not sure why
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
-                )
-
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
-                )
-            end
-
-            lspconfig.jedi_language_server.setup{
-                on_attach = on_attach,
-                root_dir = function(fname)
-                    local found_path = lspconfig.util.root_pattern(
-                        "pyproject.toml", ".git"
-                    )(fname)
-                    return found_path or vim.fn.getcwd()
-                end
-            }
-            lspconfig.rust_analyzer.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.ts_ls.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.svelte.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.astro.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.dartls.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.hls.setup {
-                on_attach = on_attach,
-            }
-        end
-    },
+    {"neovim/nvim-lspconfig"},
     {
         "hrsh7th/nvim-cmp",
         event = "InsertEnter",
@@ -477,11 +438,60 @@ vim.diagnostic.config({
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set(
-    'n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts
+    "n", "<Leader>e", "<cmd>lua vim.diagnostic.open_float()<CR>", opts
 )
 vim.keymap.set(
-    'n', '[e', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts
+    "n", "[e", "<Cmd>lua vim.diagnostic.goto_prev()<CR>", opts
 )
 vim.keymap.set(
-    'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
+    "n", "]e", "<Cmd>lua vim.diagnostic.goto_next()<CR>", opts
 )
+---------------------------------------------------------------------------------------------------
+--
+-- LSP Configuration
+--
+---------------------------------------------------------------------------------------------------
+local on_attach  = function(client, bufnr)
+    local options = {
+        noremap = true,
+        silent = true,
+    }
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.definition()<CR>", options
+    )
+    -- TODO: This is broken, not sure why
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
+    )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
+    )
+end
+
+vim.lsp.config("jedi_language_server", {on_attach = on_attach})
+vim.lsp.enable("jedi_language_server")
+
+vim.lsp.config("rust_analyzer", {on_attach = on_attach})
+vim.lsp.enable("rust_analyzer")
+
+vim.lsp.config("ts_ls", {
+    on_attach = on_attach,
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "javascript.jsx",
+        "typescript",
+        "typescriptreact",
+        "typescript.tsx",
+        -- vue_ls requires a ts_ls client to be running at the same time
+        "vue",
+    },
+})
+vim.lsp.enable("ts_ls")
+
+vim.lsp.config("astro", {on_attach = on_attach})
+vim.lsp.enable("astro")
+
+vim.lsp.config("vue_ls", {on_attach = on_attach})
+vim.lsp.enable("vue_ls")
