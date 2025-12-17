@@ -69,22 +69,22 @@ style = "Block"
 unfocused_hollow = true
 
 [font]
-size = 5.5
+size = 11
 
 [font.bold]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Bold"
 
 [font.bold_italic]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Bold Italic"
 
 [font.italic]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Italic"
 
 [font.normal]
-family = "Noto Sans Mono"
+family = "iosevka"
 
 [[keyboard.bindings]]
 action = "ToggleViMode"
