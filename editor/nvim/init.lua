@@ -54,38 +54,38 @@ vim.api.nvim_command("filetype plugin on")
 --
 ---------------------------------------------------------------------------------------------------
 -- Map ; as :
-vim.api.nvim_set_keymap("n", ";", ":", {noremap = true})
+vim.keymap.set("n", ";", ":", {noremap = true})
 
 -- Stop accidentally opening help
-vim.api.nvim_set_keymap("", "<F1>", "<Esc>", {})
-vim.api.nvim_set_keymap("i", "<F1>", "<Esc>", {})
+vim.keymap.set("", "<F1>", "<Esc>", {})
+vim.keymap.set("i", "<F1>", "<Esc>", {})
 
 -- Save and quit
-vim.api.nvim_set_keymap("n", "<Leader>w", ":w<CR>", {})
-vim.api.nvim_set_keymap("n", "<Leader>q", ":q!<CR>", {})
+vim.keymap.set("n", "<Leader>w", ":w<CR>", {})
+vim.keymap.set("n", "<Leader>q", ":q!<CR>", {})
 
 -- Move cursor between each "line" for a wrapped line
-vim.api.nvim_set_keymap("n", "j", "gj", {noremap = true})
-vim.api.nvim_set_keymap("n", "k", "gk", {noremap = true})
+vim.keymap.set("n", "j", "gj", {noremap = true})
+vim.keymap.set("n", "k", "gk", {noremap = true})
 
 -- Move up/down half page but also center the view
-vim.api.nvim_set_keymap("n", "<c-u>", "<c-u>zz", {noremap = true})
-vim.api.nvim_set_keymap("n", "<c-d>", "<c-d>zz", {noremap = true})
+vim.keymap.set("n", "<c-u>", "<c-u>zz", {noremap = true})
+vim.keymap.set("n", "<c-d>", "<c-d>zz", {noremap = true})
 
 -- Fast capitalization
-vim.api.nvim_set_keymap("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
+vim.keymap.set("i", "<c-u>", "<esc>bveU<esc>Ea", {noremap = true})
 
 -- No arrow keys
-vim.api.nvim_set_keymap("n", "<up>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<down>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<up>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<down>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<left>", "<nop>", {noremap = true})
-vim.api.nvim_set_keymap("i", "<right>", "<nop>", {noremap = true})
+vim.keymap.set("n", "<up>", "<nop>", {noremap = true})
+vim.keymap.set("n", "<down>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<up>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<down>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<left>", "<nop>", {noremap = true})
+vim.keymap.set("i", "<right>", "<nop>", {noremap = true})
 
 -- Use left and right arrow keys to switch between buffers
-vim.api.nvim_set_keymap("n", "<left>", ":bp<CR>", {noremap = true})
-vim.api.nvim_set_keymap("n", "<right>", ":bn<CR>", {noremap = true})
+vim.keymap.set("n", "<left>", ":bp<CR>", {noremap = true})
+vim.keymap.set("n", "<right>", ":bn<CR>", {noremap = true})
 ---------------------------------------------------------------------------------------------------
 --
 -- Autocommands
@@ -133,6 +133,17 @@ require("lazy").setup({
     {"tpope/vim-commentary"},
     {"tpope/vim-fugitive"},
     {"tpope/vim-obsession"},
+    {
+        dir="~/projects/plugins/memo.nvim",
+        name = "memo",
+        config = function()
+            local memo = require("memo")
+            memo.setup({
+                width = 160,
+                height = 40,
+            })
+        end
+    },
     {
         "lewis6991/gitsigns.nvim",
         config = function()
@@ -188,7 +199,7 @@ require("lazy").setup({
                 for shortcut, command in pairs(keymap) do
                     local mapping_str = string.format(keymap_template, shortcut)
                     local command_str = string.format(command_template, command)
-                    vim.api.nvim_set_keymap("n", mapping_str, command_str, keymap_options)
+                    vim.keymap.set("n", mapping_str, command_str, keymap_options)
                 end
             end
             set_fzf_keymaps({
@@ -267,16 +278,6 @@ require("lazy").setup({
             require("lint").linters_by_ft = {
                 python = {"flake8",}
             }
-
-            -- Ruff config
-            -- local parse_ruff_diagnostics = function(output, bufnr)
-            -- end
-            -- require("lint").linters.ruff = {
-            --     cmd = "ruff",
-            --     stdin = false,
-            --     ignore_exitcode = true,
-            -- }
-
             vim.g.python_indent = {
                 disable_parentheses_indenting = false,
                 closed_paren_align_last_line = false,
@@ -354,49 +355,7 @@ require("lazy").setup({
     },
     {
         "neovim/nvim-lspconfig",
-        config = function ()
-            local lspconfig = require("lspconfig")
-
-            local on_attach  = function(client, bufnr)
-                local options = {
-                    noremap = true,
-                    silent = true,
-                }
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.definition()<CR>", options
-                )
-                -- TODO: This is broken, not sure why
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
-                )
-
-                vim.api.nvim_buf_set_keymap(
-                    bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
-                )
-            end
-
-            lspconfig.jedi_language_server.setup{
-                on_attach = on_attach,
-                root_dir = function(fname)
-                    local found_path = lspconfig.util.root_pattern(
-                        "pyproject.toml", ".git"
-                    )(fname)
-                    return found_path or vim.fn.getcwd()
-                end
-            }
-            lspconfig.rust_analyzer.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.ts_ls.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.astro.setup{
-                on_attach = on_attach,
-            }
-            lspconfig.hls.setup {
-                on_attach = on_attach,
-            }
-        end
+        dependencies = {"hrsh7th/cmp-nvim-lsp"}
     },
     {
         "hrsh7th/nvim-cmp",
@@ -463,18 +422,65 @@ require("lazy").setup({
                 end
             end
 
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<C-Space>", "compe#complete()", {expr = true, noremap = true})
-            vim.api.nvim_set_keymap("i",
+            vim.keymap.set("i",
                 "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
         end
     },
     {"rust-lang/rust.vim", ft = {"rust"}},
 })    
+
+-- LSP
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local on_attach  = function(client, bufnr)
+    local options = {
+        noremap = true,
+        silent = true,
+    }
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gD", "<C-w>v<Cmd>lua vim.lsp.buf.definition()<CR>", options
+    )
+    -- TODO: This is broken, not sure why
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "gS", "<Cmd>lua vim.lsp.buf.signature_help()<CR>", options
+    )
+
+    vim.api.nvim_buf_set_keymap(
+        bufnr, "n", "H", "<Cmd>lua vim.lsp.buf.hover()<CR>", options
+    )
+end
+
+vim.lsp.enable("jedi_language_server")
+vim.lsp.config("jedi_language_server", {
+    capabilities = capabilities,
+    on_attach = on_attach,
+    root_dir = function(fname)
+        local found_path = lspconfig.util.root_pattern(
+            "pyproject.toml", ".git"
+        )(fname)
+        return found_path or vim.fn.getcwd()
+    end
+})
+vim.lsp.enable("rust_analyzer")
+vim.lsp.config("rust_analyzer", {
+    capabilities = capabilities,
+    on_attach = on_attach
+})
+vim.lsp.enable("ts_ls")
+vim.lsp.config("ts_ls", {
+    capabilities = capabilities,
+    on_attach = on_attach
+})
+vim.lsp.enable("astro")
+vim.lsp.config("astro", {
+    capabilities = capabilities,
+    on_attach = on_attach
+})
       
 -- Colorscheme
 local color_term_values = {"-256color", "alacritty"}
@@ -531,12 +537,12 @@ vim.fn.sign_define("DiagnosticSignHint", {
 })
 
 local opts = { noremap=true, silent=true }
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', '<Leader>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', '[e', '<Cmd>lua vim.diagnostic.goto_prev()<CR>', opts
 )
-vim.api.nvim_set_keymap(
+vim.keymap.set(
     'n', ']e', '<Cmd>lua vim.diagnostic.goto_next()<CR>', opts
 )
