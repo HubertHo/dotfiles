@@ -1,0 +1,1 @@
+timeout 300 'swaylock --daemonize --color 1c1c1c --ignore-empty-password'
