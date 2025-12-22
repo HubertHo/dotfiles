@@ -12,7 +12,7 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --color=1c1c1c --i
 exec --no-startup-id feh --bg-scale $background_img
 
 # Set font for status and window bars
-font pango:Noto Sans Mono 9
+font pango:Iosevka 9
 
 # Config for i3-gaps
 hide_edge_borders both
