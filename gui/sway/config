@@ -8,7 +8,7 @@ set $lock swaylock -c 1c1c1c --ignore-empty-password
 exec --no-startup-id swayidle
 
 set $background_img "$HOME/Pictures/wallpapers/calvin_and_hobbes.jpg"
-output *background $background_img stretch
+output * background $background_img stretch
 
 # Set font for status and window bars
 font pango:Iosevka 9
@@ -24,8 +24,10 @@ smart_borders on
 # Do not automatically focus on new windows
 no_focus [window_role="pop-up"]
 
-workspace 1 output HDMI-A-0
-workspace 2 output DisplayPort-0
+output DP-2 resolution 2560x1440 position 0,0
+output HDMI-A-1 resolution 1920x1080 position 2560,0
+workspace 1 output HDMI-A-1
+workspace 2 output DP-2
 
 # Use pactl to adjust volume in PulseAudio.
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -134,10 +136,10 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# restart sway inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+# exit sway (logs you out of your X session)
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
