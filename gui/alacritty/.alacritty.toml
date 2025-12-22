@@ -1,50 +1,90 @@
-live_config_reload = true
+[colors.primary]
+background = "#eff1f5"
+foreground = "#4c4f69"
+dim_foreground = "#8c8fa1"
+bright_foreground = "#4c4f69"
 
-[colors.bright]
-black = "0x928374"
-blue = "0x7daea3"
-cyan = "0x89b482"
-green = "0xa9b665"
-magenta = "0xd3869b"
-red = "0xea6962"
-white = "0xdfbf8e"
-yellow = "0xe3a84e"
+[colors.cursor]
+text = "#eff1f5"
+cursor = "#dc8a78"
+
+[colors.vi_mode_cursor]
+text = "#eff1f5"
+cursor = "#7287fd"
+
+[colors.search.matches]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.search.focused_match]
+foreground = "#eff1f5"
+background = "#40a02b"
+
+[colors.footer_bar]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.hints.start]
+foreground = "#eff1f5"
+background = "#df8e1d"
+
+[colors.hints.end]
+foreground = "#eff1f5"
+background = "#6c6f85"
+
+[colors.selection]
+text = "#eff1f5"
+background = "#dc8a78"
 
 [colors.normal]
-black = "0x665c54"
-blue = "0x7daea3"
-cyan = "0x89b482"
-green = "0xa9b665"
-magenta = "0xd3869b"
-red = "0xea6962"
-white = "0xdfbf8e"
-yellow = "0xe78a4e"
+black = "#bcc0cc"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#5c5f77"
 
-[colors.primary]
-background = "0x1d2021"
-foreground = "0xdfbf8e"
+[colors.bright]
+black = "#acb0be"
+red = "#d20f39"
+green = "#40a02b"
+yellow = "#df8e1d"
+blue = "#1e66f5"
+magenta = "#ea76cb"
+cyan = "#179299"
+white = "#6c6f85"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#fe640b"
+
+[[colors.indexed_colors]]
+index = 17
+color = "#dc8a78"
 
 [cursor]
 style = "Block"
 unfocused_hollow = true
 
 [font]
-size = 8.0
+size = 10.0
 
 [font.bold]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Bold"
 
 [font.bold_italic]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Bold Italic"
 
 [font.italic]
-family = "Noto Sans Mono"
+family = "iosevka"
 style = "Italic"
 
 [font.normal]
-family = "Noto Sans Mono"
+family = "iosevka"
 
 [[keyboard.bindings]]
 action = "ToggleViMode"
@@ -57,3 +97,6 @@ multiplier = 3
 
 [window]
 opacity = 1.0
+
+[general]
+live_config_reload = true
