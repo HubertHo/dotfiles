@@ -495,3 +495,23 @@ vim.lsp.enable("astro")
 
 vim.lsp.config("vue_ls", {on_attach = on_attach})
 vim.lsp.enable("vue_ls")
+
+vim.lsp.config("ocamllsp", {
+    cmd = {"ocamllsp"},
+    on_attach = on_attach,
+    filetypes = {
+        "ocaml",
+        "ocaml.interface",
+        "ocaml.menhir",
+        "ocaml.ocamllex",
+        "dune",
+        "reason",
+    },
+    root_markers = {
+        {"dune-project", "dune-workspace"},
+        {"*.opam", "esy.json", "package.json"},
+        ".git",
+    },
+    settings = {}
+})
+vim.lsp.enable("ocamllsp")
