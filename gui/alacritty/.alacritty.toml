@@ -69,7 +69,7 @@ style = "Block"
 unfocused_hollow = true
 
 [font]
-size = 10.0
+size = 11.0
 
 [font.bold]
 family = "iosevka"

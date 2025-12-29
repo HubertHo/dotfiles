@@ -156,6 +156,10 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
+# Stop locking the screen while playing games or media
+for_window [class="steam_app*"] inhibit_idle focus
+for_window [class="firefox"] inhibit_idle fullscreen
+
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
