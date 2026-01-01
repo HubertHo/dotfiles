@@ -7,6 +7,9 @@ set $lock swaylock -c 1c1c1c --ignore-empty-password
 # Configure swayidle to lock and suspend
 exec --no-startup-id swayidle
 
+# Need to import DISPLAY for dunst to work
+exec systemctl --user import-environment DISPLAY
+
 set $background_img "$HOME/Pictures/wallpapers/neon_hong_kong_skyline.png"
 output * background $background_img stretch
 

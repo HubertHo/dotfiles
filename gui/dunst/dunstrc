@@ -24,12 +24,12 @@
     width = 500
 
     # The maximum height of a single notification, excluding the frame.
-    height = 300
+    height = (0, 300)
 
     origin = bottom-right
 
     # Offset from the origin
-    offset = 10x50
+    offset = (10, 50)
 
     # Scale factor. It is auto-detected if value is 0.
     scale = 0
@@ -64,7 +64,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing window manager is
     # present (e.g. xcompmgr, compiz, etc.). (X11 only)
-    transparency = 0
+    # transparency = 0
 
     # Draw a line of "separator_height" pixel height between two
     # notifications.
