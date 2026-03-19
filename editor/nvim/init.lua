@@ -36,11 +36,11 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 -- Tabbing
-vim.opt.expandtab = true
+vim.opt.softtabstop = 4
+vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
-vim.opt.smarttab = true
-vim.opt.softtabstop = 0
-vim.opt.tabstop = 8
+vim.opt.expandtab = true
+vim.opt.smarttab = false
 
 vim.api.nvim_command("filetype plugin on")
 
@@ -113,7 +113,26 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 vim.opt.rtp:prepend(install_path)
 require("lazy").setup({
-    {"catppuccin/nvim", lazy = false, priority = 1000, name = "catppuccin"},
+    {
+        "zenbones-theme/zenbones.nvim",
+        dependencies = "rktjmp/lush.nvim",
+        lazy = false,
+        priority = 1000,
+        name = "zenbones",
+        config = function()
+            local color_term_values = {"-256color", "alacritty"}
+            for _, term_value in ipairs(color_term_values) do
+                if vim.endswith(vim.env.TERM, term_value) then
+                    vim.opt.termguicolors = true
+                end
+            end
+            vim.cmd("syntax on")
+            vim.g.zenbones_darken_comments = 20
+            vim.g.seoulbones_darken_non_text = 50
+            vim.opt.background = "light"
+            vim.cmd.colorscheme("seoulbones")
+        end
+    },
     {"tpope/vim-commentary"},
     {"tpope/vim-fugitive"},
     {"tpope/vim-obsession"},
@@ -137,13 +156,35 @@ require("lazy").setup({
         end
     },
     {
-        "mhinz/vim-signify",
-        config = function()
-            vim.g.signify_sign_add = "++"
-            vim.g.signify_sign_delete="--"
-            vim.g.signify_sign_delete_first_line="--"
-            vim.g.signify_sign_change="=="
-        end
+        "lewis6991/gitsigns.nvim",
+        opts = {
+            signs = {
+                add          = { text = '┃┃' },
+                change       = { text = '┃┃' },
+                delete       = { text = '__' },
+                topdelete    = { text = '‾‾' },
+                changedelete = { text = '~~' },
+                untracked    = { text = '┆┆' },
+            },
+            signs_staged_enable = false,
+            on_attach = function(_)
+                local gitsigns = require("gitsigns")
+                vim.keymap.set("n", "]c", function()
+                    if vim.wo.diff then
+                        vim.cmd.norma({"]c", bang = true});
+                    else
+                        gitsigns.nav_hunk("next")
+                    end
+                end)
+                vim.keymap.set("n", "[c", function()
+                    if vim.wo.diff then
+                        vim.cmd.norma({"pc", bang = true});
+                    else
+                        gitsigns.nav_hunk("prev")
+                    end
+                end)
+            end
+        }
     },
     {
         "junegunn/fzf",
@@ -403,15 +444,6 @@ require("lazy").setup({
 })    
       
 -- Colorscheme
-local color_term_values = {"-256color", "alacritty"}
-for _, term_value in ipairs(color_term_values) do
-    if vim.endswith(vim.env.TERM, term_value) then
-        vim.opt.termguicolors = true
-    end
-end
-vim.cmd("syntax on")
-vim.opt.background = "light"
-vim.cmd("colorscheme catppuccin")
 
 -- Diagnostics
 vim.diagnostic.config({
@@ -490,7 +522,17 @@ vim.lsp.config("ts_ls", {
 })
 vim.lsp.enable("ts_ls")
 
-vim.lsp.config("astro", {on_attach = on_attach})
+vim.lsp.config(
+    "astro",
+    {
+        on_attach = on_attach,
+        init_options = {
+            typescript = {
+                tsdk = vim.fs.normalize("/usr/lib/node_modules/typescript/lib"),
+            },
+        },
+    }
+)
 vim.lsp.enable("astro")
 
 vim.lsp.config("vue_ls", {on_attach = on_attach})
