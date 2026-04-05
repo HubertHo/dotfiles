@@ -479,7 +479,12 @@ vim.lsp.config("ts_ls", {
 vim.lsp.enable("astro")
 vim.lsp.config("astro", {
     capabilities = capabilities,
-    on_attach = on_attach
+    on_attach = on_attach,
+    init_options = {
+        typescript = {
+            tsdk = "/usr/lib/node_modules/typescript/lib",
+        }
+    }
 })
       
 -- Colorscheme
