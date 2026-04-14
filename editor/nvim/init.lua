@@ -101,372 +101,304 @@ vim.api.nvim_create_autocmd(
 -- Plugin Configuration
 --
 ---------------------------------------------------------------------------------------------------
--- Ensure that the package manager is installed
-local fn = vim.fn
-local install_path = fn.stdpath("data") .. "/lazy/lazy.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-    local lazy_repo = "https://github.com/folke/lazy.nvim.git"
-    fn.system({
-        "git", "clone", "--filter=blob:none", "--branch=stable", lazy_repo,
-        install_path
-    })
+
+local post_install_hooks = function(event)
+    local name, event = event.data.spec.name, event.data.kind
+    if name == "fzf" and (kind == "update" or kind == "install") then
+        vim.cmd("call fzf#install()")
+    elseif name == "nvim-treesitter" and kind == "update" then
+        vim.cmd("TSUpdate")
+    end
 end
-vim.opt.rtp:prepend(install_path)
-require("lazy").setup({
-    {
-        "zenbones-theme/zenbones.nvim",
-        dependencies = "rktjmp/lush.nvim",
-        lazy = false,
-        priority = 1000,
-        name = "zenbones",
-        config = function()
-            local color_term_values = {"-256color", "alacritty"}
-            for _, term_value in ipairs(color_term_values) do
-                if vim.endswith(vim.env.TERM, term_value) then
-                    vim.opt.termguicolors = true
-                end
+vim.api.nvim_create_autocmd("PackChanged", {callback = post_install_hooks})
+
+vim.pack.add({
+    {src = "https://github.com/zenbones-theme/zenbones.nvim", name = "zenbones"},
+    "https://github.com/rktjmp/lush.nvim",
+    "https://github.com/tpope/vim-commentary",
+    "https://github.com/tpope/vim-fugitive",
+    "https://github.com/tpope/vim-obsession",
+    "https://github.com/lewis6991/gitsigns.nvim",
+    "https://github.com/junegunn/fzf",
+    "https://github.com/ibhagwan/fzf-lua",
+    {src = "https://github.com/lukas-reineke/indent-blankline.nvim", name = "ibl"},
+    "https://github.com/mfussenegger/nvim-lint",
+    "https://github.com/nvim-lualine/lualine.nvim",
+    "https://github.com/neovim/nvim-lspconfig",
+    {src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main"},
+    "https://github.com/hrsh7th/nvim-cmp",
+    "https://github.com/hrsh7th/cmp-nvim-lsp",
+    "https://github.com/L3MON4D3/LuaSnip",
+    "https://github.com/saadparwaiz1/cmp_luasnip",
+})
+
+-- colorscheme
+local color_term_values = {"-256color", "alacritty"}
+for _, term_value in ipairs(color_term_values) do
+    if vim.endswith(vim.env.TERM, term_value) then
+        vim.opt.termguicolors = true
+    end
+end
+vim.cmd("syntax on")
+vim.g.zenbones_darken_comments = 20
+vim.g.seoulbones_darken_non_text = 50
+vim.opt.background = "light"
+vim.cmd.colorscheme("seoulbones")
+
+-- gitsigns
+require("gitsigns").setup({
+    signs = {
+        add          = { text = '┃┃' },
+        change       = { text = '┃┃' },
+        delete       = { text = '__' },
+        topdelete    = { text = '‾‾' },
+        changedelete = { text = '~~' },
+        untracked    = { text = '┆┆' },
+    },
+    signs_staged_enable = false,
+    on_attach = function(_)
+        local gitsigns = require("gitsigns")
+        vim.keymap.set("n", "]c", function()
+            if vim.wo.diff then
+                vim.cmd.norma({"]c", bang = true});
+            else
+                gitsigns.nav_hunk("next")
             end
-            vim.cmd("syntax on")
-            vim.g.zenbones_darken_comments = 20
-            vim.g.seoulbones_darken_non_text = 50
-            vim.opt.background = "light"
-            vim.cmd.colorscheme("seoulbones")
-        end
-    },
-    {"tpope/vim-commentary"},
-    {"tpope/vim-fugitive"},
-    {"tpope/vim-obsession"},
-    {
-        "HubertHo/memo.nvim",
-        config = function()
-            local memo = require("memo")
-            memo.setup({
-                height = 60,
-                width = 180,
-            })
-            vim.keymap.set("n", "<Leader>nt", function()
-                require("memo").open_note("notes")
-            end)
-            vim.api.nvim_create_user_command("Memo",
-                function(opts)
-                    memo.open_note(opts["fargs"][1])
-                end,
-                {nargs = 1}
-            )
-        end
-    },
-    {
-        "lewis6991/gitsigns.nvim",
-        opts = {
-            signs = {
-                add          = { text = '┃┃' },
-                change       = { text = '┃┃' },
-                delete       = { text = '__' },
-                topdelete    = { text = '‾‾' },
-                changedelete = { text = '~~' },
-                untracked    = { text = '┆┆' },
-            },
-            signs_staged_enable = false,
-            on_attach = function(_)
-                local gitsigns = require("gitsigns")
-                vim.keymap.set("n", "]c", function()
-                    if vim.wo.diff then
-                        vim.cmd.norma({"]c", bang = true});
-                    else
-                        gitsigns.nav_hunk("next")
-                    end
-                end)
-                vim.keymap.set("n", "[c", function()
-                    if vim.wo.diff then
-                        vim.cmd.norma({"pc", bang = true});
-                    else
-                        gitsigns.nav_hunk("prev")
-                    end
-                end)
+        end)
+        vim.keymap.set("n", "[c", function()
+            if vim.wo.diff then
+                vim.cmd.norma({"pc", bang = true});
+            else
+                gitsigns.nav_hunk("prev")
             end
-        }
-    },
-    {
-        "junegunn/fzf",
-        build = ":call fzf#install()",
-    },
-    {
-        "ibhagwan/fzf-lua",
-        config = function()
-            local set_fzf_keymaps = function(keymap)
-                local keymap_options = {noremap = true, silent = true}
-                local keymap_template = "<Leader>%s"
-                local command_template = "<Cmd>lua require('fzf-lua').%s()<CR>"
-                for shortcut, command in pairs(keymap) do
-                    local mapping_str = string.format(keymap_template, shortcut)
-                    local command_str = string.format(command_template, command)
-                    vim.keymap.set("n", mapping_str, command_str, keymap_options)
-                end
-            end
-            set_fzf_keymaps({
-                s = "grep_project",
-                b = "buffers",
-                f = "files",
-                g = "git_files",
-            })
+        end)
+    end
+})
 
-            local fzf_lua = require("fzf-lua")
-            local fzf_actions = fzf_lua.actions
-            fzf_lua.setup({
-                actions = {
-                    files = {
-                        ["default"] = fzf_actions.file_edit_or_qf,
-                        ["ctrl-h"] = fzf_actions.file_split,
-                        ["ctrl-v"] = fzf_actions.file_vsplit,
-                        ["ctrl-s"] = fzf_actions.file_tabedit,
-                        ["alt-q"] = fzf_actions.file_sel_to_qf,
-                        ["alt-l"] = fzf_actions.file_sel_to_ll,
-                    },
-                    buffers = {
-                        ["default"] = fzf_actions.buf_edit,
-                        ["ctrl-h"] = fzf_actions.buf_split,
-                        ["ctrl-v"] = fzf_actions.buf_vsplit,
-                        ["ctrl-s"] = fzf_actions.buf_tabedit,
-                    }
-                }
-            })
-        end
-    },
-    {
-        "lukas-reineke/indent-blankline.nvim",
-        name = "ibl",
-        opts = {
-            scope = {
-                enabled = true
-            }
-        }
-    },
-    {
-        "nvim-treesitter/nvim-treesitter",
-        lazy = false,
-        branch="main",
-        build = ":TSUpdate",
-        config = function ()
-            local treesitter = require("nvim-treesitter")
-            treesitter.install({
-                "astro",
-                "bash",
-                "css",
-                "dockerfile",
-                "html",
-                "javascript",
-                "json",
-                "lua",
-                "markdown",
-                "markdown_inline",
-                "ocaml",
-                "python",
-                "toml",
-                "tsx",
-                "typescript",
-                "vim",
-                "vue",
-                "yaml"
-            })
-            vim.api.nvim_create_autocmd("FileType", {
-                pattern = {
-                    "astro",
-                    "bash",
-                    "css",
-                    "dockerfile",
-                    "html",
-                    "javascript",
-                    "json",
-                    "lua",
-                    "markdown",
-                    "ocaml",
-                    "python",
-                    "toml",
-                    "typescript",
-                    "typescriptreact",
-                    "vim",
-                    "vue",
-                    "yaml"
-                },
-                callback = function()
-                    vim.treesitter.start()
-                    -- Indentation
-                    vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-                end,
-            })
-
-        end
-    },
-    {
-        "mfussenegger/nvim-lint",
-        config = function()
-            require("lint").linters_by_ft = {
-                python = {"flake8",}
-            }
-
-            -- Ruff config
-            -- local parse_ruff_diagnostics = function(output, bufnr)
-            -- end
-            -- require("lint").linters.ruff = {
-            --     cmd = "ruff",
-            --     stdin = false,
-            --     ignore_exitcode = true,
-            -- }
-
-            vim.g.python_indent = {
-                disable_parentheses_indenting = false,
-                closed_paren_align_last_line = false,
-                searchpair_timeout = 150,
-                continue = "shiftwidth()",
-                open_paren = "shiftwidth()",
-                nested_paren = "shiftwidth()",
-            }
-        end
-    },
-    {
-        "nvim-lualine/lualine.nvim",
-        config = function()
-            local filenameConfig = {
-                "filename",
-                file_status = true,
-                newfile_status = true,
-                path = 0,
-            }
-            local truncateBranchName = function(str)
-                local branchNameLengthLimit = 40
-                local branchName = str
-                if (string.len(branchName) > branchNameLengthLimit) then
-                    branchName = string.sub(branchName, 0, branchNameLengthLimit) .. "..."
-                end
-                return branchName
-            end
-
-            require('lualine').setup {
-                options = {
-                    icons_enabled = false,
-                    theme = 'auto',
-                    component_separators = {left = "|", right = "|"},
-                    section_separators = '',
-                    ignore_focus = {},
-                    always_divide_middle = true,
-                    globalstatus = false,
-                    refresh = {
-                        statusline = 1000,
-                        tabline = 1000,
-                        winbar = 1000,
-                    }
-                },
-                sections = {
-                    lualine_a = {'mode'},
-                    lualine_b = {
-                        {
-                            'branch',
-                            icons_enabled = false,
-                            fmt = truncateBranchName,
-                        },
-                        'diff',
-                        'diagnostics'
-                    },
-                    lualine_c = {filenameConfig},
-                    lualine_x = {'encoding', 'filetype'},
-                    lualine_y = {'progress'},
-                    lualine_z = {'location'}
-                },
-                inactive_sections = {
-                    lualine_a = {},
-                    lualine_b = {},
-                    lualine_c = {filenameConfig},
-                    lualine_x = {'progress'},
-                    lualine_y = {'location'},
-                    lualine_z = {}
-                },
-                tabline = {
-                    lualine_a = {
-                        {"tabs", mode = 2}
-                    },
-                },
-            }
-        end
-    },
-    {"neovim/nvim-lspconfig"},
-    {
-        "hrsh7th/nvim-cmp",
-        event = "InsertEnter",
-        dependencies = {
-            "neovim/nvim-lspconfig",
-            "hrsh7th/cmp-nvim-lsp",
-            "L3MON4D3/LuaSnip",
-            "saadparwaiz1/cmp_luasnip",
+-- fzf-lua
+local set_fzf_keymaps = function(keymap)
+    local keymap_options = {noremap = true, silent = true}
+    local keymap_template = "<Leader>%s"
+    local command_template = "<Cmd>lua require('fzf-lua').%s()<CR>"
+    for shortcut, command in pairs(keymap) do
+        local mapping_str = string.format(keymap_template, shortcut)
+        local command_str = string.format(command_template, command)
+        vim.keymap.set("n", mapping_str, command_str, keymap_options)
+    end
+end
+set_fzf_keymaps({
+    s = "grep_project",
+    b = "buffers",
+    f = "files",
+    g = "git_files",
+})
+local fzf_lua = require("fzf-lua")
+local fzf_actions = fzf_lua.actions
+fzf_lua.setup({
+    actions = {
+        files = {
+            ["default"] = fzf_actions.file_edit_or_qf,
+            ["ctrl-h"] = fzf_actions.file_split,
+            ["ctrl-v"] = fzf_actions.file_vsplit,
+            ["ctrl-s"] = fzf_actions.file_tabedit,
+            ["alt-q"] = fzf_actions.file_sel_to_qf,
+            ["alt-l"] = fzf_actions.file_sel_to_ll,
         },
-        config = function()
-            local cmp = require"cmp"
-            cmp.setup({
-                snippet = {
-                  expand = function(args)
-                      require('luasnip').lsp_expand(args.body)
-                  end,
-                },
-                sources = {
-                    {name = "nvim_lsp", group_index = 1},
-                    {name = "buffers", group_index = 2},
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.abort(),
-                    ["<CR>"] = cmp.mapping.confirm({ select = true }),
-                    ["<Tab>"] = cmp.mapping.select_next_item(
-                        {
-                            behavior = cmp.SelectBehavior.Insert,
-                            count = 1
-                        }
-                    ),
-                    ["<S-Tab>"] = cmp.mapping.select_prev_item({
-                        behavior = cmp.SelectBehavior.Insert,
-                        count = 1,
-                    }),
-                }),
-            })
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        buffers = {
+            ["default"] = fzf_actions.buf_edit,
+            ["ctrl-h"] = fzf_actions.buf_split,
+            ["ctrl-v"] = fzf_actions.buf_vsplit,
+            ["ctrl-s"] = fzf_actions.buf_tabedit,
+        }
+    }
+})
 
-            local compe_t = function(str)
-              return vim.api.nvim_replace_termcodes(str, true, true, true)
-            end
+-- indent-blankline.nvim
+require("ibl").setup({
+    scope = {
+        enabled = true
+    }
+})
 
-            -- Use (s-)tab to:
-            --- move to prev/next item in completion menuone
-            --- jump to prev/next snippet's placeholder
-            _G.tab_complete = function()
-                if vim.fn.pumvisible() == 1 then
-                    return compe_t "<C-n>"
-                else
-                    return compe_t "<Tab>"
-              end
-            end
-            _G.s_tab_complete = function()
-                if vim.fn.pumvisible() == 1 then
-                    return compe_t "<C-p>"
-                else
-                    -- If <S-Tab> is not working in your terminal, change it to <C-h>
-                    return compe_t "<S-Tab>"
-                end
-            end
+-- nvim-lint
+require("lint").linters_by_ft = {
+    python = {"flake8",}
+}
 
-            vim.keymap.set("i",
-                "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
-            vim.keymap.set("i",
-                "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
-            vim.keymap.set("i",
-                "<C-Space>", "compe#complete()", {expr = true, noremap = true})
-            vim.keymap.set("i",
-                "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
-        end
+-- lualine.nvim
+local filenameConfig = {
+    "filename",
+    file_status = true,
+    newfile_status = true,
+    path = 0,
+}
+local truncateBranchName = function(str)
+    local branchNameLengthLimit = 40
+    local branchName = str
+    if (string.len(branchName) > branchNameLengthLimit) then
+        branchName = string.sub(branchName, 0, branchNameLengthLimit) .. "..."
+    end
+    return branchName
+end
+
+require('lualine').setup {
+    options = {
+        icons_enabled = false,
+        theme = 'auto',
+        component_separators = {left = "|", right = "|"},
+        section_separators = '',
+        ignore_focus = {},
+        always_divide_middle = true,
+        globalstatus = false,
+        refresh = {
+            statusline = 1000,
+            tabline = 1000,
+            winbar = 1000,
+        }
     },
-    {"rust-lang/rust.vim", ft = {"rust"}},
-})    
-      
--- Colorscheme
+    sections = {
+        lualine_a = {'mode'},
+        lualine_b = {
+            {
+                'branch',
+                icons_enabled = false,
+                fmt = truncateBranchName,
+            },
+            'diff',
+            'diagnostics'
+        },
+        lualine_c = {filenameConfig},
+        lualine_x = {'encoding', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {filenameConfig},
+        lualine_x = {'progress'},
+        lualine_y = {'location'},
+        lualine_z = {}
+    },
+    tabline = {
+        lualine_a = {
+            {"tabs", mode = 2}
+        },
+    },
+}
+
+-- nvim-treesitter
+local treesitter = require("nvim-treesitter")
+treesitter.install({
+    "astro",
+    "bash",
+    "css",
+    "dockerfile",
+    "html",
+    "javascript",
+    "json",
+    "lua",
+    "markdown",
+    "markdown_inline",
+    "ocaml",
+    "python",
+    "toml",
+    "tsx",
+    "typescript",
+    "vim",
+    "vue",
+    "yaml"
+})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {
+        "astro",
+        "bash",
+        "css",
+        "dockerfile",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "ocaml",
+        "python",
+        "toml",
+        "typescript",
+        "typescriptreact",
+        "vim",
+        "vue",
+        "yaml"
+    },
+    callback = function()
+        vim.treesitter.start()
+        -- Indentation
+        vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+    end,
+})
+
+-- nvim-cmp
+local cmp = require("cmp")
+cmp.setup({
+    snippet = {
+      expand = function(args)
+          require('luasnip').lsp_expand(args.body)
+      end,
+    },
+    sources = {
+        {name = "nvim_lsp", group_index = 1},
+        {name = "buffers", group_index = 2},
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-b>"] = cmp.mapping.scroll_docs(-4),
+        ["<C-f>"] = cmp.mapping.scroll_docs(4),
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<C-e>"] = cmp.mapping.abort(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping.select_next_item(
+            {
+                behavior = cmp.SelectBehavior.Insert,
+                count = 1
+            }
+        ),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item({
+            behavior = cmp.SelectBehavior.Insert,
+            count = 1,
+        }),
+    }),
+})
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+local compe_t = function(str)
+  return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+-- Use (s-)tab to:
+--- move to prev/next item in completion menuone
+--- jump to prev/next snippet's placeholder
+_G.tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return compe_t "<C-n>"
+    else
+        return compe_t "<Tab>"
+  end
+end
+_G.s_tab_complete = function()
+    if vim.fn.pumvisible() == 1 then
+        return compe_t "<C-p>"
+    else
+        -- If <S-Tab> is not working in your terminal, change it to <C-h>
+        return compe_t "<S-Tab>"
+    end
+end
+
+vim.keymap.set("i",
+    "<Tab>", "v:lua.tab_complete()", {expr = true, noremap = true})
+vim.keymap.set("i",
+    "<S-Tab>", "v:lua.s_tab_complete()", {expr = true, noremap = true})
+vim.keymap.set("i",
+    "<C-Space>", "compe#complete()", {expr = true, noremap = true})
+vim.keymap.set("i",
+    "<C-e>", "compe#close('<C-e>')", {expr = true, noremap = true})
 
 -- Diagnostics
 vim.diagnostic.config({
