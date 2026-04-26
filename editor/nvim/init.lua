@@ -102,6 +102,18 @@ vim.api.nvim_create_autocmd(
 --
 ---------------------------------------------------------------------------------------------------
 
+-- Disable plugins that aren't used
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_remote_plugins = 1
+vim.g.loaded_shada_plugin = 1
+vim.g.loaded_gzip = 1
+vim.g.gzip_exec = 0
+vim.g.loaded_tarPlugin = 1
+vim.g.loaded_tar = 1
+vim.g.loaded_zipPlugin = 1
+vim.g.loaded_zip = 1
+vim.g.loaded_tutor_mode_plugin = 1
+
 local post_install_hooks = function(event)
     local name, event = event.data.spec.name, event.data.kind
     if name == "fzf" and (kind == "update" or kind == "install") then
