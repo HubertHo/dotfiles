@@ -152,9 +152,8 @@ for _, term_value in ipairs(color_term_values) do
     end
 end
 vim.cmd("syntax on")
-vim.g.zenbones_darken_comments = 20
-vim.g.seoulbones_darken_non_text = 50
 vim.opt.background = "light"
+vim.g.everforest_background = "soft"
 vim.cmd.colorscheme("everforest")
 
 -- gitsigns
