@@ -2,6 +2,8 @@
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
 
+require("vim._core.ui2").enable()
+
 -- Automatically apply changes if the file changes outside of neovim
 vim.opt.autoread = true
 vim.opt.colorcolumn = "101"
@@ -116,9 +118,7 @@ vim.g.loaded_tutor_mode_plugin = 1
 
 local post_install_hooks = function(event)
     local name, event = event.data.spec.name, event.data.kind
-    if name == "fzf" and (kind == "update" or kind == "install") then
-        vim.cmd("call fzf#install()")
-    elseif name == "nvim-treesitter" and kind == "update" then
+    if name == "nvim-treesitter" and kind == "update" then
         vim.cmd("TSUpdate")
     end
 end
@@ -131,7 +131,6 @@ vim.pack.add({
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/tpope/vim-obsession",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/junegunn/fzf",
     "https://github.com/ibhagwan/fzf-lua",
     {src = "https://github.com/lukas-reineke/indent-blankline.nvim", name = "ibl"},
     "https://github.com/mfussenegger/nvim-lint",
@@ -142,6 +141,7 @@ vim.pack.add({
     "https://github.com/hrsh7th/cmp-nvim-lsp",
     "https://github.com/L3MON4D3/LuaSnip",
     "https://github.com/saadparwaiz1/cmp_luasnip",
+    "https://github.com/sainnhe/everforest",
 })
 
 -- colorscheme
@@ -155,7 +155,7 @@ vim.cmd("syntax on")
 vim.g.zenbones_darken_comments = 20
 vim.g.seoulbones_darken_non_text = 50
 vim.opt.background = "light"
-vim.cmd.colorscheme("seoulbones")
+vim.cmd.colorscheme("everforest")
 
 -- gitsigns
 require("gitsigns").setup({
@@ -306,13 +306,13 @@ treesitter.install({
     "bash",
     "css",
     "dockerfile",
+    "elm",
     "html",
     "javascript",
     "json",
     "lua",
     "markdown",
     "markdown_inline",
-    "ocaml",
     "python",
     "toml",
     "tsx",
@@ -332,7 +332,6 @@ vim.api.nvim_create_autocmd("FileType", {
         "json",
         "lua",
         "markdown",
-        "ocaml",
         "python",
         "toml",
         "typescript",
@@ -505,22 +504,5 @@ vim.lsp.enable("astro")
 vim.lsp.config("vue_ls", {on_attach = on_attach})
 vim.lsp.enable("vue_ls")
 
-vim.lsp.config("ocamllsp", {
-    cmd = {"ocamllsp"},
-    on_attach = on_attach,
-    filetypes = {
-        "ocaml",
-        "ocaml.interface",
-        "ocaml.menhir",
-        "ocaml.ocamllex",
-        "dune",
-        "reason",
-    },
-    root_markers = {
-        {"dune-project", "dune-workspace"},
-        {"*.opam", "esy.json", "package.json"},
-        ".git",
-    },
-    settings = {}
-})
-vim.lsp.enable("ocamllsp")
+vim.lsp.config("elmls", {on_attach = on_attach})
+vim.lsp.enable("elmls")

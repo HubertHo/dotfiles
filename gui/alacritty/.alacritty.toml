@@ -1,27 +1,27 @@
-[colors.bright]
-black = "#BFBABB"
-red = "#BE3C6D"
-green = "#487249"
-yellow = "#A76B48"
-blue = "#006F89"
-magenta = "#7F4C7E"
-cyan = "#006F70"
-white = "#777777"
-[colors.cursor]
-cursor = "#555555"
-text = "#E2E2E2"
-[colors.normal]
-black = "#E2E2E2"
-blue = "#0084A3"
-cyan = "#008586"
-green = "#628562"
-magenta = "#896788"
-red = "#DC5284"
-white = "#555555"
-yellow = "#C48562"
 [colors.primary]
-background = "#E2E2E2"
-foreground = "#555555"
+background = '#fffbef'
+foreground = '#5c6a72'
+
+[colors.normal]
+black   = '#5c6a72'
+red     = '#f85552'
+green   = '#8da101'
+yellow  = '#dfa000'
+blue    = '#3a94c5'
+magenta = '#df69ba'
+cyan    = '#35a77c'
+white   = '#e8e5d5'
+
+[colors.bright]
+black   = '#5c6a72'
+red     = '#f85552'
+green   = '#8da101'
+yellow  = '#dfa000'
+blue    = '#3a94c5'
+magenta = '#df69ba'
+cyan    = '#35a77c'
+white   = '#e8e5d5'
+
 [cursor]
 style = "Block"
 unfocused_hollow = true
