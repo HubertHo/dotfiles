@@ -139,6 +139,7 @@ vim.pack.add({
     "https://github.com/saadparwaiz1/cmp_luasnip",
     "https://github.com/nvim-lualine/lualine.nvim",
     "https://github.com/hrsh7th/nvim-cmp",
+    "https://github.com/sainnhe/everforest",
 })
 
 -- gitsigns
@@ -466,7 +467,8 @@ for _, term_value in ipairs(color_term_values) do
 end
 vim.cmd("syntax on")
 vim.opt.background = "light"
-vim.cmd("colorscheme seoulbones")
+vim.g.everforest_background = "medium"
+vim.cmd("colorscheme everforest")
 
 -- Diagnostics
 function format_float_diagnostic_message(diagnostic)
