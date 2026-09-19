@@ -10,6 +10,10 @@ exec --no-startup-id swayidle
 # Need to import DISPLAY for dunst to work
 exec systemctl --user import-environment DISPLAY
 
+exec systemctl --user import-environment WAYLAND_DISPLAY DISPLAY XDG_CURRENT_DESKTOP SWAYSOCK I3SOCK XCURSOR_SIZE XCURSOR_THEME
+# exec hash dbus-update-activation-environment 2>/dev/null && \
+#      dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK
+
 set $background_img "$HOME/Pictures/wallpapers/neon_hong_kong_skyline.png"
 output * background $background_img stretch
 
