@@ -115,9 +115,7 @@ vim.api.nvim_create_autocmd(
 
 local post_install_hooks = function(event)
     local name, event = event.data.spec.name, event.data.kind
-    if name == "fzf" and (kind == "update" or kind == "install") then
-        vim.cmd("call fzf#install()")
-    elseif name == "nvim-treesitter" and kind == "update" then
+    if name == "nvim-treesitter" and kind == "update" then
         vim.cmd("TSUpdate")
     end
 end
@@ -131,7 +129,6 @@ vim.pack.add({
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/tpope/vim-obsession",
     "https://github.com/lewis6991/gitsigns.nvim",
-    "https://github.com/junegunn/fzf",
     "https://github.com/ibhagwan/fzf-lua",
     "https://github.com/lukas-reineke/indent-blankline.nvim",
     "https://github.com/mfussenegger/nvim-lint",
@@ -388,6 +385,7 @@ vim.api.nvim_create_autocmd('FileType', {
         "bash",
         "css",
         "dockerfile",
+        "elm",
         "haskell",
         "html",
         "javascript",
@@ -457,6 +455,7 @@ vim.lsp.config("astro", {
         }
     }
 })
+vim.lsp.enable("elmls")
       
 -- Colorscheme
 local color_term_values = {"-256color", "alacritty"}
