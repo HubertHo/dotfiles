@@ -153,7 +153,7 @@ for _, term_value in ipairs(color_term_values) do
 end
 vim.cmd("syntax on")
 vim.opt.background = "light"
-vim.g.everforest_background = "soft"
+vim.g.everforest_background = "medium"
 vim.cmd.colorscheme("everforest")
 
 -- gitsigns
@@ -303,6 +303,7 @@ local treesitter = require("nvim-treesitter")
 treesitter.install({
     "astro",
     "bash",
+    "scss",
     "css",
     "dockerfile",
     "elm",
@@ -324,6 +325,7 @@ vim.api.nvim_create_autocmd("FileType", {
     pattern = {
         "astro",
         "bash",
+        "scss",
         "css",
         "dockerfile",
         "html",
